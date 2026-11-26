@@ -115,6 +115,10 @@ Consultada el 2026-11-26 (UTC), sin autenticación. La página <https://dev.socr
 
 [Application Tokens](https://dev.socrata.com/docs/app-tokens.html) indica que las solicitudes sin token comparten una cuota por dirección IP y que el exceso responde 429. No se encontró documentación de `Retry-After`. La especificación no declara cuotas numéricas.
 
+## Adaptador y prueba controlada (E1)
+
+El adaptador está en `backend/src/fdh/dataplane/connectors/socrata/`. [Prueba en vivo](evidence/live-2026-11-26T024122Z.json) del 2026-11-26 (UTC) sobre `e53ebb5`, con `uv run pytest -m live`: 1 solicitud, HTTP 200, 858861 bytes, 2370 ms; 100 datasets válidos de 145 declarados, 0 rechazados y página siguiente disponible. La evidencia guarda solo conteos. Resultados del descubrimiento completo en la [validación de FDH-001](../../../experiments/fdh-001-validation/README.md#e1-descubrimiento-en-socrata-t025-a-t038).
+
 ## Interpretación y pendientes (no son hechos verificados)
 - **Hipótesis**: los términos permitirían publicar metadatos con la cita exigida. Cada dataset conserva su licencia, incluida alguna sin derivados.
 - **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos, con la cita exigida y la licencia declarada (ver [inventario](../../inventory.md)). Consta en la especificación aprobada ([registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)).

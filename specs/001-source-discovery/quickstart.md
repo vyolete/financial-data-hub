@@ -1,6 +1,6 @@
 # Guía de validación de FDH-001
 
-Comprueba el MVP. **Estado: solo E0 está implementado.** Funcionan la preparación, las pruebas, `fdh config check`, `fdh sources sync`, `/health` y la página inicial del portal. Los escenarios 2 a 9 requieren entregas posteriores. Contratos: [CLI](contracts/cli.md), [configuración](contracts/sources-config.md), [API](contracts/openapi.yaml); datos: [modelo](data-model.md).
+Comprueba el MVP. **Estado: E0 y E1 implementadas.** Funcionan la preparación, las pruebas, `fdh config check`, `fdh sources sync`, `fdh discover` y `fdh runs list` para Socrata, `/health` y la página inicial del portal. Los escenarios 2 y 4 funcionan para `co-datos-gov`; los escenarios 3 y 5 a 9 requieren entregas posteriores. Contratos: [CLI](contracts/cli.md), [configuración](contracts/sources-config.md), [API](contracts/openapi.yaml); datos: [modelo](data-model.md).
 
 ## Requisitos previos
 Docker con Compose en ejecución, [uv](https://docs.astral.sh/uv/) y Git. Node 24 solo si se quiere trabajar en el portal fuera de Docker. La primera instalación de dependencias e imágenes necesita red; las pruebas ordinarias, no. Reservar unos 3 GB libres.
@@ -39,6 +39,20 @@ docker run --rm --network none fdh-web-check sh -c "npm run lint && npm run type
 ```
 
 Si un puerto está ocupado, definir `FDH_DB_PORT`, `FDH_API_PORT` o `FDH_WEB_PORT` en `.env`; para las pruebas del backend, exportar también `FDH_DB_PORT`.
+
+## Descubrimiento en Socrata (E1)
+
+Envía solicitudes reales a `api.us.socrata.com`: dos consultas de hasta cinco páginas.
+
+```bash
+docker compose build api                                   # tras actualizar el código
+docker compose up --detach --wait
+docker compose run --rm api fdh discover --source co-datos-gov
+docker compose run --rm api fdh runs list
+docker compose exec db psql -U fdh -d fdh -c "select count(*), count(distinct (source_id, external_id)) from datasets"
+```
+
+La salida `stdout` resume cada ejecución; los logs JSON van a `stderr`. Códigos de salida en el [contrato de la CLI](contracts/cli.md).
 
 ## Escenarios
 

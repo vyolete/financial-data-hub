@@ -1,0 +1,48 @@
+{
+  "kind": "live",
+  "source_id": "co-datos-gov",
+  "started_utc": "2026-11-26T02:41:22Z",
+  "repository_commit": "e53ebb5c76aaf4fc099160ecf5c00f20b7898a47",
+  "uncommitted_changes": false,
+  "request": {
+    "method": "GET",
+    "url": "https://api.us.socrata.com/api/catalog/v1",
+    "params": {
+      "domains": "www.datos.gov.co",
+      "only": "datasets",
+      "limit": "100",
+      "scroll_id": "",
+      "q": "presupuesto"
+    }
+  },
+  "limits": {
+    "page_size": 100,
+    "attempt_timeout_s": 10.0,
+    "max_retries": 3
+  },
+  "outcome": "succeeded",
+  "http_status": 200,
+  "response_bytes": 858861,
+  "total_declared": 145,
+  "datasets": 100,
+  "distinct_identifiers": 100,
+  "rejected": {},
+  "has_next_page": true,
+  "filled_fields": {
+    "external_id": 100,
+    "title": 100,
+    "description": 100,
+    "publisher": 100,
+    "official_url": 100,
+    "categories": 98,
+    "topics": 0,
+    "tags": 87,
+    "data_sources": 0,
+    "licenses": 100,
+    "citation_requirement": 0,
+    "dates": 100,
+    "locators": 100
+  },
+  "requests": 1,
+  "elapsed_ms": 2370
+}

@@ -2,7 +2,7 @@
 
 Complementa la [arquitectura objetivo](target-architecture.md), que describe componentes y flujos; este documento dice **dónde vive cada responsabilidad en el código**. La estructura actual describe archivos que existen. La estructura objetivo es una **propuesta**: cada especificación confirma sus módulos y nombres, y ningún directorio se crea antes de tener contenido.
 
-**Situación descrita**: entrega E0 de FDH-001 (commit `d35141260db86ccd71b91f4b1525ba8a6d9fede3`).
+**Situación descrita**: entrega E1 de FDH-001 (descubrimiento en Socrata).
 
 ## Estructura actual
 
@@ -11,13 +11,13 @@ backend/                     # un único backend desplegable (API y CLI, misma i
 ├── migrations/              # migraciones Alembic
 ├── src/fdh/
 │   ├── domain/              # tipos y reglas puras
-│   ├── controlplane/        # fuentes: plan de sincronización e interfaces de repositorio
+│   ├── controlplane/        # plan de sincronización, tipos de ejecución e interfaces
 │   ├── dataplane/
-│   │   ├── connectors/      # contrato y registro de adaptadores (sin adaptadores)
-│   │   └── discovery/       # paquete reservado en E0, sin motor
-│   ├── persistence/         # modelos, sesiones y repositorio de fuentes (PostgreSQL)
+│   │   ├── connectors/      # contract.py, registry.py y socrata/
+│   │   └── discovery/       # engine.py, http.py y retry.py: núcleo común
+│   ├── persistence/         # modelos, fuentes, catálogo y ejecuciones (PostgreSQL)
 │   ├── api/                 # FastAPI: solo /health
-│   ├── cli/                 # `fdh config check` y `fdh sources sync`
+│   ├── cli/                 # `fdh config check`, `sources sync`, `discover` y `runs list`
 │   ├── settings/            # entorno y config/sources.toml
 │   └── observability/       # logs JSON sanitizados
 └── tests/                   # unit, contract, integration, api, architecture, live, fixtures
@@ -59,7 +59,7 @@ Etapas del [roadmap](../../ROADMAP.md). Las rutas marcadas como propuestas **no 
 
 | Capacidad | Ubicación | Etapa | Evolución prevista |
 |---|---|---|---|
-| Descubrimiento | `dataplane/discovery/`, `dataplane/connectors/<platform>/` | FDH-001 | Motor común y un adaptador por plataforma: Socrata y Data360 |
+| Descubrimiento | `dataplane/discovery/`, `dataplane/connectors/<platform>/` | FDH-001 | Motor común y adaptador de Socrata implementados (E1); Data360 pendiente (E3) |
 | Conectores reutilizables | `dataplane/connectors/` | FDH-002 | Ampliar el contrato a la extracción y organizar por familias (REST, SDMX, archivos, especializados) |
 | Extracción | `dataplane/extraction/` (propuesta) | FDH-003 | Lotes acotados e incremental; exige permiso de extracción `allowed` |
 | Integración ETL/ELT | `dataplane/integration/` (propuesta) y `controlplane/pipelines` (propuesta) | FDH-003 | Pipelines configurados; dlt y alternativas solo tras pruebas de concepto y ADR ([ADR-0007](../adr/0007-integration-and-orchestration.md)) |
@@ -70,6 +70,15 @@ Etapas del [roadmap](../../ROADMAP.md). Las rutas marcadas como propuestas **no 
 | Servicios de datos | `api/`, `cli/` | FDH-001 (catálogo), FDH-006 | Consulta y exportación para Python, R y Power BI |
 | Analítica | `dataplane/analytics/` (propuesta), `frontend/` | FDH-007 | Productos sobre Gold; DuckDB por evaluar |
 | Observabilidad y operación | `observability/`, historial en `controlplane/` | Desde FDH-001; FDH-008 | Logs e historial; después métricas, alertas, objetivos de servicio y recuperación |
+
+## Qué aporta una plataforma nueva
+
+1. `dataplane/connectors/<platform>/`: un adaptador puro (`validate`, `build_request`, `classify`, `parse`) con sus capacidades.
+2. Su registro en `connectors/registry.py` y su nombre en `KNOWN_PLATFORMS`.
+3. Respuestas sintéticas y una clase que herede la [suite de contrato](../../backend/tests/contract/suite.py).
+4. Una entrada en `config/sources.toml` con permisos declarados.
+
+El motor, la persistencia y la CLI no cambian.
 
 ## Reglas para crecer
 
