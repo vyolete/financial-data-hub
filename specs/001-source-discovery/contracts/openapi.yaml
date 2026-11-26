@@ -1,0 +1,375 @@
+openapi: 3.1.0
+info:
+  title: Financial Data Hub Catalog API
+  version: 1.0.0
+  description: >
+    Read-only catalog API for local development. Only datasets of sources whose metadata
+    publication is allowed, and that are not restricted, are ever returned.
+  license:
+    name: Apache-2.0
+    identifier: Apache-2.0
+servers:
+  - url: http://127.0.0.1:8000
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Liveness of the API and its database
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Health"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/datasets:
+    get:
+      operationId: searchDatasets
+      summary: Search visible datasets
+      parameters:
+        - name: q
+          in: query
+          description: Accent-insensitive text over title and description
+          schema: {type: string, maxLength: 200}
+        - name: provider
+          in: query
+          schema: {type: string, maxLength: 200}
+        - name: category
+          in: query
+          description: Matches any original category or topic, ignoring case
+          schema: {type: string, maxLength: 200}
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Page of datasets
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/DatasetPage"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/datasets/{datasetId}:
+    get:
+      operationId: getDataset
+      summary: Dataset detail
+      parameters:
+        - $ref: "#/components/parameters/DatasetId"
+      responses:
+        "200":
+          description: Dataset
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/DatasetDetail"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/datasets/{datasetId}/provenance:
+    get:
+      operationId: listDatasetProvenance
+      summary: Runs and searches that found the dataset, newest first
+      parameters:
+        - $ref: "#/components/parameters/DatasetId"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Page of observations
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ObservationPage"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/providers:
+    get:
+      operationId: listProviders
+      summary: Providers having visible datasets
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Page of values
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ValuePage"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/categories:
+    get:
+      operationId: listCategories
+      summary: Categories and topics of visible datasets
+      parameters:
+        - name: q
+          in: query
+          schema: {type: string, maxLength: 200}
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Page of values
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ValuePage"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/runs:
+    get:
+      operationId: listRuns
+      summary: Discovery runs, newest first
+      parameters:
+        - name: source_id
+          in: query
+          schema: {type: string, maxLength: 100}
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        "200":
+          description: Page of runs
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/RunPage"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+  /api/v1/runs/{runId}:
+    get:
+      operationId: getRun
+      summary: Run detail with queries and sanitized errors
+      parameters:
+        - name: runId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Run
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/RunDetail"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "422": {$ref: "#/components/responses/Invalid"}
+        "503": {$ref: "#/components/responses/Unavailable"}
+components:
+  parameters:
+    DatasetId:
+      name: datasetId
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    Page:
+      name: page
+      in: query
+      schema: {type: integer, minimum: 1, maximum: 10000, default: 1}
+    PageSize:
+      name: page_size
+      in: query
+      schema: {type: integer, minimum: 1, maximum: 100, default: 20}
+  responses:
+    NotFound:
+      description: Unknown or hidden resource
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/Error"}
+    Invalid:
+      description: Invalid parameters
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/Error"}
+    Unavailable:
+      description: Database unavailable
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/Error"}
+  schemas:
+    Health:
+      type: object
+      required: [status]
+      properties:
+        status: {type: string, enum: [ok]}
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: {type: string}
+            message: {type: string}
+    PageMeta:
+      type: object
+      required: [page, page_size, total]
+      properties:
+        page: {type: integer}
+        page_size: {type: integer, maximum: 100}
+        total: {type: integer}
+    DatasetPage:
+      allOf:
+        - $ref: "#/components/schemas/PageMeta"
+        - type: object
+          required: [items]
+          properties:
+            items:
+              type: array
+              maxItems: 100
+              items: {$ref: "#/components/schemas/DatasetSummary"}
+    ObservationPage:
+      allOf:
+        - $ref: "#/components/schemas/PageMeta"
+        - type: object
+          required: [items]
+          properties:
+            items:
+              type: array
+              maxItems: 100
+              items: {$ref: "#/components/schemas/Observation"}
+    ValuePage:
+      allOf:
+        - $ref: "#/components/schemas/PageMeta"
+        - type: object
+          required: [items]
+          properties:
+            items:
+              type: array
+              maxItems: 100
+              items: {type: string}
+    RunPage:
+      allOf:
+        - $ref: "#/components/schemas/PageMeta"
+        - type: object
+          required: [items]
+          properties:
+            items:
+              type: array
+              maxItems: 100
+              items: {$ref: "#/components/schemas/Run"}
+    Permission:
+      type: string
+      enum: [allowed, denied, undetermined]
+    ReviewStatus:
+      type: string
+      description: Restricted datasets are never returned
+      enum: [pending, verified]
+    License:
+      type: object
+      required: [name, url, note]
+      properties:
+        name: {type: [string, "null"], description: Verbatim; null means unknown}
+        url: {type: [string, "null"]}
+        note: {type: [string, "null"]}
+    Attribution:
+      type: object
+      required: [text, data_sources, data_updated_at, citation_requirement]
+      properties:
+        text: {type: [string, "null"]}
+        data_sources: {type: array, items: {type: string}}
+        data_updated_at: {type: [string, "null"], format: date-time}
+        citation_requirement: {type: [string, "null"]}
+    DatasetSummary:
+      type: object
+      required: [id, source_id, external_id, title, description, provider, platform, publisher, categories, topics, review_status, licenses, attribution, last_seen_at]
+      properties:
+        id: {type: string, format: uuid}
+        source_id: {type: string}
+        external_id: {type: string}
+        title: {type: string}
+        description: {type: [string, "null"]}
+        provider: {type: string}
+        platform: {type: string}
+        publisher: {type: [string, "null"]}
+        categories: {type: array, items: {type: string}}
+        topics: {type: array, items: {type: string}}
+        review_status: {$ref: "#/components/schemas/ReviewStatus"}
+        licenses: {type: array, items: {$ref: "#/components/schemas/License"}}
+        attribution: {$ref: "#/components/schemas/Attribution"}
+        last_seen_at: {type: string, format: date-time}
+    SourceInfo:
+      type: object
+      required: [official_url, verified_at, access_conditions, redistribution_conditions]
+      properties:
+        official_url: {type: string, format: uri}
+        verified_at: {type: string, format: date}
+        access_conditions: {type: [string, "null"]}
+        redistribution_conditions: {type: [string, "null"]}
+    Locator:
+      type: object
+      required: [kind, url, source_field, status]
+      properties:
+        kind: {type: string}
+        url: {type: string, description: Verbatim; link it only when it is a valid HTTPS URL}
+        source_field: {type: string}
+        status: {type: string, enum: [unverified, invalid]}
+    DatasetDetail:
+      allOf:
+        - $ref: "#/components/schemas/DatasetSummary"
+        - type: object
+          required: [tags, official_url, created_at, published_at, metadata_updated_at, data_updated_at, updated_at, access_conditions, redistribution_conditions, extraction_permission, redistribution_permission, source, locators, first_seen_at]
+          properties:
+            tags: {type: array, items: {type: string}}
+            official_url: {type: [string, "null"]}
+            created_at: {type: [string, "null"], format: date-time}
+            published_at: {type: [string, "null"], format: date-time}
+            metadata_updated_at: {type: [string, "null"], format: date-time}
+            data_updated_at: {type: [string, "null"], format: date-time}
+            updated_at: {type: [string, "null"], format: date-time}
+            access_conditions: {type: [string, "null"]}
+            redistribution_conditions: {type: [string, "null"]}
+            extraction_permission: {$ref: "#/components/schemas/Permission"}
+            redistribution_permission: {$ref: "#/components/schemas/Permission"}
+            source: {$ref: "#/components/schemas/SourceInfo"}
+            locators: {type: array, items: {$ref: "#/components/schemas/Locator"}}
+            first_seen_at: {type: string, format: date-time}
+    Observation:
+      type: object
+      required: [run_id, query_term, source_url, observed_at]
+      properties:
+        run_id: {type: string, format: uuid}
+        query_term: {type: [string, "null"]}
+        source_url: {type: string}
+        observed_at: {type: string, format: date-time}
+    RunStatus:
+      type: string
+      enum: [running, succeeded, partial, failed]
+    Run:
+      type: object
+      required: [id, source_id, status, truncated, started_at, finished_at, pages_processed, received, created, updated, unchanged, rejected, failures]
+      properties:
+        id: {type: string, format: uuid}
+        source_id: {type: string}
+        status: {$ref: "#/components/schemas/RunStatus"}
+        truncated: {type: boolean, description: True if any query was truncated}
+        started_at: {type: string, format: date-time}
+        finished_at: {type: [string, "null"], format: date-time}
+        pages_processed: {type: integer}
+        received: {type: integer}
+        created: {type: integer}
+        updated: {type: integer}
+        unchanged: {type: integer}
+        rejected: {type: integer}
+        failures: {type: integer}
+    RunQuery:
+      type: object
+      required: [query_index, term, pages_processed, total_declared, truncated]
+      properties:
+        query_index: {type: integer}
+        term: {type: [string, "null"]}
+        pages_processed: {type: integer}
+        total_declared: {type: [integer, "null"]}
+        truncated: {type: boolean}
+    RunError:
+      type: object
+      required: [code, message, query_index, http_status, attempts]
+      properties:
+        code: {type: string}
+        message: {type: string}
+        query_index: {type: [integer, "null"]}
+        http_status: {type: [integer, "null"]}
+        attempts: {type: [integer, "null"]}
+    RunDetail:
+      allOf:
+        - $ref: "#/components/schemas/Run"
+        - type: object
+          required: [queries, errors]
+          properties:
+            queries: {type: array, items: {$ref: "#/components/schemas/RunQuery"}}
+            errors: {type: array, items: {$ref: "#/components/schemas/RunError"}}

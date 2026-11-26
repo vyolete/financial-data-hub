@@ -8,12 +8,92 @@ Pruebas en vivo ejecutadas el 2026-11-26 (UTC). Los detalles y la evidencia vive
 | World Bank Data360 | Accesible; elegida para FR-06 ([ADR-0008](../../docs/adr/0008-world-bank-data360.md)) | [informe](../../research/sources/international/world-bank/README.md) |
 | World Bank Data Catalog API | No utilizable en las pruebas: HTTP 429 persistente | [informe](../../research/sources/international/world-bank/README.md) |
 | World Bank Indicators API | Accesible; candidata para extracción en FDH-002 y FDH-003. Su código de indicador no es único entre fuentes | [informe](../../research/sources/international/world-bank/README.md) |
-| Contrato común de descubrimiento | Propuesta sin aprobar, con boceto de relación con la extracción | [propuesta](../../research/experiments/discovery-probe/discovery-contract-proposal.md) |
+| Contrato común de descubrimiento | La propuesta se concreta en el [contrato del plan](contracts/adapter-contract.md) | [propuesta](../../research/experiments/discovery-probe/discovery-contract-proposal.md) |
 | Permisos de publicación | `allowed` declarado para ambas fuentes y recogido en la especificación aprobada | [inventario](../../research/sources/inventory.md) |
 
-## Pendiente para el plan
-- Los cuatro puntos abiertos de la [especificación](spec.md).
-- Cómo imponer el plazo de 10 segundos a cada intento: una solicitud de 100 registros en Socrata tardó 11,7 s.
+## Pendiente
 - Revisión humana de las licencias externas y ausentes de Data360 antes de extraer datos.
-- Leer la referencia oficial de Socrata Discovery API.
+- Leer la referencia oficial de Socrata Discovery API (tarea previa al adaptador).
+- Verificar si existe un patrón documentado de URL de página de dataset en Data360.
 - **LAB-01**: un informe anterior registró cero datasets en Socrata. Las pruebas actuales obtuvieron resultados; la causa del informe anterior sigue sin determinar.
+
+## Campos de Data360 para URL y publicador
+Comprobación del 2026-11-26 (UTC) con el repositorio en `6452d44`: `python3 -I research/experiments/discovery-probe/data360_links.py`. [Evidencia](../../research/sources/international/world-bank/evidence/links-2026-11-26T013930Z.json), 2 solicitudes, 174 datasets.
+
+- Cada dataset declara exactamente un enlace en `links[]`, sin tipo, que apunta a sitios del proveedor de los datos (FMI, FAO, OCDE, World Bank y otros). Ninguno contiene el identificador del dataset.
+- `api_explorer_link` apunta en los 174 casos a `http://datacatalog.worldbank.org`, sin identificador y sin HTTPS.
+- `api_link`, `json_link` y `csv_link` son HTTPS.
+- `sources[].organization` tiene 175 valores; `sources[].uri`, 171. `authoring_entity` no tiene valores.
+
+## Decisiones del plan (Fase 0)
+
+Versiones consultadas en PyPI, npm, nodejs.org, Docker Hub y GitHub el 2026-11-26 (UTC). Los archivos de bloqueo fijan las versiones exactas.
+
+### D01. Entorno de ejecución
+- **Decisión**: Python 3.13, uv, imagen `python:3.13-slim`; Node 24 LTS; PostgreSQL 18.
+- **Razón**: versiones con soporte vigente y compatibles con las dependencias elegidas.
+- **Alternativas**: Python 3.14 (algunas dependencias aún no lo declaran); Node 26 LTS (más reciente; se adoptará cuando las herramientas lo prueben).
+
+### D02. Backend
+- **Decisión**: FastAPI 0.165, Pydantic 2.14, pydantic-settings, Uvicorn, SQLAlchemy 2.1 asíncrono, Alembic, asyncpg. CLI con `argparse` y configuración TOML con `tomllib`.
+- **Razón**: un solo modelo asíncrono para red y base de datos; la biblioteca estándar cubre CLI y configuración.
+- **Alternativas**: psycopg 3 (licencia LGPL-3.0; asyncpg es Apache-2.0 y evita revisar compatibilidad); Typer (dependencia innecesaria).
+
+### D03. Cliente HTTP y plazo por intento
+- **Decisión**: httpx asíncrono; cada intento completo, incluida la lectura del cuerpo, dentro de `asyncio.timeout`.
+- **Razón**: los tiempos de espera de los clientes aplican por operación de red; una prueba tardó 11,7 s con un límite de 10 s por operación. `MockTransport` permite pruebas sin red.
+- **Alternativas**: aiohttp (mantenimiento más reciente); se podrá sustituir porque solo el ejecutor lo usa.
+- **Riesgo**: la última versión de httpx (0.28.1) es de diciembre de 2024.
+
+### D04. Configuración y administración de permisos
+- **Decisión**: la fuente (permiso de metadatos, atribución, consultas y límites) se declara en `config/sources.toml`; el estado de revisión y los permisos de cada dataset se cambian con un comando local y quedan en una bitácora.
+- **Razón**: las fuentes son pocas y revisables en Git; los datasets se descubren dinámicamente.
+- **Alternativas**: todo en archivo (inmanejable para cientos de datasets); todo en comandos (se pierde la revisión de la configuración).
+
+### D05. Paginación de Socrata
+- **Decisión**: cursor `scroll_id`, sin `order`.
+- **Razón**: recorrió 145 resultados distintos; con `offset` se observó un registro repetido y hay un tope de 10000.
+- **Alternativas**: `offset`.
+- **Riesgo**: comportamiento observado y mencionado en un mensaje de error, con la referencia oficial sin leer. Una tarea la revisa antes de implementar.
+
+### D06. URL oficial, publicador y fuentes de datos en Data360
+- **Decisión**: `official_url` y `publisher` quedan desconocidos. Los enlaces se guardan como localizadores y `sources[].organization` como fuentes de los datos para la atribución.
+- **Razón**: ningún campo identifica la página del dataset ni su publicador; construir una URL o elegir un publicador sería inferir.
+- **Alternativas**: usar `links[]` como URL oficial (apunta a terceros); construir la URL con el identificador (no verificada).
+
+### D07. Categorías y filtro
+- **Decisión**: arreglos textuales de categorías y temas, más un arreglo de claves en minúsculas (`casefold`) para filtrar; el filtro compara la clave completa.
+- **Razón**: conserva los originales y une variantes de mayúsculas observadas.
+
+### D08. Búsqueda por texto
+- **Decisión**: `ILIKE` sobre título y descripción con la extensión `unaccent`.
+- **Razón**: suficiente para el volumen del MVP e insensible a tildes.
+- **Alternativas**: búsqueda de texto completo o motor externo (innecesarios).
+
+### D09. Portal y Lovable
+- **Decisión**: SPA con React 19, Vite 8, TypeScript 5.9, React Router y TanStack Query, servida como archivos estáticos por nginx, con proxy `/api` al backend. Cliente generado desde OpenAPI.
+- **Razón**: cumple «sin backend alternativo» y no añade un proceso de servidor.
+- **Lovable**: según su [FAQ](https://docs.lovable.dev/introduction/faq), los proyectos nuevos desde mayo de 2026 usan TanStack Start con renderizado en servidor, sin elegir otro stack, y Git no importa repositorios. Su [integración con GitHub](https://docs.lovable.dev/integrations/github) crea un repositorio nuevo y pide escritura en contenido, flujos de trabajo y administración. Por tanto **no se conecta a este repositorio**: se usa para prototipar aparte y el código se incorpora mediante commits revisados. Los componentes de presentación no dependen del enrutador ni de la red para poder trasladarse.
+- **Alternativas**: TanStack Start en este repositorio (introduce un servidor Node y funciones de servidor, contrarias al principio III sin un ADR).
+- **TypeScript**: 7.x es la última, pero `openapi-typescript` exige 5.x y `typescript-eslint` admite menos de 6.1.
+
+### D10. Entorno local
+- **Decisión**: Docker Compose con `db`, `migrate` (misma imagen del backend, termina), `api` y `web`; puertos publicados solo en `127.0.0.1`. El descubrimiento se ejecuta con `docker compose run --rm api fdh discover`.
+- **Razón**: un único backend desplegable y ningún servicio de pago.
+
+### D11. Pruebas
+- **Decisión**: pytest, pytest-asyncio y pytest-socket (solo equipo local); integración contra PostgreSQL real; contrato con datos sintéticos; Vitest y Testing Library en el portal. Cobertura informada, con mínimo del 85 % en dominio, descubrimiento y conectores.
+- **Alternativas**: SQLite (prohibido por el principio VIII); Testcontainers (dependencia innecesaria con Compose).
+
+### D12. Integración continua
+- **Decisión**: flujos con permisos de solo lectura y acciones fijadas por SHA, en cada push y PR: estilo, tipos, pruebas sin red, migraciones, deriva de OpenAPI, portal, construcción de imágenes, prueba de humo con datos sintéticos, búsqueda de secretos con gitleaks y auditoría de dependencias informativa.
+- **Razón**: controles proporcionales que no dependen de las API externas.
+
+### D13. Observabilidad
+- **Decisión**: logs JSON con la biblioteca estándar e identificador de ejecución; historial en base de datos; `/health`.
+- **Alternativas**: métricas y trazas con herramientas especializadas (FDH-008).
+
+### D14. Trabajo en paralelo sin ramas nuevas
+- **Decisión**: `git worktree add --detach` por línea de trabajo y una sola persona o sesión integradora que aplica los commits con `cherry-pick` en la rama de desarrollo.
+- **Razón**: aísla el trabajo (principio IX) sin crear ramas.
+- **Alternativas**: escritura simultánea en la misma carpeta (causó un incidente); ramas por tarea (no autorizadas).

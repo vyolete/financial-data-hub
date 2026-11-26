@@ -1,0 +1,126 @@
+{
+ "target": "data360-links",
+ "started_utc": "2026-11-26T01:39:30Z",
+ "finished_utc": "2026-11-26T01:39:36Z",
+ "repository_commit": "6452d44ce996e97f6cc7bfbb68ef78ad3834bd04",
+ "script_sha256": "f524f4c9ba39235b1fd5a0838e6d8fea9161cb3b792f11a0de2ea5fb7d75d890",
+ "round2_sha256": "1d81b8d73f11b23e6570882999679cf19ceef192594d09ff33b9f544b859f47a",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "checks": {
+  "declared_total": 174,
+  "complete": true,
+  "datasets": 174,
+  "links_per_dataset": {
+   "1": 174
+  },
+  "link_types": {
+   "None": 174
+  },
+  "link_shapes": {
+   "None | https://www.worldbank.org (without dataset id)": 18,
+   "None | https://data.imf.org (without dataset id)": 12,
+   "None | https://www.fao.org (without dataset id)": 11,
+   "None | https://www.imf.org (without dataset id)": 5,
+   "None | https://data-explorer.oecd.org (without dataset id)": 5,
+   "None | https://datacatalog.worldbank.org (without dataset id)": 5,
+   "None | https://climatedata.imf.org (without dataset id)": 3,
+   "None | https://www.weforum.org (without dataset id)": 3,
+   "None | https://databank.worldbank.org (without dataset id)": 3,
+   "None | https://unctadstat.unctad.org (without dataset id)": 3,
+   "None | https://pip.worldbank.org (without dataset id)": 2,
+   "None | https://freedomhouse.org (without dataset id)": 2,
+   "None | https://datatopics.worldbank.org (without dataset id)": 2,
+   "None | https://www.gemconsortium.org (without dataset id)": 2,
+   "None | https://www.wri.org (without dataset id)": 2,
+   "None | https://unstats.un.org (without dataset id)": 2,
+   "None | https://www.thinkhazard.org (without dataset id)": 1,
+   "None | https://esgdata.worldbank.org (without dataset id)": 1,
+   "None | https://documents.worldbank.org (without dataset id)": 1,
+   "None | https://edgar.jrc.ec.europa.eu (without dataset id)": 1,
+   "None | https://internationalbudget.org (without dataset id)": 1,
+   "None | https://wits.worldbank.org (without dataset id)": 1,
+   "None | https://ilostat.ilo.org (without dataset id)": 1,
+   "None | https://id4d.worldbank.org (without dataset id)": 1,
+   "None | https://humancapital.worldbank.org (without dataset id)": 1,
+   "None | https://app.gen5.digital (without dataset id)": 1,
+   "None | http://www.systemicpeace.org (without dataset id)": 1,
+   "None | https://www.infralatam.info (without dataset id)": 1,
+   "None | https://www.peeringdb.com (without dataset id)": 1,
+   "None | http://www.knomad.org (without dataset id)": 1,
+   "None | https://worldjusticeproject.org (without dataset id)": 1,
+   "None | https://www.sgi-network.org (without dataset id)": 1,
+   "None | https://databrowser.uis.unesco.org (without dataset id)": 1,
+   "None | https://www.itu.int (without dataset id)": 1,
+   "None | https://scorecard.worldbank.org (without dataset id)": 1,
+   "None | https://genderdata.worldbank.org (without dataset id)": 1,
+   "None | https://www.eiu.com (without dataset id)": 1,
+   "None | https://blogs.worldbank.org (without dataset id)": 1,
+   "None | https://sendaimonitor.undrr.org (without dataset id)": 1,
+   "None | https://gain.nd.edu (without dataset id)": 1
+  },
+  "url_fields": {
+   "api_explorer_link": {
+    "http://datacatalog.worldbank.org (without dataset id)": 174
+   },
+   "api_link": {
+    "https://data360api.worldbank.org (without dataset id)": 174
+   },
+   "json_link": {
+    "https://data360files.worldbank.org (without dataset id)": 174
+   },
+   "csv_link": {
+    "https://data360files.worldbank.org (without dataset id)": 174
+   }
+  },
+  "entity_filled_keys": {
+   "sources.organization": 175,
+   "sources.uri": 171,
+   "sources.name": 20
+  }
+ },
+ "requests": [
+  {
+   "id": "K1",
+   "purpose": "all datasets, page 1",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:39:30Z",
+   "status": 200,
+   "elapsed_ms": 2577,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "26edabe634122fdd16d965c54f08b87342e8a531bef59d964653d3665da83edb",
+   "json": true
+  },
+  {
+   "id": "K2",
+   "purpose": "all datasets, page 2",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 100
+   },
+   "utc": "2026-11-26T01:39:34Z",
+   "status": 200,
+   "elapsed_ms": 1126,
+   "bytes": 811467,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "789386ac75bb958cf27ba8faa1b673cea7329d45f0916e2913bfaa48ca38ff91",
+   "json": true
+  }
+ ]
+}
