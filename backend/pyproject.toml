@@ -1,0 +1,79 @@
+[project]
+name = "fdh"
+version = "0.1.0"
+description = "Financial Data Hub backend: discovery and catalog"
+requires-python = ">=3.13,<3.14"
+license = "Apache-2.0"
+dependencies = [
+    "fastapi>=0.165,<0.166",
+    "pydantic>=2.14,<3",
+    "pydantic-settings>=2.16,<3",
+    "uvicorn>=0.54,<0.55",
+    "sqlalchemy[asyncio]>=2.1,<2.2",
+    "alembic>=1.20,<2",
+    "asyncpg>=0.32,<0.33",
+    "httpx>=0.28,<0.29",
+]
+
+[project.scripts]
+fdh = "fdh.cli.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2,<10",
+    "pytest-asyncio>=1.5,<2",
+    "pytest-socket>=0.8,<0.9",
+    "pytest-cov>=7.1,<8",
+    "ruff>=0.17,<0.18",
+    "mypy>=2.4,<3",
+    "openapi-spec-validator>=0.9,<0.10",
+    "pyyaml>=6,<7",
+]
+
+[build-system]
+requires = ["uv_build>=0.13,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "fdh"
+module-root = "src"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = ["live: calls real external APIs; excluded by default"]
+# Only loopback connections are allowed; external network access fails the test.
+addopts = "-m 'not live' --allow-hosts=127.0.0.1,::1,localhost --strict-markers --strict-config"
+# pytest-socket warns before raising; let its own exception reach the test.
+filterwarnings = ["error", "ignore:A test tried to use socket.socket:UserWarning"]
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "ASYNC", "S", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests assert, use fake credentials and run fixed local commands.
+"tests/**" = ["S101", "S105", "S106", "S603", "S607"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["src", "tests", "migrations"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["openapi_spec_validator.*", "asyncpg.*", "pytest_socket", "yaml"]
+ignore_missing_imports = true

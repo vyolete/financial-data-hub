@@ -1,0 +1,39 @@
+# Discovery sources. Versioned: never put secrets here.
+# Contract: specs/001-source-discovery/contracts/sources-config.md
+
+[defaults]
+page_size = 100
+max_pages = 5 # per query
+attempt_timeout_s = 10.0
+max_retries = 3 # additional to the first attempt
+max_retry_after_s = 60
+
+[[sources]]
+source_id = "co-datos-gov"
+provider = "MinTIC"
+platform = "socrata"
+base_url = "https://api.us.socrata.com/api/catalog/v1"
+allowed_hosts = ["api.us.socrata.com"]
+official_url = "https://www.datos.gov.co"
+verified_at = 2026-11-26
+attribution = "Fuente: Portal de Datos Abiertos www.datos.gov.co"
+access_conditions = "Consulta pública sin autenticación observada en las pruebas"
+redistribution_conditions = "Los términos del portal permiten redistribuir citando la fuente; la licencia se declara por dataset"
+# license_name and license_url omitted: there is no single licence, each dataset declares its own.
+terms_url = "https://herramientas.datos.gov.co/terminos"
+terms_checked_on = 2026-11-26
+
+[sources.options]
+domains = "www.datos.gov.co"
+
+[sources.metadata_publication]
+value = "allowed"
+declared_by = "maintainer"
+declared_on = 2026-11-25
+evidence = "https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703"
+
+[[sources.queries]]
+term = "presupuesto"
+
+[[sources.queries]]
+term = "finanzas"
