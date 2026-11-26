@@ -97,3 +97,15 @@ Versiones consultadas en PyPI, npm, nodejs.org, Docker Hub y GitHub el 2026-11-2
 - **Decisión**: `git worktree add --detach` por línea de trabajo y una sola persona o sesión integradora que aplica los commits con `cherry-pick` en la rama de desarrollo.
 - **Razón**: aísla el trabajo (principio IX) sin crear ramas.
 - **Alternativas**: escritura simultánea en la misma carpeta (causó un incidente); ramas por tarea (no autorizadas).
+
+### D15. Compatibilidad comprobada
+- **Fecha**: 2026-11-26 (UTC), en un proyecto temporal fuera del repositorio.
+- **Comprobado**: las dependencias de D02, D03 y D11 resuelven e importan en Python 3.13.18. Contra `postgres:18` (18.7, `postgres@sha256:c699303802144847d238196173655dbbecf7a96aeca1565f2b02eb671a1f0b6b`), SQLAlchemy 2.1.9 con asyncpg 0.32.0 crea la extensión `unaccent`, usa bloqueos consultivos y rechaza escrituras en transacciones de solo lectura. La imagen declara el volumen `/var/lib/postgresql` y guarda datos en `18/docker`.
+- **Licencias**: MIT, BSD, Apache-2.0 y PSF, salvo `certifi` (MPL-2.0, ejecución) y `pathspec` (MPL-2.0, solo desarrollo), usadas sin modificar. FastAPI 0.165 incorpora `opentelemetry-api` (Apache-2.0).
+- **Portal**: Vitest 5 no declara soporte para Node 23; las pruebas y la compilación usan Node 24.
+- **Decisión**: no se cambia ninguna versión.
+
+### D16. Validación de contratos y controles de la cadena de suministro
+- **Decisión**: `openapi-spec-validator` y PyYAML como dependencias de desarrollo; gitleaks, `pip-audit` y `npm audit` solo en la integración continua.
+- **Razón**: validar formalmente el contrato OpenAPI y compararlo con la API en las pruebas; detectar secretos y dependencias vulnerables. Licencias Apache-2.0 y MIT en las dependencias de Python.
+- **Alternativas**: comprobar solo la sintaxis (no detecta un documento inválido).

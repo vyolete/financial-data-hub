@@ -35,11 +35,11 @@ Esperado: todo en verde con conexiones externas bloqueadas (AC-28, AC-34).
 | 5 | Filtrar por texto, proveedor y categoría; pedir `page_size=101` | Filtros correctos; 422 | AC-12, AC-13 |
 | 6 | Revisar la pantalla de ejecuciones | Estados, conteos y truncamiento visibles | AC-30 |
 | 7 | `fdh dataset review ... --status restricted` | El dataset desaparece de búsqueda y detalle (404) | AC-27 |
-| 8 | Cambiar `metadata_publication` de una fuente a `undetermined` en una copia de la configuración y ejecutar | Sus datasets dejan de mostrarse | AC-27 |
+| 8 | Cambiar `metadata_publication` de una fuente a `undetermined` y ejecutar `fdh sources sync`, sin descubrir | Sus datasets dejan de mostrarse, aun sin red externa | AC-27 |
 | 9 | Detener `api` y recargar el portal | Estado fallido, distinto de vacío | AC-16 |
 | 10 | `docker compose config` | Puertos publicados solo en `127.0.0.1` | AC-25 |
 
-Tras el escenario 8, restaurar la configuración y volver a ejecutar.
+Tras el escenario 8, restaurar la configuración y volver a sincronizar.
 
 ## Evidencia en vivo
 

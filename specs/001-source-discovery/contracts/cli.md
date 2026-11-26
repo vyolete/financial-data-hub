@@ -5,6 +5,7 @@ Comando `fdh`, ejecutable local y dentro de la imagen del backend. Requisitos: F
 | Comando | Efecto |
 |---|---|
 | `fdh config check [--config PATH]` | Valida la configuración sin red ni base de datos |
+| `fdh sources sync [--config PATH]` | Aplica fuentes y permisos de publicación usando solo la base de datos; sin solicitudes externas |
 | `fdh discover (--source ID \| --all) [--config PATH]` | Ejecuta el descubrimiento |
 | `fdh runs list [--source ID] [--limit N]` | Muestra ejecuciones |
 | `fdh dataset show --source ID --external-id ID` | Muestra un dataset, también si está oculto en la API |
@@ -15,6 +16,7 @@ Comando `fdh`, ejecutable local y dentro de la imagen del backend. Requisitos: F
 ## Reglas
 - `--evidence`, `--by` y `--on` son obligatorios y no admiten valores vacíos.
 - Cada cambio escribe en la bitácora de decisiones en la misma transacción.
+- Para revocar la publicación de una fuente: cambiar `metadata_publication` y ejecutar `fdh sources sync`. Para ocultar un dataset: `fdh dataset review --status restricted`. Ninguno depende de un descubrimiento ni de servicios externos.
 - `--limit` va de 1 a 100; predeterminado 20.
 - La salida va a `stdout`; los logs JSON, a `stderr`. Ninguna contiene secretos.
 

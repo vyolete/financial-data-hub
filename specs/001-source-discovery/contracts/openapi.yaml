@@ -285,12 +285,16 @@ components:
         last_seen_at: {type: string, format: date-time}
     SourceInfo:
       type: object
-      required: [official_url, verified_at, access_conditions, redistribution_conditions]
+      required: [official_url, verified_at, access_conditions, redistribution_conditions, license_name, license_url, terms_url, terms_checked_on]
       properties:
         official_url: {type: string, format: uri}
         verified_at: {type: string, format: date}
         access_conditions: {type: [string, "null"]}
         redistribution_conditions: {type: [string, "null"]}
+        license_name: {type: [string, "null"], description: Source level; null means unknown}
+        license_url: {type: [string, "null"]}
+        terms_url: {type: [string, "null"]}
+        terms_checked_on: {type: [string, "null"], format: date}
     Locator:
       type: object
       required: [kind, url, source_field, status]
@@ -303,7 +307,7 @@ components:
       allOf:
         - $ref: "#/components/schemas/DatasetSummary"
         - type: object
-          required: [tags, official_url, created_at, published_at, metadata_updated_at, data_updated_at, updated_at, access_conditions, redistribution_conditions, extraction_permission, redistribution_permission, source, locators, first_seen_at]
+          required: [tags, official_url, created_at, published_at, metadata_updated_at, data_updated_at, updated_at, access_conditions, redistribution_conditions, extraction_permission, redistribution_permission, source, locators, first_seen_at, provenance]
           properties:
             tags: {type: array, items: {type: string}}
             official_url: {type: [string, "null"]}
@@ -319,6 +323,17 @@ components:
             source: {$ref: "#/components/schemas/SourceInfo"}
             locators: {type: array, items: {$ref: "#/components/schemas/Locator"}}
             first_seen_at: {type: string, format: date-time}
+            provenance: {$ref: "#/components/schemas/RecentProvenance"}
+    RecentProvenance:
+      type: object
+      description: Newest observations; the full history is paginated at the provenance resource
+      required: [total, items]
+      properties:
+        total: {type: integer, minimum: 0}
+        items:
+          type: array
+          maxItems: 20
+          items: {$ref: "#/components/schemas/Observation"}
     Observation:
       type: object
       required: [run_id, query_term, source_url, observed_at]

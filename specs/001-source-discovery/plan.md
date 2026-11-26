@@ -14,7 +14,8 @@ Detalle: [investigación y decisiones](research.md), [modelo de datos](data-mode
 |---|---|
 | Lenguaje | Python 3.13 (backend), TypeScript 5.9 (portal) |
 | Dependencias de ejecución | FastAPI, Pydantic, pydantic-settings, Uvicorn, SQLAlchemy asíncrono, asyncpg, Alembic, httpx; React, React Router, TanStack Query, openapi-fetch |
-| Dependencias de desarrollo | pytest, pytest-asyncio, pytest-socket, pytest-cov, ruff, mypy; Vite, Vitest, Testing Library, jsdom, ESLint, openapi-typescript |
+| Dependencias de desarrollo | pytest, pytest-asyncio, pytest-socket, pytest-cov, ruff, mypy, openapi-spec-validator, PyYAML; Vite, Vitest, Testing Library, jsdom, ESLint, openapi-typescript |
+| Herramientas de CI | gitleaks, pip-audit, npm audit |
 | Almacenamiento | PostgreSQL 18 |
 | Plataforma | Contenedores Linux con Docker Compose, solo en el equipo local |
 | Tipo de proyecto | Aplicación web: backend con API y CLI, más SPA |
@@ -22,7 +23,7 @@ Detalle: [investigación y decisiones](research.md), [modelo de datos](data-mode
 | Restricciones | Límites de la especificación; sin autenticación, solo local; sin extracción de datos |
 | Escala | Dos fuentes; hasta 500 resultados por consulta; miles de datasets |
 
-Cada dependencia se justifica en [research.md](research.md) (D02, D03, D09, D11). Las versiones exactas quedan en `backend/uv.lock` y `frontend/package-lock.json`. Antes de fijarlas se comprueba que su licencia sea compatible con Apache-2.0.
+Cada dependencia se justifica en [research.md](research.md) (D02, D03, D09, D11, D16). Las versiones exactas quedan en `backend/uv.lock` y `frontend/package-lock.json`. Antes de fijarlas se comprueba que su licencia sea compatible con Apache-2.0.
 
 ## Comprobación contra la constitución
 
@@ -34,7 +35,7 @@ Constitución 1.1.1. Evaluada antes de la Fase 0 y repetida tras el diseño.
 | II. Evidence First | Ambas API probadas en vivo y condiciones consultadas; una tarea revisa la referencia oficial de Socrata antes de su adaptador | Cumple | Cumple |
 | III. Modularidad | Un backend; planos separados; adaptadores sin red ni persistencia; portal solo contra la API | Cumple | Cumple |
 | IV. Integridad | Unicidad `(source_id, external_id)`; procedencia por observación; migraciones; desconocidos explícitos. Bronze, Silver y Gold no aplican porque no se extraen datos | Cumple | Cumple |
-| V. Seguridad | Secretos por entorno; hosts permitidos; contenido externo tratado como dato; permisos por defecto `undetermined` | Cumple | Cumple |
+| V. Seguridad | Secretos por entorno; hosts permitidos; contenido externo tratado como dato; URL, verificación, licencia, acceso y redistribución por fuente; permisos por defecto `undetermined` y revocables sin red | Cumple | Cumple |
 | VI. Eficiencia | Límites numéricos fijados; API paginada, también las colecciones auxiliares | Cumple | Cumple |
 | VII. Observabilidad | Registro persistente por ejecución, logs con identificador y estados visibles | Cumple | Cumple |
 | VIII. Pruebas | pytest, PostgreSQL real, sin red, bloqueos versionados y CI desde la primera entrega | Cumple | Cumple |
@@ -94,13 +95,15 @@ compose.yaml
 .github/workflows/ci.yml
 ```
 
-**Decisión de estructura**: `backend/` y `frontend/` separados; API y CLI comparten paquete e imagen.
+**Decisión de estructura**: `backend/` y `frontend/` separados; API y CLI comparten paquete e imagen. `controlplane` define las interfaces y las reglas de fuentes, catálogo, ejecuciones y revisión; `persistence` las implementa.
 
 ### Reglas de dependencia
 
 | Módulo | Puede importar |
 |---|---|
 | `domain` | Biblioteca estándar |
+| `settings` | `domain` y Pydantic |
+| `observability` | Biblioteca estándar |
 | `dataplane.connectors` | `domain` y su contrato. Nunca `httpx`, `sqlalchemy`, `asyncpg`, sockets ni persistencia |
 | `controlplane` | `domain`; define las interfaces de repositorio |
 | `dataplane.discovery` | `domain`, el contrato de conectores y las interfaces de `controlplane` |
@@ -126,7 +129,7 @@ El adaptador es puro: `validate`, `build_request`, `classify` y `parse`, y decla
 La correspondencia de campos está en [adapter-contract.md](contracts/adapter-contract.md).
 
 ### Motor de descubrimiento
-1. Cargar y validar `sources.toml`; sincronizar las fuentes. Una configuración inválida o una capacidad no soportada termina sin solicitudes (AC-33).
+1. Cargar y validar `sources.toml`; sincronizar las fuentes con la misma operación que `fdh sources sync`, que funciona sin red. Una configuración inválida o una capacidad no soportada termina sin solicitudes (AC-33).
 2. Tomar un bloqueo consultivo de PostgreSQL por fuente. Si ya está tomado, el comando termina sin crear ejecución. Al obtenerlo, cerrar las ejecuciones `running` abandonadas con un error `interrupted`.
 3. Crear la ejecución `running` y confirmarla.
 4. Por cada consulta, hasta `max_pages`: construir la solicitud, comprobar el host, ejecutar con reintentos, clasificar y traducir.
@@ -152,7 +155,7 @@ El reloj y la espera se inyectan para probar sin demoras.
 Alembic con una migración inicial y `unaccent`. Detalle en [data-model.md](data-model.md). El servicio `migrate` aplica las migraciones antes de iniciar la API. La CI comprueba que los modelos y las migraciones coinciden.
 
 ### API
-Solo lectura, versionada en `/api/v1`, según [openapi.yaml](contracts/openapi.yaml). Solo devuelve datasets de fuentes `allowed` que no sean `restricted`; los demás responden 404. Sus conexiones se abren en modo de transacción de solo lectura. El contrato es la referencia: la CI compara el esquema generado con él.
+Solo lectura, versionada en `/api/v1`, según [openapi.yaml](contracts/openapi.yaml). El detalle incluye las 20 observaciones más recientes y su total; el historial completo está paginado. Solo devuelve datasets de fuentes `allowed` que no sean `restricted`; los demás responden 404. Sus conexiones se abren en modo de transacción de solo lectura. El contrato es la referencia: la CI compara el esquema generado con él.
 
 ### Portal
 
@@ -173,6 +176,7 @@ El contenido externo se muestra como texto. Solo se enlazan URL HTTPS, con `rel=
 | Salud | `GET /health` comprueba la API y la base de datos |
 | Exposición | Puertos solo en `127.0.0.1`; validación de la cabecera `Host`; sin CORS (mismo origen) |
 | Base de datos | Contraseña por `.env`; sin puerto público |
+| Configuración | `config/` montada en solo lectura únicamente en los servicios del backend; nunca en la imagen ni en el portal |
 | Contenedores | Usuario sin privilegios; imágenes fijadas por resumen |
 | Navegador | Cabeceras CSP, `X-Content-Type-Options` y `Referrer-Policy` en nginx |
 | Entradas | Validación de parámetros; consultas parametrizadas; comodines de búsqueda escapados |
@@ -187,7 +191,7 @@ Un flujo con `permissions: contents: read`, disparado por `push` en cualquier ra
 | `integration` | Migraciones, `alembic check`, pruebas de integración y API contra PostgreSQL, deriva de OpenAPI |
 | `frontend` | `npm ci`, ESLint, tipos, pruebas, tipos generados al día, compilación |
 | `compose` | Configuración, puertos solo locales, construcción, arranque y humo con datos sintéticos |
-| `security` | gitleaks (bloquea) y auditoría de dependencias (informa) |
+| `security` | gitleaks (bloquea, desde E0) y auditoría de dependencias (informa) |
 
 Ningún trabajo llama a las API externas.
 
@@ -238,7 +242,7 @@ Reglas: una sola sesión integra y publica; cada espacio toca archivos distintos
 | Lovable usa otro stack en proyectos nuevos | Componentes sin dependencia de red ni enrutador; incorporación revisada |
 | httpx sin versiones recientes | Uso aislado en el ejecutor |
 | Respuestas de Socrata cercanas a 10 s | Plazo y tamaño de página configurables; medir en la evidencia en vivo |
-| Directorio de datos distinto en la imagen de PostgreSQL 18 | Fijar el volumen según su documentación y probar el reinicio |
+| Directorio de datos distinto en la imagen de PostgreSQL 18 | Volumen en `/var/lib/postgresql` (comprobado, D15) y prueba de reinicio |
 
 ## Decisiones que requieren registro
 

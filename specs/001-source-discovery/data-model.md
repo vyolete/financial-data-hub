@@ -20,7 +20,9 @@ Se sincroniza desde `config/sources.toml`.
 | `provider`, `platform` | text | Obligatorios |
 | `official_url` | text | HTTPS |
 | `verified_at` | date | Fecha de verificación de la fuente |
-| `access_conditions`, `redistribution_conditions` | text null | Por separado |
+| `access_conditions`, `redistribution_conditions` | text null | Por separado; resumen de lo consultado, nunca un permiso |
+| `license_name`, `license_url` | text null | Licencia declarada para la fuente; desconocida si se omite. No sustituye la de cada dataset |
+| `terms_url`, `terms_checked_on` | text null, date null | Condiciones de uso consultadas |
 | `metadata_publication` | permission | `undetermined` por defecto |
 | `publication_evidence_url`, `publication_declared_by`, `publication_declared_on` | text, text, date | Obligatorios si no es `undetermined` |
 | `attribution_text` | text null | |
@@ -74,7 +76,7 @@ El redescubrimiento **no modifica** `review_status`, permisos ni condiciones reg
 | `pages_processed`, `received`, `created`, `updated`, `unchanged`, `rejected`, `failures` | integer | |
 | `errors` | jsonb | `{code, message, query_index, http_status, attempts}` sanitizados |
 
-`updated` cuenta datasets existentes con metadatos distintos; `unchanged`, los iguales. `received` incluye repetidos.
+`received` cuenta todos los registros recibidos, repetidos incluidos. `created`, `updated` y `unchanged` cuentan datasets distintos, una sola vez por ejecución según su primera aparición: nuevo, con metadatos distintos o iguales. Las repeticiones solo suman en `received` y como observaciones. `rejected` cuenta registros rechazados.
 
 ## `run_queries`
 
@@ -122,6 +124,24 @@ running ──► succeeded   rejected = 0 y failures = 0 (aunque valid = 0)
 ```
 
 `truncated` no interviene. Una ejecución abandonada se cierra con un fallo `interrupted`.
+
+## Sincronización de fuentes y revocación
+
+`fdh sources sync` aplica `sources.toml` usando solo la base de datos, sin solicitudes externas; `discover` la ejecuta antes de empezar.
+
+- Cambiar `metadata_publication` surte efecto al sincronizar y se anota en la bitácora.
+- Una fuente retirada de la configuración conserva sus datos y pasa a `undetermined`.
+- La sincronización nunca modifica el estado de revisión, los permisos ni las condiciones de un dataset.
+
+## Correspondencia de fechas
+
+| Columna | Contrato de adaptador y API |
+|---|---|
+| `created_at_source` | `created_at` |
+| `published_at_source` | `published_at` |
+| `metadata_updated_at_source` | `metadata_updated_at` |
+| `data_updated_at_source` | `data_updated_at` |
+| `updated_at_source` | `updated_at` |
 
 ## Visibilidad en la API
 
