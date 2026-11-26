@@ -10,7 +10,7 @@ Lista de trabajo; una marca indica que existe un cambio o una comprobación, no 
 - [x] Adoptar prosa en español y código y rutas en inglés. Especificación y notas de FDH-001 traducidas.
 - [x] Instalar GitHub Spec Kit con su CLI y revisar los archivos generados ([ADR-0001](../adr/0001-adopt-github-spec-kit.md)).
 - [ ] Aprobar la constitución y la especificación de FDH-001 antes de implementar.
-- [ ] Validar solicitudes en vivo a Socrata y registrar evidencia.
+- [x] Validar solicitudes en vivo a Socrata y registrar evidencia ([informe](../../research/sources/colombia/socrata/README.md)). Pendiente la revisión humana de sus condiciones.
 - [ ] Implementar un corte vertical mínimo PostgreSQL/FastAPI/React con pruebas y demostración local.
 - [ ] Verificar el adaptador de World Bank y revisar la funcionalidad completa en un PR.
 

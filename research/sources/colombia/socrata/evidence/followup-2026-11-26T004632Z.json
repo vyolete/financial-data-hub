@@ -1,0 +1,120 @@
+{
+ "target": "socrata-page-stability",
+ "started_utc": "2026-11-26T00:46:32Z",
+ "finished_utc": "2026-11-26T00:46:54Z",
+ "repository_commit": "10e52799e1d0f836a0d5923bdd0c0841c63b9e46",
+ "script_sha256": "32ef418597cc1094b1c74bc3014bad608044c7ae89089f8b0c0d7abed1858193",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "checks": {
+  "default": {
+   "resultSetSize": 145,
+   "returned": 145,
+   "unique": 145,
+   "overlap": 0
+  },
+  "createdAt": {
+   "resultSetSize": 145,
+   "returned": 145,
+   "unique": 145,
+   "overlap": 0
+  },
+  "name": {
+   "resultSetSize": 145,
+   "returned": 145,
+   "unique": 145,
+   "overlap": 0
+  }
+ },
+ "requests": [
+  {
+   "id": "F-default-0",
+   "purpose": "order=default, offset=0",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=0",
+   "utc": "2026-11-26T00:46:32Z",
+   "status": 200,
+   "elapsed_ms": 2104,
+   "bytes": 721503,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "d056ada4f1a96fc70818277833ac3c9607327629faacf45817d4755a78a95346",
+   "json": true
+  },
+  {
+   "id": "F-default-100",
+   "purpose": "order=default, offset=100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=100",
+   "utc": "2026-11-26T00:46:35Z",
+   "status": 200,
+   "elapsed_ms": 983,
+   "bytes": 498370,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "04a6b4976f001ef91b16b93d25f4949a292aced3e3762dd7ba0a157c3616d9ef",
+   "json": true
+  },
+  {
+   "id": "F-createdAt-0",
+   "purpose": "order=createdAt, offset=0",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=0&order=createdAt",
+   "utc": "2026-11-26T00:46:37Z",
+   "status": 200,
+   "elapsed_ms": 9216,
+   "bytes": 887792,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "235a85893544761f40f5fe875d2d74dfa9cf4e2373281701305feaad3d3f15aa",
+   "json": true
+  },
+  {
+   "id": "F-createdAt-100",
+   "purpose": "order=createdAt, offset=100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=100&order=createdAt",
+   "utc": "2026-11-26T00:46:48Z",
+   "status": 200,
+   "elapsed_ms": 982,
+   "bytes": 332081,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "71e2deb53ac81df5782ae502141760ebc57ffccfc6ac398e1eb32c215c5e6c92",
+   "json": true
+  },
+  {
+   "id": "F-name-0",
+   "purpose": "order=name, offset=0",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=0&order=name",
+   "utc": "2026-11-26T00:46:50Z",
+   "status": 200,
+   "elapsed_ms": 1127,
+   "bytes": 835125,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "e6d459c8a06185db6332801513aaf336ae7d2bb14e8bb7ad8a526b90e3bb98e0",
+   "json": true
+  },
+  {
+   "id": "F-name-100",
+   "purpose": "order=name, offset=100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=100&order=name",
+   "utc": "2026-11-26T00:46:52Z",
+   "status": 200,
+   "elapsed_ms": 938,
+   "bytes": 384748,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "06e2787e7981f8de8430999aab475851e28c042be72cb2712be76bf894917507",
+   "json": true
+  }
+ ]
+}

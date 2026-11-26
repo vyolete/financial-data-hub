@@ -1,0 +1,184 @@
+{
+ "target": "world-bank-catalog-throttling",
+ "started_utc": "2026-11-26T00:46:54Z",
+ "finished_utc": "2026-11-26T00:49:05Z",
+ "repository_commit": "10e52799e1d0f836a0d5923bdd0c0841c63b9e46",
+ "script_sha256": "32ef418597cc1094b1c74bc3014bad608044c7ae89089f8b0c0d7abed1858193",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "checks": {
+  "succeeded": [],
+  "attempts": 4,
+  "statuses": [
+   429,
+   429,
+   429,
+   429
+  ]
+ },
+ "requests": [
+  {
+   "id": "R01.1",
+   "purpose": "search, page 1",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:46:54Z",
+   "status": 429,
+   "elapsed_ms": 432,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "40",
+   "rate_limit_headers": {},
+   "body_sha256": "ee9b5481f5b43ab83c688f1003ce8083acdde8daece0bd75c5815773c3ae5f24",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\"}"
+   }
+  },
+  {
+   "id": "R01.2",
+   "purpose": "search, page 1",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:47:37Z",
+   "status": 429,
+   "elapsed_ms": 479,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "43",
+   "rate_limit_headers": {},
+   "body_sha256": "0c284ca2a807282b518cf0f18e68dc369b1431754403d6bbae22aa57aaec5dae",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 43 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 43 seconds.\"}"
+   }
+  },
+  {
+   "id": "R01.3",
+   "purpose": "search, page 1",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:48:22Z",
+   "status": 429,
+   "elapsed_ms": 419,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "39",
+   "rate_limit_headers": {},
+   "body_sha256": "59a3b559bcafeb14a5c01f75b37f0afa6d1105a246bdc146ce13cbab3c4d4f5d",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\"}"
+   }
+  },
+  {
+   "id": "R01.4",
+   "purpose": "search, page 1",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:49:04Z",
+   "status": 429,
+   "elapsed_ms": 320,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "30",
+   "rate_limit_headers": {},
+   "body_sha256": "c84681206afd74cd298927337e4313b767ff016b96a0a645419b3a365ab13f73",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 30 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 30 seconds.\"}"
+   }
+  }
+ ]
+}

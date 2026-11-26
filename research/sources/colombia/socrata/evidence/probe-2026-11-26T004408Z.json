@@ -1,0 +1,2119 @@
+{
+ "target": "socrata",
+ "started_utc": "2026-11-26T00:44:08Z",
+ "finished_utc": "2026-11-26T00:45:13Z",
+ "repository_commit": "10e52799e1d0f836a0d5923bdd0c0841c63b9e46",
+ "script_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "settings": {
+  "timeout_s": 10,
+  "delay_s": 1.1,
+  "retries": 0,
+  "authentication": "none"
+ },
+ "checks": {
+  "page5_overlap": 0,
+  "page5_repeat_same_order": true,
+  "page100_overlap": 1
+ },
+ "requests": [
+  {
+   "id": "S01",
+   "purpose": "baseline, one dataset",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=1",
+   "utc": "2026-11-26T00:44:08Z",
+   "status": 200,
+   "elapsed_ms": 1920,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "fc1432e36b894fa455ff7ee6498ac0fdb55fb1dc945a58fd1eb32e09c68aabe5",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.resultSetSize": [
+     "int"
+    ],
+    "$.results": [
+     "list"
+    ],
+    "$.results[]": [
+     "dict"
+    ],
+    "$.results[].classification": [
+     "dict"
+    ],
+    "$.results[].classification.categories": [
+     "list"
+    ],
+    "$.results[].classification.domain_category": [
+     "str"
+    ],
+    "$.results[].classification.domain_metadata": [
+     "list"
+    ],
+    "$.results[].classification.domain_metadata[]": [
+     "dict"
+    ],
+    "$.results[].classification.domain_metadata[].key": [
+     "str"
+    ],
+    "$.results[].classification.domain_metadata[].value": [
+     "str"
+    ],
+    "$.results[].classification.domain_tags": [
+     "list"
+    ],
+    "$.results[].classification.domain_tags[]": [
+     "str"
+    ],
+    "$.results[].classification.tags": [
+     "list"
+    ],
+    "$.results[].creator": [
+     "dict"
+    ],
+    "$.results[].creator.display_name": [
+     "str"
+    ],
+    "$.results[].creator.id": [
+     "str"
+    ],
+    "$.results[].creator.user_type": [
+     "str"
+    ],
+    "$.results[].link": [
+     "str"
+    ],
+    "$.results[].metadata": [
+     "dict"
+    ],
+    "$.results[].metadata.domain": [
+     "str"
+    ],
+    "$.results[].metadata.license": [
+     "str"
+    ],
+    "$.results[].owner": [
+     "dict"
+    ],
+    "$.results[].owner.display_name": [
+     "str"
+    ],
+    "$.results[].owner.id": [
+     "str"
+    ],
+    "$.results[].owner.user_type": [
+     "str"
+    ],
+    "$.results[].permalink": [
+     "str"
+    ],
+    "$.results[].resource": [
+     "dict"
+    ],
+    "$.results[].resource.attribution": [
+     "str"
+    ],
+    "$.results[].resource.attribution_link": [
+     "str"
+    ],
+    "$.results[].resource.backend": [
+     "str"
+    ],
+    "$.results[].resource.blob_mime_type": [
+     "NoneType"
+    ],
+    "$.results[].resource.columns_datatype": [
+     "list"
+    ],
+    "$.results[].resource.columns_datatype[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_description": [
+     "list"
+    ],
+    "$.results[].resource.columns_description[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_field_name": [
+     "list"
+    ],
+    "$.results[].resource.columns_field_name[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_format": [
+     "list"
+    ],
+    "$.results[].resource.columns_format[]": [
+     "dict"
+    ],
+    "$.results[].resource.columns_format[].align": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].currencyStyle": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].precisionStyle": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].view": [
+     "str"
+    ],
+    "$.results[].resource.columns_name": [
+     "list"
+    ],
+    "$.results[].resource.columns_name[]": [
+     "str"
+    ],
+    "$.results[].resource.contact_email": [
+     "NoneType"
+    ],
+    "$.results[].resource.createdAt": [
+     "str"
+    ],
+    "$.results[].resource.data_updated_at": [
+     "str"
+    ],
+    "$.results[].resource.description": [
+     "str"
+    ],
+    "$.results[].resource.download_count": [
+     "int"
+    ],
+    "$.results[].resource.hide_from_data_json": [
+     "bool"
+    ],
+    "$.results[].resource.id": [
+     "str"
+    ],
+    "$.results[].resource.lens_display_type": [
+     "str"
+    ],
+    "$.results[].resource.lens_view_type": [
+     "str"
+    ],
+    "$.results[].resource.locked": [
+     "bool"
+    ],
+    "$.results[].resource.metadata_updated_at": [
+     "str"
+    ],
+    "$.results[].resource.name": [
+     "str"
+    ],
+    "$.results[].resource.page_views": [
+     "dict"
+    ],
+    "$.results[].resource.page_views.page_views_last_month": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_last_month_log": [
+     "float"
+    ],
+    "$.results[].resource.page_views.page_views_last_week": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_last_week_log": [
+     "float"
+    ],
+    "$.results[].resource.page_views.page_views_total": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_total_log": [
+     "float"
+    ],
+    "$.results[].resource.parent_fxf": [
+     "list"
+    ],
+    "$.results[].resource.provenance": [
+     "str"
+    ],
+    "$.results[].resource.publication_date": [
+     "str"
+    ],
+    "$.results[].resource.resource_name": [
+     "NoneType"
+    ],
+    "$.results[].resource.type": [
+     "str"
+    ],
+    "$.results[].resource.updatedAt": [
+     "str"
+    ],
+    "$.timings": [
+     "dict"
+    ],
+    "$.timings.searchMillis": [
+     "list"
+    ],
+    "$.timings.searchMillis[]": [
+     "int"
+    ],
+    "$.timings.serviceMillis": [
+     "int"
+    ],
+    "$.warnings": [
+     "list"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 8475,
+    "returned": 1,
+    "unique_ids": 1,
+    "server_timings": {
+     "serviceMillis": 19,
+     "searchMillis": [
+      3,
+      4
+     ]
+    },
+    "types": {
+     "dataset": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 1
+    },
+    "filled_fields": {
+     "resource.id": 1,
+     "resource.name": 1,
+     "resource.description": 1,
+     "resource.attribution": 1,
+     "resource.createdAt": 1,
+     "resource.updatedAt": 1,
+     "resource.data_updated_at": 1,
+     "resource.metadata_updated_at": 1,
+     "resource.publication_date": 1,
+     "classification.domain_category": 1,
+     "classification.domain_tags": 1,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 1,
+     "metadata.license": 1,
+     "permalink": 1,
+     "link": 1
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 1
+    },
+    "domain_categories": {
+     "Estadísticas Nacionales": 1
+    }
+   }
+  },
+  {
+   "id": "S02",
+   "purpose": "same request on the portal host",
+   "url": "https://www.datos.gov.co/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=1",
+   "utc": "2026-11-26T00:44:11Z",
+   "status": 200,
+   "elapsed_ms": 598,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "678fee10137f4cf9bf482834f3140545c30bffe84f59c54950b78e6cac2e1844",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 8475,
+    "returned": 1,
+    "unique_ids": 1,
+    "server_timings": {
+     "serviceMillis": 17,
+     "searchMillis": [
+      3,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 1
+    },
+    "filled_fields": {
+     "resource.id": 1,
+     "resource.name": 1,
+     "resource.description": 1,
+     "resource.attribution": 1,
+     "resource.createdAt": 1,
+     "resource.updatedAt": 1,
+     "resource.data_updated_at": 1,
+     "resource.metadata_updated_at": 1,
+     "resource.publication_date": 1,
+     "classification.domain_category": 1,
+     "classification.domain_tags": 1,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 1,
+     "metadata.license": 1,
+     "permalink": 1,
+     "link": 1
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 1
+    },
+    "domain_categories": {
+     "Estadísticas Nacionales": 1
+    }
+   }
+  },
+  {
+   "id": "S03",
+   "purpose": "with search_context",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&search_context=www.datos.gov.co&limit=1",
+   "utc": "2026-11-26T00:44:13Z",
+   "status": 200,
+   "elapsed_ms": 544,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "b90b9a96a2f3d12a1a56c773fa2caa6d5e33587254b321593ae96cd8a77d1535",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 8475,
+    "returned": 1,
+    "unique_ids": 1,
+    "server_timings": {
+     "serviceMillis": 19,
+     "searchMillis": [
+      7,
+      4
+     ]
+    },
+    "types": {
+     "dataset": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 1
+    },
+    "filled_fields": {
+     "resource.id": 1,
+     "resource.name": 1,
+     "resource.description": 1,
+     "resource.attribution": 1,
+     "resource.createdAt": 1,
+     "resource.updatedAt": 1,
+     "resource.data_updated_at": 1,
+     "resource.metadata_updated_at": 1,
+     "resource.publication_date": 1,
+     "classification.domain_category": 1,
+     "classification.domain_tags": 1,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 1,
+     "metadata.license": 1,
+     "permalink": 1,
+     "link": 1
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 1
+    },
+    "domain_categories": {
+     "Estadísticas Nacionales": 1
+    }
+   }
+  },
+  {
+   "id": "S04",
+   "purpose": "term, page 1 of 5",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=5&offset=0",
+   "utc": "2026-11-26T00:44:15Z",
+   "status": 200,
+   "elapsed_ms": 783,
+   "bytes": 26004,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "4ce8118af0c0aa7cc2b6c6e087c14043e144ecc69e7677df07a0896cdefbda22",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 5,
+    "unique_ids": 5,
+    "server_timings": {
+     "serviceMillis": 19,
+     "searchMillis": [
+      2,
+      6
+     ]
+    },
+    "types": {
+     "dataset": 5
+    },
+    "domains": {
+     "www.datos.gov.co": 5
+    },
+    "filled_fields": {
+     "resource.id": 5,
+     "resource.name": 5,
+     "resource.description": 5,
+     "resource.attribution": 5,
+     "resource.createdAt": 5,
+     "resource.updatedAt": 5,
+     "resource.data_updated_at": 5,
+     "resource.metadata_updated_at": 5,
+     "resource.publication_date": 5,
+     "classification.domain_category": 4,
+     "classification.domain_tags": 5,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 5,
+     "metadata.license": 5,
+     "permalink": 5,
+     "link": 5
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 5
+    },
+    "domain_categories": {
+     "Seguridad y Defensa": 2,
+     "Vivienda, Ciudad y Territorio": 2,
+     "<NoneType>": 1
+    }
+   }
+  },
+  {
+   "id": "S05",
+   "purpose": "term, page 2 of 5",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=5&offset=5",
+   "utc": "2026-11-26T00:44:17Z",
+   "status": 200,
+   "elapsed_ms": 550,
+   "bytes": 29307,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "39ea9e0d9b120de4d70ff00ce1544505304a681d53157fac4af289ee26361a70",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 5,
+    "unique_ids": 5,
+    "server_timings": {
+     "serviceMillis": 17,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 5
+    },
+    "domains": {
+     "www.datos.gov.co": 5
+    },
+    "filled_fields": {
+     "resource.id": 5,
+     "resource.name": 5,
+     "resource.description": 5,
+     "resource.attribution": 5,
+     "resource.createdAt": 5,
+     "resource.updatedAt": 5,
+     "resource.data_updated_at": 5,
+     "resource.metadata_updated_at": 5,
+     "resource.publication_date": 5,
+     "classification.domain_category": 5,
+     "classification.domain_tags": 5,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 5,
+     "metadata.license": 5,
+     "permalink": 5,
+     "link": 5
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 5
+    },
+    "domain_categories": {
+     "Economía y Finanzas": 3,
+     "Minas y Energía": 1,
+     "Hacienda y Crédito Público": 1
+    }
+   }
+  },
+  {
+   "id": "S06",
+   "purpose": "repeat of S04",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=5&offset=0",
+   "utc": "2026-11-26T00:44:18Z",
+   "status": 200,
+   "elapsed_ms": 574,
+   "bytes": 26004,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "54d706e5246babff14ecb9f76dd178d2024bb8b87b6ffff102e0a35feb6c20bd",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 5,
+    "unique_ids": 5,
+    "server_timings": {
+     "serviceMillis": 17,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 5
+    },
+    "domains": {
+     "www.datos.gov.co": 5
+    },
+    "filled_fields": {
+     "resource.id": 5,
+     "resource.name": 5,
+     "resource.description": 5,
+     "resource.attribution": 5,
+     "resource.createdAt": 5,
+     "resource.updatedAt": 5,
+     "resource.data_updated_at": 5,
+     "resource.metadata_updated_at": 5,
+     "resource.publication_date": 5,
+     "classification.domain_category": 4,
+     "classification.domain_tags": 5,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 5,
+     "metadata.license": 5,
+     "permalink": 5,
+     "link": 5
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 5
+    },
+    "domain_categories": {
+     "Seguridad y Defensa": 2,
+     "Vivienda, Ciudad y Territorio": 2,
+     "<NoneType>": 1
+    }
+   }
+  },
+  {
+   "id": "S07",
+   "purpose": "term, page 1 of 100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=0",
+   "utc": "2026-11-26T00:44:20Z",
+   "status": 200,
+   "elapsed_ms": 1186,
+   "bytes": 726920,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "3f8ebe533d8442a51979014e6f5b049281ca0c23d45a841d30c0ed5fc8c9eb5d",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.resultSetSize": [
+     "int"
+    ],
+    "$.results": [
+     "list"
+    ],
+    "$.results[]": [
+     "dict"
+    ],
+    "$.results[].classification": [
+     "dict"
+    ],
+    "$.results[].classification.categories": [
+     "list"
+    ],
+    "$.results[].classification.domain_category": [
+     "str"
+    ],
+    "$.results[].classification.domain_metadata": [
+     "list"
+    ],
+    "$.results[].classification.domain_metadata[]": [
+     "dict"
+    ],
+    "$.results[].classification.domain_metadata[].key": [
+     "str"
+    ],
+    "$.results[].classification.domain_metadata[].value": [
+     "str"
+    ],
+    "$.results[].classification.domain_tags": [
+     "list"
+    ],
+    "$.results[].classification.domain_tags[]": [
+     "str"
+    ],
+    "$.results[].classification.tags": [
+     "list"
+    ],
+    "$.results[].creator": [
+     "dict"
+    ],
+    "$.results[].creator.display_name": [
+     "str"
+    ],
+    "$.results[].creator.id": [
+     "str"
+    ],
+    "$.results[].creator.user_type": [
+     "str"
+    ],
+    "$.results[].link": [
+     "str"
+    ],
+    "$.results[].metadata": [
+     "dict"
+    ],
+    "$.results[].metadata.domain": [
+     "str"
+    ],
+    "$.results[].metadata.license": [
+     "str"
+    ],
+    "$.results[].owner": [
+     "dict"
+    ],
+    "$.results[].owner.display_name": [
+     "str"
+    ],
+    "$.results[].owner.id": [
+     "str"
+    ],
+    "$.results[].owner.user_type": [
+     "str"
+    ],
+    "$.results[].permalink": [
+     "str"
+    ],
+    "$.results[].resource": [
+     "dict"
+    ],
+    "$.results[].resource.attribution": [
+     "str"
+    ],
+    "$.results[].resource.attribution_link": [
+     "NoneType",
+     "str"
+    ],
+    "$.results[].resource.backend": [
+     "str"
+    ],
+    "$.results[].resource.blob_mime_type": [
+     "NoneType"
+    ],
+    "$.results[].resource.columns_datatype": [
+     "list"
+    ],
+    "$.results[].resource.columns_datatype[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_description": [
+     "list"
+    ],
+    "$.results[].resource.columns_description[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_field_name": [
+     "list"
+    ],
+    "$.results[].resource.columns_field_name[]": [
+     "str"
+    ],
+    "$.results[].resource.columns_format": [
+     "list"
+    ],
+    "$.results[].resource.columns_format[]": [
+     "dict"
+    ],
+    "$.results[].resource.columns_format[].align": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].currencyStyle": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].decimalSeparator": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].displayStyle": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].groupSeparator": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].noCommas": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].percentScale": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].precision": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].precisionStyle": [
+     "str"
+    ],
+    "$.results[].resource.columns_format[].view": [
+     "str"
+    ],
+    "$.results[].resource.columns_name": [
+     "list"
+    ],
+    "$.results[].resource.columns_name[]": [
+     "str"
+    ],
+    "$.results[].resource.contact_email": [
+     "NoneType"
+    ],
+    "$.results[].resource.createdAt": [
+     "str"
+    ],
+    "$.results[].resource.data_updated_at": [
+     "str"
+    ],
+    "$.results[].resource.description": [
+     "str"
+    ],
+    "$.results[].resource.download_count": [
+     "int"
+    ],
+    "$.results[].resource.hide_from_data_json": [
+     "bool"
+    ],
+    "$.results[].resource.id": [
+     "str"
+    ],
+    "$.results[].resource.lens_display_type": [
+     "str"
+    ],
+    "$.results[].resource.lens_view_type": [
+     "str"
+    ],
+    "$.results[].resource.locked": [
+     "bool"
+    ],
+    "$.results[].resource.metadata_updated_at": [
+     "str"
+    ],
+    "$.results[].resource.name": [
+     "str"
+    ],
+    "$.results[].resource.page_views": [
+     "dict"
+    ],
+    "$.results[].resource.page_views.page_views_last_month": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_last_month_log": [
+     "float"
+    ],
+    "$.results[].resource.page_views.page_views_last_week": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_last_week_log": [
+     "float"
+    ],
+    "$.results[].resource.page_views.page_views_total": [
+     "int"
+    ],
+    "$.results[].resource.page_views.page_views_total_log": [
+     "float"
+    ],
+    "$.results[].resource.parent_fxf": [
+     "list"
+    ],
+    "$.results[].resource.provenance": [
+     "str"
+    ],
+    "$.results[].resource.publication_date": [
+     "str"
+    ],
+    "$.results[].resource.resource_name": [
+     "NoneType",
+     "str"
+    ],
+    "$.results[].resource.type": [
+     "str"
+    ],
+    "$.results[].resource.updatedAt": [
+     "str"
+    ],
+    "$.timings": [
+     "dict"
+    ],
+    "$.timings.searchMillis": [
+     "list"
+    ],
+    "$.timings.searchMillis[]": [
+     "int"
+    ],
+    "$.timings.serviceMillis": [
+     "int"
+    ],
+    "$.warnings": [
+     "list"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 100,
+    "unique_ids": 100,
+    "server_timings": {
+     "serviceMillis": 61,
+     "searchMillis": [
+      19,
+      13
+     ]
+    },
+    "types": {
+     "dataset": 100
+    },
+    "domains": {
+     "www.datos.gov.co": 100
+    },
+    "filled_fields": {
+     "resource.id": 100,
+     "resource.name": 100,
+     "resource.description": 100,
+     "resource.attribution": 100,
+     "resource.createdAt": 100,
+     "resource.updatedAt": 100,
+     "resource.data_updated_at": 100,
+     "resource.metadata_updated_at": 100,
+     "resource.publication_date": 100,
+     "classification.domain_category": 92,
+     "classification.domain_tags": 85,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 100,
+     "metadata.license": 100,
+     "permalink": 100,
+     "link": 100
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 98,
+     "Creative Commons Attribution 4.0 International": 1,
+     "Creative Commons Attribution | NoDerivatives 4.0 International License": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 31,
+     "Economía y Finanzas": 13,
+     "Presupuestos Gubernamentales": 9,
+     "<NoneType>": 8,
+     "Gastos Gubernamentales": 7,
+     "Organismos de Control": 6,
+     "Estadísticas Nacionales": 4,
+     "Vivienda, Ciudad y Territorio": 3,
+     "Función pública": 3,
+     "Salud y Protección Social": 3,
+     "Planeación": 3,
+     "Seguridad y Defensa": 2,
+     "Minas y Energía": 1,
+     "Transporte": 1,
+     "Cultura": 1
+    }
+   }
+  },
+  {
+   "id": "S08",
+   "purpose": "term, page 2 of 100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&offset=100",
+   "utc": "2026-11-26T00:44:22Z",
+   "status": 200,
+   "elapsed_ms": 950,
+   "bytes": 498370,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "5087bbafaa1e8e90ca4a1a7b72022e27fdd7f233cf8572f5f1664481f6f3a3fa",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 45,
+    "unique_ids": 45,
+    "server_timings": {
+     "serviceMillis": 43,
+     "searchMillis": [
+      2,
+      7
+     ]
+    },
+    "types": {
+     "dataset": 45
+    },
+    "domains": {
+     "www.datos.gov.co": 45
+    },
+    "filled_fields": {
+     "resource.id": 45,
+     "resource.name": 45,
+     "resource.description": 45,
+     "resource.attribution": 45,
+     "resource.createdAt": 45,
+     "resource.updatedAt": 45,
+     "resource.data_updated_at": 45,
+     "resource.metadata_updated_at": 45,
+     "resource.publication_date": 45,
+     "classification.domain_category": 44,
+     "classification.domain_tags": 40,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 45,
+     "metadata.license": 45,
+     "permalink": 45,
+     "link": 45
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 44,
+     "Creative Commons 1.0 Universal (Public Domain Dedication)": 1
+    },
+    "domain_categories": {
+     "Organismos de Control": 8,
+     "Estadísticas Nacionales": 7,
+     "Presupuestos Gubernamentales": 6,
+     "Hacienda y Crédito Público": 5,
+     "Planeación": 4,
+     "Transporte": 3,
+     "Gastos Gubernamentales": 3,
+     "Inclusión Social y Reconciliación": 3,
+     "Participación Ciudadana": 2,
+     "Vivienda, Ciudad y Territorio": 1,
+     "Participación ciudadana": 1,
+     "Función pública": 1,
+     "<NoneType>": 1
+    }
+   }
+  },
+  {
+   "id": "S09",
+   "purpose": "offset beyond result set",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=5&offset=150",
+   "utc": "2026-11-26T00:44:24Z",
+   "status": 200,
+   "elapsed_ms": 535,
+   "bytes": 131,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "a9cfbac4c22bb4673484c08b1a7680557b6230be265021fd6ec2263ddf0bd7da",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 16,
+     "searchMillis": [
+      2,
+      4
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S10",
+   "purpose": "term with no results",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=zzqxnoresultsfdh&limit=5",
+   "utc": "2026-11-26T00:44:26Z",
+   "status": 200,
+   "elapsed_ms": 331,
+   "bytes": 129,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "7d1a1050ba718f5edc520682b496340214f37c5ca17d5610f8e84109fc21584d",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 0,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 15,
+     "searchMillis": [
+      3,
+      3
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S11",
+   "purpose": "offset + limit just under 10000",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=10&offset=9990",
+   "utc": "2026-11-26T00:44:27Z",
+   "status": 200,
+   "elapsed_ms": 326,
+   "bytes": 132,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "bf1ff64d81a4d0b7f4b620ef9118a7b006cd130153e8684317e486dfd9c118fb",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 8475,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 17,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S12",
+   "purpose": "offset + limit over 10000",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=10&offset=10000",
+   "utc": "2026-11-26T00:44:29Z",
+   "status": 400,
+   "elapsed_ms": 415,
+   "bytes": 163,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "56a79b66772ec814acef136b27bcc5784b49f0180e75ec86b6e0c93ff63e54d5",
+   "json": true,
+   "error_excerpt": "{\"error\":\"Sum of `offset` and `limit` cannot exceed 10000. Please use the deep scrolling API: https://socratadiscovery.docs.apiary.io/#reference/0/deep-scrolling\"}",
+   "summary": {
+    "top_level_keys": [
+     "error"
+    ],
+    "error": "Sum of `offset` and `limit` cannot exceed 10000. Please use the deep scrolling API: https://socratadiscovery.docs.apiary.io/#reference/0/deep-scrolling"
+   }
+  },
+  {
+   "id": "S13",
+   "purpose": "invalid limit: negative",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=zzqxnoresultsfdh&limit=-1",
+   "utc": "2026-11-26T00:44:30Z",
+   "status": 500,
+   "elapsed_ms": 393,
+   "bytes": 46,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "69f21ee25aa6dd539c35430e6bec46d4f7617c9bd183241da07134408d9e7b7c",
+   "json": true,
+   "error_excerpt": "{\"error\":\"We're sorry. Something went wrong.\"}",
+   "summary": {
+    "top_level_keys": [
+     "error"
+    ],
+    "error": "We're sorry. Something went wrong."
+   }
+  },
+  {
+   "id": "S14",
+   "purpose": "invalid limit: text",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=zzqxnoresultsfdh&limit=abc",
+   "utc": "2026-11-26T00:44:32Z",
+   "status": 500,
+   "elapsed_ms": 1413,
+   "bytes": 46,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "69f21ee25aa6dd539c35430e6bec46d4f7617c9bd183241da07134408d9e7b7c",
+   "json": true,
+   "error_excerpt": "{\"error\":\"We're sorry. Something went wrong.\"}",
+   "summary": {
+    "top_level_keys": [
+     "error"
+    ],
+    "error": "We're sorry. Something went wrong."
+   }
+  },
+  {
+   "id": "S15",
+   "purpose": "limit above 10000 on empty query",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=zzqxnoresultsfdh&limit=10001",
+   "utc": "2026-11-26T00:44:34Z",
+   "status": 200,
+   "elapsed_ms": 453,
+   "bytes": 129,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "ab8dfc055c8ae50aea79cd10b8aa4c88fced24b95cc95f36a96c7852bf0a71b4",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 0,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 16,
+     "searchMillis": [
+      3,
+      3
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S16",
+   "purpose": "invalid only value",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=notatype&limit=1",
+   "utc": "2026-11-26T00:44:36Z",
+   "status": 200,
+   "elapsed_ms": 460,
+   "bytes": 129,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "69d461867d6bf6b4068c54253968bfbd4897ce5f9dfbd94525345ee4d4151059",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 0,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 13,
+     "searchMillis": [
+      2,
+      2
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S17",
+   "purpose": "unknown domain",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=unknown.invalid&only=datasets&limit=1",
+   "utc": "2026-11-26T00:44:37Z",
+   "status": 404,
+   "elapsed_ms": 580,
+   "bytes": 45,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "0cbe762e0da3df24deeba0e6590d858f088525a139295e80aee5c7b4928bc33c",
+   "json": true,
+   "error_excerpt": "{\"error\":\"Domain not found: unknown.invalid\"}",
+   "summary": {
+    "top_level_keys": [
+     "error"
+    ],
+    "error": "Domain not found: unknown.invalid"
+   }
+  },
+  {
+   "id": "S18",
+   "purpose": "term without only filter",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&q=presupuesto&limit=100",
+   "utc": "2026-11-26T00:44:39Z",
+   "status": 200,
+   "elapsed_ms": 1156,
+   "bytes": 715659,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "c4684fe4db5edb1e84ccd5ae7daaa47d4b1e69e159bb83acc79ad680dfa2f0ad",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 563,
+    "returned": 100,
+    "unique_ids": 100,
+    "server_timings": {
+     "serviceMillis": 32,
+     "searchMillis": [
+      2,
+      7
+     ]
+    },
+    "types": {
+     "dataset": 80,
+     "federated_href": 14,
+     "filter": 4,
+     "href": 1,
+     "chart": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 100
+    },
+    "filled_fields": {
+     "resource.id": 100,
+     "resource.name": 100,
+     "resource.description": 100,
+     "resource.attribution": 86,
+     "resource.createdAt": 100,
+     "resource.updatedAt": 100,
+     "resource.data_updated_at": 100,
+     "resource.metadata_updated_at": 100,
+     "resource.publication_date": 100,
+     "classification.domain_category": 80,
+     "classification.domain_tags": 90,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 100,
+     "metadata.license": 86,
+     "permalink": 100,
+     "link": 100
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 85,
+     "<NoneType>": 14,
+     "Creative Commons Attribution 4.0 International": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 26,
+     "<NoneType>": 20,
+     "Economía y Finanzas": 13,
+     "Presupuestos Gubernamentales": 8,
+     "Gastos Gubernamentales": 8,
+     "Estadísticas Nacionales": 4,
+     "Vivienda, Ciudad y Territorio": 3,
+     "Función pública": 3,
+     "Organismos de Control": 3,
+     "Seguridad y Defensa": 2,
+     "Salud y Protección Social": 2,
+     "Minas y Energía": 1,
+     "Transporte": 1,
+     "Cultura": 1,
+     "Justicia y Derecho": 1
+    }
+   }
+  },
+  {
+   "id": "S19",
+   "purpose": "term with accent",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=inversi%C3%B3n&limit=1",
+   "utc": "2026-11-26T00:44:41Z",
+   "status": 200,
+   "elapsed_ms": 416,
+   "bytes": 9100,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "5a2202ed33d957f90cabf2a184b203973d78da1527018498ca9c227fa8d3011d",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 100,
+    "returned": 1,
+    "unique_ids": 1,
+    "server_timings": {
+     "serviceMillis": 15,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 1
+    },
+    "filled_fields": {
+     "resource.id": 1,
+     "resource.name": 1,
+     "resource.description": 1,
+     "resource.attribution": 1,
+     "resource.createdAt": 1,
+     "resource.updatedAt": 1,
+     "resource.data_updated_at": 1,
+     "resource.metadata_updated_at": 1,
+     "resource.publication_date": 1,
+     "classification.domain_category": 1,
+     "classification.domain_tags": 1,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 1,
+     "metadata.license": 1,
+     "permalink": 1,
+     "link": 1
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 1
+    }
+   }
+  },
+  {
+   "id": "S20",
+   "purpose": "term without accent",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=inversion&limit=1",
+   "utc": "2026-11-26T00:44:43Z",
+   "status": 200,
+   "elapsed_ms": 461,
+   "bytes": 6180,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "4c43fe0085ce28a8e4bb54a13f6ca55bfc9e9f59305a30943482b5de276bb4cd",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 100,
+    "returned": 1,
+    "unique_ids": 1,
+    "server_timings": {
+     "serviceMillis": 17,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 1
+    },
+    "domains": {
+     "www.datos.gov.co": 1
+    },
+    "filled_fields": {
+     "resource.id": 1,
+     "resource.name": 1,
+     "resource.description": 1,
+     "resource.attribution": 1,
+     "resource.createdAt": 1,
+     "resource.updatedAt": 1,
+     "resource.data_updated_at": 1,
+     "resource.metadata_updated_at": 1,
+     "resource.publication_date": 1,
+     "classification.domain_category": 1,
+     "classification.domain_tags": 1,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 1,
+     "metadata.license": 1,
+     "permalink": 1,
+     "link": 1
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 1
+    },
+    "domain_categories": {
+     "Ciencia, Tecnología e Innovación": 1
+    }
+   }
+  },
+  {
+   "id": "L1.1",
+   "purpose": "latency repeat, 1 result",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=1",
+   "utc": "2026-11-26T00:44:44Z",
+   "status": 200,
+   "elapsed_ms": 488,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "e0d84bb28d124285266b20543e9f99855bdbe7b2b48f52cab7ce60b435097caf",
+   "json": true
+  },
+  {
+   "id": "L2.1",
+   "purpose": "latency repeat, 100 results",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100",
+   "utc": "2026-11-26T00:44:46Z",
+   "status": 200,
+   "elapsed_ms": 11740,
+   "bytes": 721504,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "1d2d69049efe4e01016764a40485b333d9bb45f5eeda0b0bc37ac7ba1d7f9ee2",
+   "json": true
+  },
+  {
+   "id": "L1.2",
+   "purpose": "latency repeat, 1 result",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=1",
+   "utc": "2026-11-26T00:44:59Z",
+   "status": 200,
+   "elapsed_ms": 572,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "805808dd5bd5c2c106dd0c87cb2db075e6da09fcb4d97ae058495ca8f272bb46",
+   "json": true
+  },
+  {
+   "id": "L2.2",
+   "purpose": "latency repeat, 100 results",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100",
+   "utc": "2026-11-26T00:45:01Z",
+   "status": 200,
+   "elapsed_ms": 4598,
+   "bytes": 716861,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "b5f22106d412caf30009bfed1b50afe0dd86ba618d05fbc05c38470dafee872f",
+   "json": true
+  },
+  {
+   "id": "L1.3",
+   "purpose": "latency repeat, 1 result",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&limit=1",
+   "utc": "2026-11-26T00:45:06Z",
+   "status": 200,
+   "elapsed_ms": 552,
+   "bytes": 25695,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "43ff08166f70734b233a50c8c9425736b1e0386a02c71ecc24ab55fd1c99c65b",
+   "json": true
+  },
+  {
+   "id": "L2.3",
+   "purpose": "latency repeat, 100 results",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100",
+   "utc": "2026-11-26T00:45:08Z",
+   "status": 200,
+   "elapsed_ms": 988,
+   "bytes": 716861,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "6fdfdf1b5f91b55ee7b0f34eaf78784627f0ad4bdb099b50cc1849bb7b85c69b",
+   "json": true
+  },
+  {
+   "id": "S21",
+   "purpose": "single asset metadata (first S01 result)",
+   "url": "https://www.datos.gov.co/api/views/<dataset-id>.json",
+   "utc": "2026-11-26T00:45:10Z",
+   "status": 200,
+   "elapsed_ms": 2024,
+   "bytes": 36968,
+   "truncated": false,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "d5bd1c63400c21b1951dde3269e071684f295dc6b7fd95250586eb01dc14dca7",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.approvals": [
+     "list"
+    ],
+    "$.approvals[]": [
+     "dict"
+    ],
+    "$.approvals[].reviewedAt": [
+     "int"
+    ],
+    "$.approvals[].reviewedAutomatically": [
+     "bool"
+    ],
+    "$.approvals[].reviewer": [
+     "dict"
+    ],
+    "$.approvals[].reviewer.displayName": [
+     "str"
+    ],
+    "$.approvals[].reviewer.id": [
+     "str"
+    ],
+    "$.approvals[].state": [
+     "str"
+    ],
+    "$.approvals[].submissionDetails": [
+     "dict"
+    ],
+    "$.approvals[].submissionDetails.permissionType": [
+     "str"
+    ],
+    "$.approvals[].submissionId": [
+     "int"
+    ],
+    "$.approvals[].submissionObject": [
+     "str"
+    ],
+    "$.approvals[].submissionOutcome": [
+     "str"
+    ],
+    "$.approvals[].submissionOutcomeApplication": [
+     "dict"
+    ],
+    "$.approvals[].submissionOutcomeApplication.endedAt": [
+     "int"
+    ],
+    "$.approvals[].submissionOutcomeApplication.failureCount": [
+     "int"
+    ],
+    "$.approvals[].submissionOutcomeApplication.startedAt": [
+     "int"
+    ],
+    "$.approvals[].submissionOutcomeApplication.status": [
+     "str"
+    ],
+    "$.approvals[].submittedAt": [
+     "int"
+    ],
+    "$.approvals[].submitter": [
+     "dict"
+    ],
+    "$.approvals[].submitter.displayName": [
+     "str"
+    ],
+    "$.approvals[].submitter.id": [
+     "str"
+    ],
+    "$.approvals[].targetAudience": [
+     "str"
+    ],
+    "$.approvals[].workflowId": [
+     "int"
+    ],
+    "$.assetType": [
+     "str"
+    ],
+    "$.attribution": [
+     "str"
+    ],
+    "$.attributionLink": [
+     "str"
+    ],
+    "$.averageRating": [
+     "int"
+    ],
+    "$.category": [
+     "str"
+    ],
+    "$.clientContext": [
+     "dict"
+    ],
+    "$.clientContext.clientContextVariables": [
+     "list"
+    ],
+    "$.clientContext.inheritedVariables": [
+     "dict"
+    ],
+    "$.columns": [
+     "list"
+    ],
+    "$.columns[]": [
+     "dict"
+    ],
+    "$.columns[].dataTypeName": [
+     "str"
+    ],
+    "$.columns[].description": [
+     "str"
+    ],
+    "$.columns[].fieldName": [
+     "str"
+    ],
+    "$.columns[].format": [
+     "dict"
+    ],
+    "$.columns[].format.align": [
+     "str"
+    ],
+    "$.columns[].format.currencyStyle": [
+     "str"
+    ],
+    "$.columns[].format.precisionStyle": [
+     "str"
+    ],
+    "$.columns[].format.view": [
+     "str"
+    ],
+    "$.columns[].id": [
+     "int"
+    ],
+    "$.columns[].name": [
+     "str"
+    ],
+    "$.columns[].position": [
+     "int"
+    ],
+    "$.columns[].renderTypeName": [
+     "str"
+    ],
+    "$.columns[].subColumnTypes": [
+     "list"
+    ],
+    "$.columns[].subColumnTypes[]": [
+     "str"
+    ],
+    "$.columns[].tableColumnId": [
+     "int"
+    ],
+    "$.columns[].width": [
+     "int"
+    ],
+    "$.createdAt": [
+     "int"
+    ],
+    "$.description": [
+     "str"
+    ],
+    "$.diciBackend": [
+     "bool"
+    ],
+    "$.displayType": [
+     "str"
+    ],
+    "$.downloadCount": [
+     "int"
+    ],
+    "$.flags": [
+     "list"
+    ],
+    "$.flags[]": [
+     "str"
+    ],
+    "$.grants": [
+     "list"
+    ],
+    "$.grants[]": [
+     "dict"
+    ],
+    "$.grants[].flags": [
+     "list"
+    ],
+    "$.grants[].flags[]": [
+     "str"
+    ],
+    "$.grants[].inherited": [
+     "bool"
+    ],
+    "$.grants[].type": [
+     "str"
+    ],
+    "$.hideFromCatalog": [
+     "bool"
+    ],
+    "$.hideFromDataJson": [
+     "bool"
+    ],
+    "$.id": [
+     "str"
+    ],
+    "$.license": [
+     "dict"
+    ],
+    "$.license.logoUrl": [
+     "str"
+    ],
+    "$.license.name": [
+     "str"
+    ],
+    "$.license.termsLink": [
+     "str"
+    ],
+    "$.licenseId": [
+     "str"
+    ],
+    "$.locked": [
+     "bool"
+    ],
+    "$.metadata": [
+     "dict"
+    ],
+    "$.metadata.availableDisplayTypes": [
+     "list"
+    ],
+    "$.metadata.availableDisplayTypes[]": [
+     "str"
+    ],
+    "$.metadata.custom_fields": [
+     "dict"
+    ],
+    "$.metadata.custom_fields.Información de Datos": [
+     "dict"
+    ],
+    "$.metadata.custom_fields.Información de Datos.Cobertura Geográfica": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de Datos.Frecuencia de Actualización": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de Datos.Idioma": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad": [
+     "dict"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.DIVIPOLA Municipio": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Departamento": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Municipio": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Nombre de la Entidad": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Orden": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Sector": [
+     "str"
+    ],
+    "$.metadata.custom_fields.Información de la Entidad.Área o dependencia": [
+     "str"
+    ],
+    "$.name": [
+     "str"
+    ],
+    "$.newBackend": [
+     "bool"
+    ],
+    "$.numberOfComments": [
+     "int"
+    ],
+    "$.oid": [
+     "int"
+    ],
+    "$.owner": [
+     "dict"
+    ],
+    "$.owner.displayName": [
+     "str"
+    ],
+    "$.owner.flags": [
+     "list"
+    ],
+    "$.owner.flags[]": [
+     "str"
+    ],
+    "$.owner.id": [
+     "str"
+    ],
+    "$.owner.screenName": [
+     "str"
+    ],
+    "$.owner.type": [
+     "str"
+    ],
+    "$.provenance": [
+     "str"
+    ],
+    "$.publicationAppendEnabled": [
+     "bool"
+    ],
+    "$.publicationDate": [
+     "int"
+    ],
+    "$.publicationGroup": [
+     "int"
+    ],
+    "$.publicationStage": [
+     "str"
+    ],
+    "$.query": [
+     "dict"
+    ],
+    "$.rights": [
+     "list"
+    ],
+    "$.rights[]": [
+     "str"
+    ],
+    "$.rowsUpdatedAt": [
+     "int"
+    ],
+    "$.rowsUpdatedBy": [
+     "str"
+    ],
+    "$.tableAuthor": [
+     "dict"
+    ],
+    "$.tableAuthor.displayName": [
+     "str"
+    ],
+    "$.tableAuthor.flags": [
+     "list"
+    ],
+    "$.tableAuthor.flags[]": [
+     "str"
+    ],
+    "$.tableAuthor.id": [
+     "str"
+    ],
+    "$.tableAuthor.screenName": [
+     "str"
+    ],
+    "$.tableAuthor.type": [
+     "str"
+    ],
+    "$.tableId": [
+     "int"
+    ],
+    "$.tags": [
+     "list"
+    ],
+    "$.tags[]": [
+     "str"
+    ],
+    "$.totalTimesRated": [
+     "int"
+    ],
+    "$.viewCount": [
+     "int"
+    ],
+    "$.viewLastModified": [
+     "int"
+    ],
+    "$.viewType": [
+     "str"
+    ]
+   },
+   "summary": {
+    "has_licenseId": true,
+    "licenseId": "CC_40_BY_SA",
+    "license_keys": [
+     "logoUrl",
+     "name",
+     "termsLink"
+    ],
+    "license_name": "Creative Commons Attribution | Share Alike 4.0 International",
+    "has_attribution": true,
+    "assetType": "dataset"
+   }
+  }
+ ]
+}

@@ -1,0 +1,898 @@
+{
+ "target": "world-bank",
+ "started_utc": "2026-11-26T00:45:20Z",
+ "finished_utc": "2026-11-26T00:46:07Z",
+ "repository_commit": "10e52799e1d0f836a0d5923bdd0c0841c63b9e46",
+ "script_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "settings": {
+  "timeout_s": 10,
+  "delay_s": 1.1,
+  "retries": 0,
+  "authentication": "none"
+ },
+ "checks": {
+  "indicators_page_overlap": 0,
+  "catalog_list_overlap": 0,
+  "catalog_search_overlap": 0,
+  "catalog_search_repeat_same_order": true
+ },
+ "requests": [
+  {
+   "id": "W01",
+   "purpose": "sources",
+   "url": "https://api.worldbank.org/v2/sources?format=json&per_page=100",
+   "utc": "2026-11-26T00:45:20Z",
+   "status": 200,
+   "elapsed_ms": 295,
+   "bytes": 13048,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "5c187eb14977846a4a9567b7a04990de4077518e2eb3b0937238629cca8ea7aa",
+   "json": true,
+   "schema": {
+    "$": [
+     "list"
+    ],
+    "$[]": [
+     "dict",
+     "list"
+    ],
+    "$[].page": [
+     "str"
+    ],
+    "$[].pages": [
+     "str"
+    ],
+    "$[].per_page": [
+     "str"
+    ],
+    "$[].total": [
+     "str"
+    ],
+    "$[][]": [
+     "dict"
+    ],
+    "$[][].code": [
+     "str"
+    ],
+    "$[][].concepts": [
+     "str"
+    ],
+    "$[][].dataavailability": [
+     "str"
+    ],
+    "$[][].description": [
+     "str"
+    ],
+    "$[][].id": [
+     "str"
+    ],
+    "$[][].lastupdated": [
+     "str"
+    ],
+    "$[][].metadataavailability": [
+     "str"
+    ],
+    "$[][].name": [
+     "str"
+    ],
+    "$[][].url": [
+     "str"
+    ]
+   },
+   "summary": {
+    "meta": {
+     "page": "1",
+     "pages": "1",
+     "per_page": "100",
+     "total": "71"
+    },
+    "returned": 71,
+    "unique_ids": 71,
+    "filled_fields": {
+     "code": 71,
+     "concepts": 71,
+     "dataavailability": 71,
+     "description": 0,
+     "id": 71,
+     "lastupdated": 71,
+     "metadataavailability": 66,
+     "name": 71,
+     "url": 0
+    }
+   }
+  },
+  {
+   "id": "W02",
+   "purpose": "indicators, page 1 of 5",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=5&page=1",
+   "utc": "2026-11-26T00:45:21Z",
+   "status": 200,
+   "elapsed_ms": 534,
+   "bytes": 2131,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "4309c7b86c0b1b531f9a9d6cb84e043653d8cd9fca22378be9db2eb6bcdabc7a",
+   "json": true,
+   "schema": {
+    "$": [
+     "list"
+    ],
+    "$[]": [
+     "dict",
+     "list"
+    ],
+    "$[].page": [
+     "int"
+    ],
+    "$[].pages": [
+     "int"
+    ],
+    "$[].per_page": [
+     "str"
+    ],
+    "$[].total": [
+     "int"
+    ],
+    "$[][]": [
+     "dict"
+    ],
+    "$[][].id": [
+     "str"
+    ],
+    "$[][].name": [
+     "str"
+    ],
+    "$[][].source": [
+     "dict"
+    ],
+    "$[][].source.id": [
+     "str"
+    ],
+    "$[][].source.value": [
+     "str"
+    ],
+    "$[][].sourceNote": [
+     "str"
+    ],
+    "$[][].sourceOrganization": [
+     "str"
+    ],
+    "$[][].topics": [
+     "list"
+    ],
+    "$[][].topics[]": [
+     "dict"
+    ],
+    "$[][].topics[].id": [
+     "str"
+    ],
+    "$[][].topics[].value": [
+     "str"
+    ],
+    "$[][].unit": [
+     "str"
+    ]
+   },
+   "summary": {
+    "meta": {
+     "page": 1,
+     "pages": 5909,
+     "per_page": "5",
+     "total": 29544
+    },
+    "returned": 5,
+    "unique_ids": 5,
+    "filled_fields": {
+     "id": 5,
+     "name": 5,
+     "source": 5,
+     "sourceNote": 5,
+     "sourceOrganization": 5,
+     "topics": 5,
+     "unit": 0
+    }
+   }
+  },
+  {
+   "id": "W03",
+   "purpose": "indicators, page 2 of 5",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=5&page=2",
+   "utc": "2026-11-26T00:45:23Z",
+   "status": 200,
+   "elapsed_ms": 1099,
+   "bytes": 2491,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "1b50ca5632a5d79612351bceed73b5d835b25cbdeeae085ead5c5e9e169175c6",
+   "json": true,
+   "summary": {
+    "meta": {
+     "page": 2,
+     "pages": 5909,
+     "per_page": "5",
+     "total": 29544
+    },
+    "returned": 5,
+    "unique_ids": 5,
+    "filled_fields": {
+     "id": 5,
+     "name": 5,
+     "source": 5,
+     "sourceNote": 5,
+     "sourceOrganization": 5,
+     "topics": 5,
+     "unit": 0
+    }
+   }
+  },
+  {
+   "id": "W04",
+   "purpose": "indicators, page of 100",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=100",
+   "utc": "2026-11-26T00:45:25Z",
+   "status": 200,
+   "elapsed_ms": 482,
+   "bytes": 29344,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "408b04ae998a2477385d9eb5498b80dab9d0b2b255b19d87f9000f0570b6ffc6",
+   "json": true,
+   "summary": {
+    "meta": {
+     "page": 1,
+     "pages": 296,
+     "per_page": "100",
+     "total": 29544
+    },
+    "returned": 100,
+    "unique_ids": 100,
+    "filled_fields": {
+     "id": 100,
+     "name": 100,
+     "source": 100,
+     "sourceNote": 41,
+     "sourceOrganization": 41,
+     "topics": 37,
+     "unit": 0
+    }
+   }
+  },
+  {
+   "id": "W05",
+   "purpose": "page beyond the last",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=5&page=5910",
+   "utc": "2026-11-26T00:45:27Z",
+   "status": 200,
+   "elapsed_ms": 572,
+   "bytes": 60,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "ef183726ea884d59f06ff8fbe04de186e7d254a4a70f0354373adf645aef6b90",
+   "json": true,
+   "summary": {
+    "meta": {
+     "page": 5910,
+     "pages": 5909,
+     "per_page": "5",
+     "total": 29544
+    },
+    "returned": 0,
+    "unique_ids": 0,
+    "filled_fields": {}
+   }
+  },
+  {
+   "id": "W06",
+   "purpose": "unknown indicator",
+   "url": "https://api.worldbank.org/v2/indicator/NOT.A.REAL.CODE?format=json",
+   "utc": "2026-11-26T00:45:28Z",
+   "status": 200,
+   "elapsed_ms": 527,
+   "bytes": 102,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "f230e5b6d8f652aa544aec29624faa117c27571ce309a7a474584e1cfeb45c1b",
+   "json": true,
+   "summary": {
+    "shape": "list",
+    "body_excerpt": "[{\"message\": [{\"id\": \"120\", \"key\": \"Invalid value\", \"value\": \"The provided parameter value is not valid\"}]}]"
+   }
+  },
+  {
+   "id": "W07",
+   "purpose": "invalid per_page: text",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=abc",
+   "utc": "2026-11-26T00:45:30Z",
+   "status": 200,
+   "elapsed_ms": 921,
+   "bytes": 102,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "f230e5b6d8f652aa544aec29624faa117c27571ce309a7a474584e1cfeb45c1b",
+   "json": true,
+   "summary": {
+    "shape": "list",
+    "body_excerpt": "[{\"message\": [{\"id\": \"120\", \"key\": \"Invalid value\", \"value\": \"The provided parameter value is not valid\"}]}]"
+   }
+  },
+  {
+   "id": "W08",
+   "purpose": "invalid per_page: zero",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=0",
+   "utc": "2026-11-26T00:45:32Z",
+   "status": 200,
+   "elapsed_ms": 576,
+   "bytes": 102,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "f230e5b6d8f652aa544aec29624faa117c27571ce309a7a474584e1cfeb45c1b",
+   "json": true,
+   "summary": {
+    "shape": "list",
+    "body_excerpt": "[{\"message\": [{\"id\": \"120\", \"key\": \"Invalid value\", \"value\": \"The provided parameter value is not valid\"}]}]"
+   }
+  },
+  {
+   "id": "W09",
+   "purpose": "indicators of source 2",
+   "url": "https://api.worldbank.org/v2/source/2/indicator?format=json&per_page=5",
+   "utc": "2026-11-26T00:45:34Z",
+   "status": 200,
+   "elapsed_ms": 585,
+   "bytes": 5991,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "fb59240dfeb3f57bbfe70a9808c31c33547c60dedac0ccaaaabec55642ece715",
+   "json": true,
+   "summary": {
+    "meta": {
+     "page": 1,
+     "pages": 300,
+     "per_page": "5",
+     "total": 1498
+    },
+    "returned": 5,
+    "unique_ids": 5,
+    "filled_fields": {
+     "id": 5,
+     "name": 5,
+     "source": 5,
+     "sourceNote": 5,
+     "sourceOrganization": 5,
+     "topics": 5,
+     "unit": 0
+    }
+   }
+  },
+  {
+   "id": "W10",
+   "purpose": "default format",
+   "url": "https://api.worldbank.org/v2/indicator?per_page=1",
+   "utc": "2026-11-26T00:45:35Z",
+   "status": 200,
+   "elapsed_ms": 766,
+   "bytes": 653,
+   "truncated": false,
+   "content_type": "text/xml",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "5abfbbb3645c15137dbbcae3e77439f4e9d729813c58ad17c32d8bc383dd7202",
+   "json": false
+  },
+  {
+   "id": "W11",
+   "purpose": "exploratory text search parameter",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=1&q=gdp",
+   "utc": "2026-11-26T00:45:37Z",
+   "status": 200,
+   "elapsed_ms": 609,
+   "bytes": 465,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "d6aa35d148b737a089728e4f838647e379486a4642890d014e68c18d06d06d35",
+   "json": true,
+   "summary": {
+    "meta": {
+     "page": 1,
+     "pages": 29544,
+     "per_page": "1",
+     "total": 29544
+    },
+    "returned": 1,
+    "unique_ids": 1,
+    "filled_fields": {
+     "id": 1,
+     "name": 1,
+     "source": 1,
+     "sourceNote": 1,
+     "sourceOrganization": 1,
+     "topics": 1,
+     "unit": 0
+    }
+   }
+  },
+  {
+   "id": "D01",
+   "purpose": "dataset list, page 1 of 5",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetList?$top=5&$skip=0",
+   "utc": "2026-11-26T00:45:39Z",
+   "status": 429,
+   "elapsed_ms": 1383,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "41",
+   "rate_limit_headers": {},
+   "body_sha256": "bc0cafc08c7a48d85d71ef6740d82df7ed11434905648911173d55fc480786db",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 41 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 41 seconds.\"}"
+   }
+  },
+  {
+   "id": "D02",
+   "purpose": "dataset list, page 2 of 5",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetList?$top=5&$skip=5",
+   "utc": "2026-11-26T00:45:41Z",
+   "status": 429,
+   "elapsed_ms": 286,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "41",
+   "rate_limit_headers": {},
+   "body_sha256": "bc0cafc08c7a48d85d71ef6740d82df7ed11434905648911173d55fc480786db",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 41 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 41 seconds.\"}"
+   }
+  },
+  {
+   "id": "D03",
+   "purpose": "dataset list, page of 100",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetList?$top=100&$skip=0",
+   "utc": "2026-11-26T00:45:43Z",
+   "status": 429,
+   "elapsed_ms": 357,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "40",
+   "rate_limit_headers": {},
+   "body_sha256": "ee9b5481f5b43ab83c688f1003ce8083acdde8daece0bd75c5815773c3ae5f24",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\"}"
+   }
+  },
+  {
+   "id": "D04",
+   "purpose": "search, page 1 of 5",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:45:44Z",
+   "status": 429,
+   "elapsed_ms": 479,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "40",
+   "rate_limit_headers": {},
+   "body_sha256": "ee9b5481f5b43ab83c688f1003ce8083acdde8daece0bd75c5815773c3ae5f24",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\" }",
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.message": [
+     "str"
+    ],
+    "$.statusCode": [
+     "int"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 40 seconds.\"}"
+   }
+  },
+  {
+   "id": "D05",
+   "purpose": "search, page 2 of 5",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=5",
+   "utc": "2026-11-26T00:45:46Z",
+   "status": 429,
+   "elapsed_ms": 368,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "39",
+   "rate_limit_headers": {},
+   "body_sha256": "59a3b559bcafeb14a5c01f75b37f0afa6d1105a246bdc146ce13cbab3c4d4f5d",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\"}"
+   }
+  },
+  {
+   "id": "D06",
+   "purpose": "repeat of D04",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=5&$skip=0",
+   "utc": "2026-11-26T00:45:47Z",
+   "status": 429,
+   "elapsed_ms": 332,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "38",
+   "rate_limit_headers": {},
+   "body_sha256": "f3c27febb89d8531713af30c0bcdda5ef2549045673bffe48ff83ea8c4479186",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\"}"
+   }
+  },
+  {
+   "id": "D07",
+   "purpose": "search, page of 100",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=100",
+   "utc": "2026-11-26T00:45:49Z",
+   "status": 429,
+   "elapsed_ms": 364,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "39",
+   "rate_limit_headers": {},
+   "body_sha256": "59a3b559bcafeb14a5c01f75b37f0afa6d1105a246bdc146ce13cbab3c4d4f5d",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 39 seconds.\"}"
+   }
+  },
+  {
+   "id": "D08",
+   "purpose": "search with no results",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=zzqxnoresultsfdh&$top=5",
+   "utc": "2026-11-26T00:45:50Z",
+   "status": 429,
+   "elapsed_ms": 210,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "38",
+   "rate_limit_headers": {},
+   "body_sha256": "f3c27febb89d8531713af30c0bcdda5ef2549045673bffe48ff83ea8c4479186",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\"}"
+   }
+  },
+  {
+   "id": "D09",
+   "purpose": "search without qname",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qterm=finance&$top=1",
+   "utc": "2026-11-26T00:45:51Z",
+   "status": 429,
+   "elapsed_ms": 294,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "38",
+   "rate_limit_headers": {},
+   "body_sha256": "f3c27febb89d8531713af30c0bcdda5ef2549045673bffe48ff83ea8c4479186",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\"}"
+   }
+  },
+  {
+   "id": "D10",
+   "purpose": "invalid top: negative",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetList?$top=-1",
+   "utc": "2026-11-26T00:45:53Z",
+   "status": 429,
+   "elapsed_ms": 393,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "38",
+   "rate_limit_headers": {},
+   "body_sha256": "f3c27febb89d8531713af30c0bcdda5ef2549045673bffe48ff83ea8c4479186",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\"}"
+   }
+  },
+  {
+   "id": "D11",
+   "purpose": "skip beyond the end",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetList?$top=5&$skip=10000000",
+   "utc": "2026-11-26T00:45:54Z",
+   "status": 429,
+   "elapsed_ms": 330,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "37",
+   "rate_limit_headers": {},
+   "body_sha256": "0d4566a7444f90c9c8f85b70295334c31924a8e0728cf3f7b46657e51e6a963a",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 37 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 37 seconds.\"}"
+   }
+  },
+  {
+   "id": "D13",
+   "purpose": "unknown dataset detail",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/DatasetView?dataset_unique_id=0000000",
+   "utc": "2026-11-26T00:45:56Z",
+   "status": 429,
+   "elapsed_ms": 310,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "38",
+   "rate_limit_headers": {},
+   "body_sha256": "f3c27febb89d8531713af30c0bcdda5ef2549045673bffe48ff83ea8c4479186",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 38 seconds.\" }"
+  },
+  {
+   "id": "L3.1",
+   "purpose": "latency repeat, indicators",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=100",
+   "utc": "2026-11-26T00:45:57Z",
+   "status": 200,
+   "elapsed_ms": 849,
+   "bytes": 29344,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "408b04ae998a2477385d9eb5498b80dab9d0b2b255b19d87f9000f0570b6ffc6",
+   "json": true
+  },
+  {
+   "id": "L4.1",
+   "purpose": "latency repeat, catalog search",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=100",
+   "utc": "2026-11-26T00:45:59Z",
+   "status": 429,
+   "elapsed_ms": 447,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "37",
+   "rate_limit_headers": {},
+   "body_sha256": "0d4566a7444f90c9c8f85b70295334c31924a8e0728cf3f7b46657e51e6a963a",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 37 seconds.\" }"
+  },
+  {
+   "id": "L3.2",
+   "purpose": "latency repeat, indicators",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=100",
+   "utc": "2026-11-26T00:46:01Z",
+   "status": 200,
+   "elapsed_ms": 240,
+   "bytes": 29344,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "408b04ae998a2477385d9eb5498b80dab9d0b2b255b19d87f9000f0570b6ffc6",
+   "json": true
+  },
+  {
+   "id": "L4.2",
+   "purpose": "latency repeat, catalog search",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=100",
+   "utc": "2026-11-26T00:46:02Z",
+   "status": 429,
+   "elapsed_ms": 367,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "36",
+   "rate_limit_headers": {},
+   "body_sha256": "6cc05252282541e421b68e2ba688b734f6d3b019c8189f1d45a23a3d749f54fd",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 36 seconds.\" }"
+  },
+  {
+   "id": "L3.3",
+   "purpose": "latency repeat, indicators",
+   "url": "https://api.worldbank.org/v2/indicator?format=json&per_page=100",
+   "utc": "2026-11-26T00:46:04Z",
+   "status": 200,
+   "elapsed_ms": 425,
+   "bytes": 29344,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "408b04ae998a2477385d9eb5498b80dab9d0b2b255b19d87f9000f0570b6ffc6",
+   "json": true
+  },
+  {
+   "id": "L4.3",
+   "purpose": "latency repeat, catalog search",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=100",
+   "utc": "2026-11-26T00:46:05Z",
+   "status": 429,
+   "elapsed_ms": 516,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "41",
+   "rate_limit_headers": {},
+   "body_sha256": "bc0cafc08c7a48d85d71ef6740d82df7ed11434905648911173d55fc480786db",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 41 seconds.\" }"
+  }
+ ]
+}
