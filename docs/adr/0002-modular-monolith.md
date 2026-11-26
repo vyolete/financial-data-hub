@@ -5,6 +5,7 @@
 - **Autoridad**: aprobada por la dirección del proyecto en sesión de trabajo del 2026-11-25.
   El registro verificable es un comentario personal de la persona mantenedora en el
   [issue #2](https://github.com/vyolete/financial-data-hub/issues/2); aún no consta.
+- **Complementado por**: [ADR-0006](0006-metadata-driven-architecture.md) (planos de control y datos).
 
 ## Contexto
 

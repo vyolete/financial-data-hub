@@ -1,12 +1,14 @@
 # Financial Data Hub
 
-Plataforma modular de descubrimiento, integración, gobierno y consumo de datos financieros y económicos. Proyecto público en fase de fundación; todavía no ofrece servicios operativos.
+Plataforma de ingeniería de datos financieros y económicos, con un motor modular de integración ETL/ELT como componente central. Proyecto público en fase de fundación; todavía no ofrece servicios operativos.
 
 ## Propósito
 Facilitar el acceso reproducible a fuentes públicas, con trazabilidad, calidad, eficiencia y contratos verificables. Los consumidores previstos incluyen Python, R, Power BI y un portal web.
 
 ## Navegación
 - [Visión](docs/product/vision.md)
+- [Arquitectura objetivo](docs/architecture/target-architecture.md)
+- [Inventario de fuentes](research/sources/inventory.md)
 - [Roadmap](ROADMAP.md)
 - [Documentación](docs/README.md)
 - [Especificaciones](specs/README.md)

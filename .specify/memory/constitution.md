@@ -35,8 +35,9 @@ Criterios verificables:
 
 ### III. Modularidad y simplicidad
 
-El sistema MUST ser un monolito modular y empezar por la solución más simple que satisfaga los
-requisitos aprobados.
+El sistema es una plataforma de ingeniería de datos financieros y económicos cuyo núcleo es un
+motor modular de integración. MUST ser un monolito modular orientado a metadatos y empezar por la
+solución más simple que satisfaga los requisitos aprobados.
 
 Criterios verificables:
 
@@ -46,6 +47,12 @@ Criterios verificables:
   fuentes cumplen un contrato común.
 - El frontend consume solo la API HTTP documentada, sin acceso directo a PostgreSQL ni servicios
   de backend alternativos. El backend no depende del frontend ni de Lovable.
+- El plano de control (registro, configuración, orquestación, estado, historial y gobierno) y el
+  plano de datos (conectores, extracción, transformación, almacenamiento y consulta) se separan
+  en módulos que se comunican por interfaces explícitas. Es una separación lógica dentro del
+  monolito.
+- Antes de desarrollar una capacidad de integración u orquestación se evalúa reutilizar una
+  existente; la elección se justifica en `plan.md` o en un ADR.
 - Cada dependencia nueva se justifica en `plan.md`.
 
 ### IV. Integridad, calidad y trazabilidad de datos
@@ -61,6 +68,8 @@ Criterios verificables:
   ejecución y marcas temporales UTC.
 - Repetir una ejecución con la misma entrada no crea registros duplicados.
 - Los registros inválidos o rechazados se cuentan y se informan; no se descartan en silencio.
+- Cuando se extraigan datos, la capa Bronze conserva los originales sin modificarlos; Silver
+  (normalizados y validados) y Gold (productos analíticos) registran el linaje hasta ellos.
 - Los cambios de esquema se aplican mediante migraciones versionadas.
 - Un valor desconocido se representa como desconocido; no se infiere ni se inventa.
 
@@ -125,6 +134,8 @@ Criterios verificables:
   ambos versionados.
 - Desde un clon limpio, los comandos documentados levantan el entorno y ejecutan las pruebas.
 - Cada corrección de un defecto añade una prueba de regresión.
+- La primera entrega con código incluye integración continua en GitHub Actions que ejecuta las
+  pruebas sin red.
 
 ### IX. Colaboración entre agentes y aprobación humana
 
@@ -166,8 +177,15 @@ Los ADR contienen el detalle y la justificación:
 - Monolito modular y frontend desacoplado, con apoyo de Lovable:
   `docs/adr/0002-modular-monolith.md`.
 - Python, uv, FastAPI, PostgreSQL, React, Docker Compose y pytest:
-  `docs/adr/0003-technology-stack.md`. dlt y Dagster son candidatos posteriores y MUST NOT
-  introducirse sin pruebas técnicas y un ADR.
+  `docs/adr/0003-technology-stack.md`.
+- Arquitectura objetivo con planos de control y datos, capas Bronze, Silver y Gold y familias de
+  conectores: `docs/adr/0006-metadata-driven-architecture.md` y
+  `docs/architecture/target-architecture.md`.
+- dlt (integración) y Dagster (orquestación) son referencias condicionadas a pruebas de concepto
+  comparativas: `docs/adr/0007-integration-and-orchestration.md`. MUST NOT introducirse en el
+  producto sin esas pruebas y un ADR que confirme la selección. Parquet, almacenamiento de objetos
+  y GitHub Actions forman parte del objetivo; DuckDB está por evaluar.
+- World Bank se descubre mediante Data360 en FDH-001: `docs/adr/0008-world-bank-data360.md`.
 - Licencia del software Apache-2.0: `docs/adr/0004-apache-2-license.md`. No cubre las licencias de
   las fuentes de datos.
 - Documentación en español; código, rutas, identificadores y contratos en inglés:
@@ -200,4 +218,4 @@ contradicciones se corrigen en el documento subordinado o mediante una enmienda.
 - **Cumplimiento**: cada plan incluye la comprobación contra la constitución y cada PR declara su
   cumplimiento. Una excepción se justifica por escrito y requiere aprobación humana.
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): pendiente de aprobación registrada en GitHub | **Last Amended**: 2026-11-25
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): pendiente de aprobación registrada en GitHub | **Last Amended**: 2026-11-25
