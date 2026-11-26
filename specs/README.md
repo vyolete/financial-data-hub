@@ -8,6 +8,7 @@ Las especificaciones deben identificar alcance, exclusiones, escenarios, requisi
 | ID | Directorio |
 |---|---|
 | FDH-001 | [001-source-discovery](001-source-discovery/spec.md) |
+| FDH-009 | [009-cloud-platform](009-cloud-platform/spec.md) (Draft) |
 
 ## Vincular la funcionalidad activa
 Spec Kit lee `.specify/feature.json`, que es local y no se versiona. En cada copia de trabajo, desde la raíz (Bash):
