@@ -39,6 +39,7 @@ class AdapterCapabilities:
     cursor_pagination: bool
     supported_filters: tuple[str, ...] = ()
     max_page_size: int | None = None        # None: not established
+    token_header: str | None = None         # header for an optional application token
 
 
 @dataclass(frozen=True)
@@ -156,7 +157,8 @@ class DiscoveryAdapter(Protocol):
 | Adaptador | `parse` no infiere: campo ausente es `None` o vacío. Un registro defectuoso va a `rejected` sin descartar los demás |
 | Adaptador | Nunca devuelve nombres de propietarios, creadores ni contactos |
 | Adaptador | `next_cursor` es `None` cuando la fuente no indica más resultados; el cursor lleva el conteo de vistos |
-| Núcleo | Comprueba HTTPS y host permitido, aplica la política de red y reintentos |
+| Núcleo | Comprueba HTTPS y host permitido, aplica la política de red, el intervalo mínimo y los reintentos |
+| Núcleo | Añade el token opcional en la cabecera que declara el adaptador; el adaptador nunca recibe su valor |
 | Núcleo | Valida localizadores, deduplica, persiste, asigna proveedor, plataforma, atribución y permisos |
 | Núcleo | `classify` completa la clasificación por estado HTTP; no puede volver reintentable un 400, 401, 403 o 404 |
 
@@ -187,7 +189,7 @@ Reglas del adaptador de Socrata (E1):
 
 | Caso | Comportamiento |
 |---|---|
-| Capacidades | Búsqueda por texto, total declarado y cursor; sin filtros; `max_page_size` 10000, según la referencia oficial |
+| Capacidades | Búsqueda por texto, total declarado y cursor; sin filtros; `max_page_size` 10000, según la referencia oficial; token opcional en `X-App-Token` |
 | Opciones | Solo `domains`, obligatoria: nombres de host separados por comas |
 | `metadata.domain` distinto de los configurados | Rechazo `unexpected_domain`: el permiso de publicación cubre solo los portales configurados. Si falta, se acepta |
 | Texto vacío o en blanco | Desconocido |

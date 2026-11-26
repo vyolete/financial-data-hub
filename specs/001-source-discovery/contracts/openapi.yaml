@@ -347,7 +347,7 @@ components:
       enum: [running, succeeded, partial, failed]
     Run:
       type: object
-      required: [id, source_id, status, truncated, started_at, finished_at, pages_processed, received, created, updated, unchanged, rejected, failures]
+      required: [id, source_id, status, truncated, started_at, finished_at, pages_processed, received, created, updated, unchanged, rejected, failures, requests, duration_ms, persistence_ms]
       properties:
         id: {type: string, format: uuid}
         source_id: {type: string}
@@ -362,6 +362,9 @@ components:
         unchanged: {type: integer}
         rejected: {type: integer}
         failures: {type: integer}
+        requests: {type: [integer, "null"], description: Requests sent, retries included; null means unknown}
+        duration_ms: {type: [integer, "null"], description: Measured duration; null means unknown}
+        persistence_ms: {type: [integer, "null"], description: Time storing pages; null means unknown}
     RunQuery:
       type: object
       required: [query_index, term, pages_processed, total_declared, truncated]
@@ -384,7 +387,11 @@ components:
       allOf:
         - $ref: "#/components/schemas/Run"
         - type: object
-          required: [queries, errors]
+          required: [queries, errors, rejection_reasons]
           properties:
+            rejection_reasons:
+              type: [object, "null"]
+              description: Rejected records by reason; null means unknown
+              additionalProperties: {type: integer}
             queries: {type: array, items: {$ref: "#/components/schemas/RunQuery"}}
             errors: {type: array, items: {$ref: "#/components/schemas/RunError"}}

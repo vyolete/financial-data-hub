@@ -109,3 +109,14 @@ Versiones consultadas en PyPI, npm, nodejs.org, Docker Hub y GitHub el 2026-11-2
 - **Decisión**: `openapi-spec-validator` y PyYAML como dependencias de desarrollo; gitleaks, `pip-audit` y `npm audit` solo en la integración continua.
 - **Razón**: validar formalmente el contrato OpenAPI y compararlo con la API en las pruebas; detectar secretos y dependencias vulnerables. Licencias Apache-2.0 y MIT en las dependencias de Python.
 - **Alternativas**: comprobar solo la sintaxis (no detecta un documento inválido).
+
+### D17. Intervalo entre solicitudes y token opcional (E2)
+- **Decisión**: intervalo mínimo de 1 s entre inicios de solicitudes por fuente; token opcional leído de la variable que nombre la fuente y enviado en la cabecera que declare el adaptador.
+- **Razón**: el intervalo coincide con el `Crawl-delay: 1` publicado en `www.datos.gov.co` para su sitio web (no documentado para la API); la referencia oficial recomienda el token y sin él la cuota es compartida por dirección IP.
+- **Alternativas**: sin pausa (E1); token obligatorio (la lectura pública no lo exige); limitador entre procesos (innecesario para un comando local con un bloqueo por fuente).
+
+### D18. Comprobación en navegador (E2)
+- **Decisión**: un script de Node que controla Chrome sin interfaz mediante su protocolo de depuración, sin dependencias.
+- **Razón**: comprueba el portal real servido por nginx, con su CSP, sin instalar navegadores ni paquetes adicionales.
+- **Alternativas**: Playwright (descarga navegadores; sin espacio suficiente y sin necesidad para este alcance).
+

@@ -37,6 +37,6 @@ Con `--all`, una fuente fallida no impide ejecutar las demás y se devuelve el r
 
 ## Salida
 
-`discover` imprime por fuente el identificador y estado de la ejecución, solicitudes enviadas (reintentos incluidos), páginas, registros recibidos, únicos, creados, actualizados, sin cambios y rechazados, fallos, duración total y de persistencia, cada consulta con su total declarado y truncamiento, motivos de rechazo y errores. El número de solicitudes, los motivos de rechazo y el tiempo de persistencia constan en la salida y en los logs, no en la base de datos.
+`discover` imprime por fuente el identificador y estado de la ejecución, solicitudes enviadas (reintentos incluidos), páginas, registros recibidos, únicos, creados, actualizados, sin cambios y rechazados, fallos, duración total y de persistencia, cada consulta con su total declarado y truncamiento, motivos de rechazo y errores. Solicitudes, duración, persistencia y motivos de rechazo se guardan además en la base de datos.
 
-`runs list` imprime una línea por ejecución, la más reciente primero, con sus conteos, consultas truncadas y duración, seguida de sus errores.
+`runs list` imprime una línea por ejecución, la más reciente primero, con sus conteos, consultas truncadas y métricas persistidas, seguida de sus errores. Una métrica desconocida se muestra como `-`.

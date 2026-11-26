@@ -9,6 +9,7 @@ max_pages = 5                 # per query
 attempt_timeout_s = 10.0
 max_retries = 3               # additional to the first attempt
 max_retry_after_s = 60
+min_request_interval_s = 1.0   # between the starts of consecutive requests to a source
 
 [[sources]]
 source_id = "co-datos-gov"
@@ -24,6 +25,7 @@ redistribution_conditions = "Los términos del portal permiten redistribuir cita
 # license_name and license_url omitted: no single licence for the source, it is declared per dataset
 terms_url = "https://herramientas.datos.gov.co/terminos"
 terms_checked_on = 2026-11-26
+app_token_env = "FDH_SOCRATA_APP_TOKEN"   # name of an optional environment secret
 
 [sources.metadata_publication]
 value = "allowed"
@@ -73,13 +75,17 @@ term = "finance"
 | `source_id` único, `^[a-z0-9-]+$` | El comando termina sin solicitudes |
 | `platform` conocida; con adaptador registrado, `options` y consultas compatibles con sus capacidades | `discover` termina sin solicitudes; `config check` y `sources sync` informan si el adaptador no está disponible |
 | `base_url` HTTPS y su host en `allowed_hosts` | Igual |
-| `1 ≤ page_size ≤ 100`, `1 ≤ max_pages ≤ 100`, `attempt_timeout_s > 0`, `0 ≤ max_retries ≤ 3`, `max_retry_after_s ≥ 0` | Igual |
+| `1 ≤ page_size ≤ 100`, `1 ≤ max_pages ≤ 100`, `attempt_timeout_s > 0`, `0 ≤ max_retries ≤ 3`, `max_retry_after_s ≥ 0`, `0 ≤ min_request_interval_s ≤ 60` | Igual |
+| `app_token_env`, si se indica, cumple `^FDH_[A-Z0-9_]*APP_TOKEN$` y la plataforma admite token | Igual |
+| El valor del token, si existe, tiene de 1 a 256 caracteres ASCII visibles sin espacios | `discover` termina sin solicitudes y sin mostrar el valor |
 | `official_url`, `license_url` y `terms_url` HTTPS si se indican | Igual |
 | `value` distinto de `undetermined` exige `declared_by`, `declared_on` y `evidence` | Igual |
 | Claves desconocidas | Igual |
 
 - Una fuente sin `metadata_publication` queda `undetermined`: se puede descubrir, pero sus datasets no se muestran.
 - Los límites de `[defaults]` pueden redefinirse por fuente.
+- La configuración nunca contiene el token: solo el nombre de la variable. Una variable ausente o vacía significa sin token. En Compose solo la recibe el servicio `api`, desde el entorno o `.env`.
+- El intervalo mínimo rige dentro de una ejecución; dos invocaciones seguidas del comando no se esperan entre sí.
 - Licencia, condiciones y su fecha de revisión omitidas significan desconocido y no conceden permisos.
 - `fdh sources sync` aplica los cambios sin red; cambiar el permiso de publicación registra una entrada en la bitácora.
 - Todo cambio de permiso al sincronizar exige `declared_by`, `declared_on` y `evidence`, también hacia `undetermined`; si faltan, la sincronización se rechaza con código 2 y no cambia nada. Para revocar, declarar `denied` o `undetermined` con esos tres datos.

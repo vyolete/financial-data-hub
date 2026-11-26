@@ -75,6 +75,11 @@ El redescubrimiento **no modifica** `review_status`, permisos ni condiciones reg
 | `started_at`, `finished_at` | timestamptz | `finished_at` nulo mientras está `running` |
 | `pages_processed`, `received`, `created`, `updated`, `unchanged`, `rejected`, `failures` | integer | |
 | `errors` | jsonb | `{code, message, query_index, http_status, attempts}` sanitizados |
+| `requests` | integer null | Solicitudes enviadas, reintentos incluidos |
+| `duration_ms`, `persistence_ms` | integer null | Duración medida y tiempo guardando páginas |
+| `rejection_reasons` | jsonb null | `{motivo: conteo}`; `{}` significa sin rechazos |
+
+Las cuatro métricas (migración `0002`) se escriben al terminar la ejecución. `NULL` significa desconocido: ejecuciones anteriores a la migración o cerradas como `interrupted`. No se calculan a posteriori.
 
 Códigos de `errors`: `timeout`, `connection_error`, `rate_limited`, `http_error`, `retry_after_too_long`, `redirect_rejected`, `host_not_allowed`, `response_too_large`, `invalid_response`, `provider_error`, `persistence_error`, `internal_error` e `interrupted`.
 

@@ -2,6 +2,7 @@
 
 **Estado**: In Progress (aprobada; implementación iniciada el 2026-11-26)
 **Registro de aprobación**: [comentario en el issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit `afe2090dda25295a98164c507a99cc52d3644ec1` (2026-11-26 UTC)
+**Cambios posteriores a la aprobación**: decisiones de la [sesión del 2026-11-26](#session-2026-11-26-e2), indicadas por quien opera la sesión y **pendientes de registro de aprobación** (afectan a FR-03, FR-04, NFR-01 y añaden AC-38 a AC-40)
 **Issue de seguimiento**: [#2](https://github.com/vyolete/financial-data-hub/issues/2)
 
 ## Clarifications
@@ -32,6 +33,16 @@
 - Q: ¿Entra la integración continua en FDH-001? → A: Sí, con pruebas y controles proporcionales al alcance.
 - Q: ¿Anula el permiso de metadatos de una fuente las restricciones específicas de un dataset? → A: No; la restricción del dataset prevalece.
 - Q: ¿Qué ocurre con un dataset que tiene un localizador inválido? → A: Permanece en el catálogo; el localizador no puede usarse para extracción hasta que se corrija.
+
+### Session 2026-11-26 (E2)
+
+Instrucciones dadas en la sesión de trabajo. No constituyen registro de aprobación (constitución IX).
+
+- Q: ¿Se aceptan las precisiones de los contratos reportadas en E1? → A: Sí: rechazo de datasets de un dominio no configurado, máximo de página de Socrata declarado en 10000, código de salida más grave con `--all` y cumplimiento de un `Retry-After` pendiente antes de la siguiente solicitud.
+- Q: ¿Cambia el tamaño de página predeterminado? → A: No; se solicita a la fuente en páginas de 100 por defecto. La API conserva 20 por defecto y 100 como máximo (FR-04).
+- Q: ¿Se usa el App Token de Socrata? → A: Se admite de forma opcional como secreto del entorno; las consultas actuales no lo exigen.
+- Q: ¿Se espacian las solicitudes? → A: Sí, con un intervalo mínimo configurable entre solicitudes a cada fuente.
+- Q: ¿Se persisten las métricas de ejecución? → A: Las necesarias para la API y el portal, con una migración compatible con los registros existentes. Una métrica histórica ausente es desconocida; no se calcula ni se inventa.
 
 ## Escenarios de usuario
 
@@ -75,7 +86,9 @@ La publicación de metadatos no concede extracción ni redistribución de datos,
   - Ejecución: identificador, fuente, parámetros, inicio y fin en UTC, estado, páginas procesadas, conteos (recibidos, creados, actualizados y rechazados), errores sanitizados y, por consulta, total declarado por la fuente (si lo hay) y marca `truncated`.
   - Estados: `running`; `succeeded` (sin fallos ni rechazos, aunque no haya resultados); `partial` (se recuperó al menos un registro válido y hubo fallos o rechazos); `failed` (hubo fallos o rechazos y no se recuperó ningún registro válido, incluido el caso de que todos se rechacen).
   - `truncated` indica que quedaron resultados tras alcanzar el máximo de páginas de una consulta. Es un límite intencional: no es un error ni cambia por sí solo el estado.
+  - (E2) Cada ejecución terminada guarda además solicitudes enviadas (reintentos incluidos), duración, tiempo de persistencia y motivos de rechazo con su conteo. En ejecuciones anteriores a esta medición, o interrumpidas, son desconocidos.
 - **FDH-001-FR-04**: Exponer mediante FastAPI, en modo de solo lectura, búsqueda paginada, filtros por texto, proveedor y categoría (coincide con cualquiera de las categorías o temas originales), detalle de datasets y estado de las ejecuciones. Página predeterminada de 20 registros y máxima de 100.
+  - (E2) El estado de las ejecuciones incluye sus métricas persistidas; las desconocidas se presentan como tales.
 - **FDH-001-FR-05**: Mostrar en un portal React de solo lectura los registros reales del catálogo y el estado de las ejecuciones; distinguir los estados vacío, cargando y fallido, y no presentar una ejecución `partial` o `failed` como exitosa.
 - **FDH-001-FR-06**: Añadir World Bank como segundo adaptador de descubrimiento, tras verificar su API oficial y condiciones, sin modificar el núcleo del catálogo, que no depende de Socrata. Usa la API pública Data360, solo entradas de tipo dataset, con consultas configurables y los mismos límites. Cambiar de API requiere registrar evidencia y solicitar aprobación.
   - Todo adaptador declara explícitamente sus capacidades; una configuración que exija una no soportada se rechaza antes de la primera solicitud.
@@ -84,6 +97,8 @@ La publicación de metadatos no concede extracción ni redistribución de datos,
   - Tiempo máximo configurable por intento, 10 segundos por defecto, y máximo 3 reintentos adicionales (4 intentos en total), con espera creciente y respeto de `Retry-After`. Si `Retry-After` supera 60 segundos, no se reintenta y la ejecución termina `partial` o `failed` según las reglas de estado.
   - Se reintentan fallos de conexión, tiempos de espera y respuestas HTTP 429, 500, 502, 503 y 504; los demás errores no se reintentan.
   - API, portal y base de datos sin autenticación solo son accesibles desde el equipo local.
+  - (E2) Intervalo mínimo configurable, 1 segundo por defecto y 60 como máximo, entre los inicios de dos solicitudes consecutivas a una fuente durante una ejecución, reintentos incluidos.
+  - (E2) Una fuente puede nombrar una variable de entorno con un token de aplicación opcional. Sin valor, las solicitudes se envían sin token. El token solo viaja en una cabecera hacia los hosts permitidos y no aparece en configuración, base de datos, API, portal ni logs.
 - **FDH-001-NFR-02**: Registrar URL oficial de la fuente, fecha de verificación y estado de acceso y redistribución; las condiciones desconocidas siguen siendo desconocidas.
   - Estado de revisión: `pending` (predeterminado), `verified` o `restricted`. Cambiarlo requiere una revisión humana con evidencia y fecha.
   - Las condiciones de acceso y de redistribución se registran por separado. La disponibilidad pública no implica permisos.
@@ -104,6 +119,7 @@ La publicación de metadatos no concede extracción ni redistribución de datos,
 | Tiempo máximo por intento (configurable) | 10 s |
 | `Retry-After` máximo aceptado | 60 s |
 | Reintentos adicionales por solicitud | 3 |
+| Intervalo mínimo entre solicitudes a una fuente (E2) | 1 s |
 | Tamaño de página de la API, predeterminado | 20 |
 | Tamaño de página de la API, máximo | 100 |
 
@@ -150,6 +166,9 @@ Salvo indicación contraria, las fuentes de los criterios tienen publicación de
 | FDH-001-AC-35 | NFR-02 | Ni declarar `allowed` los metadatos de una fuente ni la licencia declarada cambian los permisos de extracción y redistribución, `undetermined` por defecto; los permisos solo cambian por configuración o comando local, con evidencia y fecha |
 | FDH-001-AC-36 | FR-03 | Cada localizador conserva tipo, URL, campo de origen y estado; se aceptan tipos nuevos, una URL no HTTPS o mal formada queda `invalid` sin rechazar ni eliminar el dataset, no figura entre las utilizables para extracción hasta que una versión corregida supere la validación, y ninguna se consulta |
 | FDH-001-AC-37 | NFR-03 | Un cambio publicado en la rama o propuesto en un PR ejecuta en GitHub Actions las pruebas sin red y los controles definidos en el plan, y un fallo es visible |
+| FDH-001-AC-38 | NFR-01 | (E2) Sin la variable del token, el descubrimiento funciona sin enviar token; con ella, cada solicitud lo envía en la cabecera de la plataforma y su valor no aparece en logs, base de datos ni salidas; un valor mal formado detiene el comando sin solicitudes |
+| FDH-001-AC-39 | NFR-01 | (E2) Entre los inicios de dos solicitudes consecutivas a una fuente transcurre al menos el intervalo configurado, también en reintentos; cambiarlo no requiere modificar código |
+| FDH-001-AC-40 | FR-03, FR-04, FR-05 | (E2) La migración conserva las ejecuciones existentes, cuyas métricas quedan desconocidas; las ejecuciones nuevas las persisten y la API y el portal muestran las mismas, distinguiendo desconocido de cero |
 
 ## Fuera de alcance
 

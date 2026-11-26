@@ -49,7 +49,7 @@ Sin violaciones que justificar.
 
 ```text
 specs/001-source-discovery/
-├── spec.md          # aprobada; no se modifica
+├── spec.md          # aprobada; sus cambios requieren nuevo registro
 ├── plan.md
 ├── research.md
 ├── data-model.md
@@ -144,6 +144,8 @@ La correspondencia de campos está en [adapter-contract.md](contracts/adapter-co
 |---|---|
 | Plazo por intento, incluida la lectura | 10 s, configurable |
 | Reintentos adicionales | 3; esperas de 1, 2 y 4 s, nunca menores que `Retry-After` |
+| Intervalo mínimo entre solicitudes | 1 s por fuente, configurable (E2) |
+| Token de aplicación | Opcional, desde el entorno, en la cabecera de la plataforma (E2) |
 | `Retry-After` | Segundos o fecha HTTP; mayor de 60 s: sin reintento. Si se agotan los reintentos con una espera aceptada, se cumple antes de la siguiente solicitud |
 | Reintentable | Fallo de conexión, plazo agotado, 429, 500, 502, 503, 504 |
 | Hosts | Solo `allowed_hosts`, por HTTPS; sin seguir redirecciones |
