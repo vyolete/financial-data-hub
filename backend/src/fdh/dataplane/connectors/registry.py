@@ -8,6 +8,7 @@ from fdh.dataplane.connectors.contract import (
     UnsupportedConfiguration,
     check_capabilities,
 )
+from fdh.dataplane.connectors.data360 import Data360Adapter
 from fdh.dataplane.connectors.socrata import SocrataAdapter
 from fdh.domain.sources import SourceDefinition
 
@@ -51,4 +52,5 @@ def default_registry() -> AdapterRegistry:
     """Adapters shipped with the product."""
     registry = AdapterRegistry()
     registry.register(SocrataAdapter.platform, SocrataAdapter)
+    registry.register(Data360Adapter.platform, Data360Adapter)
     return registry

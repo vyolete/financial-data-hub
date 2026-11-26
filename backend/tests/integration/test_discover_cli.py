@@ -281,8 +281,8 @@ def test_a_run_in_progress_exits_with_five_without_requests(
     ("arguments", "platform", "message"),
     [
         (("--source", "unknown"), "socrata", "unknown source"),
-        (("--source", "alpha"), "data360", "no adapter"),
-        (("--all",), "data360", "no adapter"),
+        (("--source", "alpha"), "data360", "does not support options"),
+        (("--all",), "data360", "does not support options"),
     ],
 )
 def test_unusable_selections_stop_before_any_request(

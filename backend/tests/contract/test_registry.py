@@ -80,9 +80,9 @@ def source(
 
 def test_only_implemented_adapters_ship() -> None:
     assert default_registry().is_available("socrata")
-    assert not default_registry().is_available("data360")
+    assert default_registry().is_available("data360")
     with pytest.raises(LookupError, match="no adapter"):
-        default_registry().create("data360")
+        default_registry().create("unknown")
 
 
 def test_registered_adapter_validates_a_supported_source() -> None:

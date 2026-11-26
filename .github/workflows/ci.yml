@@ -123,7 +123,7 @@ jobs:
         run: |
           docker compose restart db
           docker compose up --detach --wait --wait-timeout 120
-          docker compose exec -T db psql -U fdh -d fdh -Atc "select count(*) from sources" | grep -qx 1
+          docker compose exec -T db psql -U fdh -d fdh -Atc "select count(*) from sources" | grep -qx 2
       - name: Seed the disposable Compose catalog
         run: docker compose exec -T api python - < backend/tests/fixtures/synthetic/seed.py
       - name: Seeded catalog smoke

@@ -40,3 +40,28 @@ term = "presupuesto"
 
 [[sources.queries]]
 term = "finanzas"
+
+[[sources]]
+source_id = "int-worldbank-data360"
+provider = "World Bank"
+platform = "data360"
+base_url = "https://data360api.worldbank.org/data360/searchv2"
+allowed_hosts = ["data360api.worldbank.org"]
+official_url = "https://data360.worldbank.org"
+verified_at = 2026-11-26
+attribution = "The World Bank"
+access_conditions = "API pública sin autenticación observada en las pruebas"
+redistribution_conditions = "CC BY 4.0 salvo indicación; algunos datasets declaran licencias externas, restrictivas o ninguna"
+license_name = "CC BY 4.0 salvo indicación en cada dataset"
+license_url = "https://datacatalog.worldbank.org/public-licenses"
+terms_url = "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets"
+terms_checked_on = 2026-11-26
+
+[sources.metadata_publication]
+value = "allowed"
+declared_by = "maintainer"
+declared_on = 2026-11-25
+evidence = "https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703"
+
+[[sources.queries]]
+term = "finance"

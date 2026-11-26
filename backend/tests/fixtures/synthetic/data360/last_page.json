@@ -1,0 +1,12 @@
+{
+  "@odata.count": 3,
+  "value": [
+    {
+      "idno": "syn-3",
+      "type": "dataset",
+      "series_description": {
+        "name": "Synthetic dataset"
+      }
+    }
+  ]
+}

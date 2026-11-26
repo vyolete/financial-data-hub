@@ -1,0 +1,19 @@
+{
+  "@odata.count": 2,
+  "value": [
+    {
+      "idno": null,
+      "type": "dataset",
+      "series_description": {
+        "name": "Synthetic dataset"
+      }
+    },
+    {
+      "idno": "bad",
+      "type": "dataset",
+      "series_description": {
+        "name": null
+      }
+    }
+  ]
+}

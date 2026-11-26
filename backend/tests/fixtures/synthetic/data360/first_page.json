@@ -1,0 +1,61 @@
+{
+  "@odata.count": 3,
+  "value": [
+    {
+      "idno": "syn-1",
+      "type": "dataset",
+      "series_description": {
+        "name": "Synthetic dataset",
+        "definition_long": "Synthetic description",
+        "topics": [
+          {
+            "name": "Finance"
+          },
+          {
+            "name": "Economics"
+          },
+          {
+            "name": "Finance"
+          }
+        ],
+        "sources": [
+          {
+            "organization": "Synthetic institution"
+          }
+        ],
+        "license": [
+          {
+            "name": "Synthetic license",
+            "uri": "https://example.org/license",
+            "note": "Note"
+          },
+          {
+            "name": "External"
+          }
+        ],
+        "citation_requirement": "Synthetic citation",
+        "date_last_update": "2024-01-01T00:00:00Z",
+        "links": [
+          {
+            "uri": "https://example.org/source"
+          }
+        ],
+        "api_link": "https://example.org/api"
+      },
+      "tags": [
+        {
+          "tag": "tag"
+        }
+      ],
+      "owner": "Synthetic Owner Person",
+      "contact_email": "synthetic.contact@example.org"
+    },
+    {
+      "idno": "syn-2",
+      "type": "dataset",
+      "series_description": {
+        "name": "Synthetic dataset"
+      }
+    }
+  ]
+}
