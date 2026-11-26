@@ -1,28 +1,44 @@
 # Guía de validación de FDH-001
 
-Describe cómo comprobar el MVP **una vez implementado**. Hoy no existe código: ningún comando de esta guía se ha ejecutado. Contratos: [CLI](contracts/cli.md), [configuración](contracts/sources-config.md), [API](contracts/openapi.yaml); datos: [modelo](data-model.md).
+Comprueba el MVP. **Estado: solo E0 está implementado.** Funcionan la preparación, las pruebas, `fdh config check`, `fdh sources sync`, `/health` y la página inicial del portal. Los escenarios 2 a 9 requieren entregas posteriores. Contratos: [CLI](contracts/cli.md), [configuración](contracts/sources-config.md), [API](contracts/openapi.yaml); datos: [modelo](data-model.md).
 
 ## Requisitos previos
-Docker con Compose en ejecución, uv, Node 24 y Git. La instalación de dependencias e imágenes necesita red; las pruebas ordinarias, no.
+Docker con Compose en ejecución, [uv](https://docs.astral.sh/uv/) y Git. Node 24 solo si se quiere trabajar en el portal fuera de Docker. La primera instalación de dependencias e imágenes necesita red; las pruebas ordinarias, no. Reservar unos 3 GB libres.
 
 ## Preparación desde un clon limpio
 
 ```bash
-cp .env.example .env            # definir POSTGRES_PASSWORD
-docker compose up -d --build    # db, migrate, api, web
+cp .env.example .env                       # escribir una contraseña en POSTGRES_PASSWORD
+docker compose up --detach --build --wait  # db, migrate, api y web
+./scripts/smoke.sh
+docker compose run --rm api fdh config check
+docker compose run --rm api fdh sources sync
 ```
 
-Esperado: `http://127.0.0.1:8000/health` responde `ok` y `http://127.0.0.1:8080` muestra el catálogo en estado vacío.
+Esperado: la prueba de humo pasa, `http://127.0.0.1:8000/health` responde `{"status":"ok"}` y `http://127.0.0.1:8080` muestra «Servicio disponible.».
 
-## Pruebas sin red
+## Pruebas
+
+Backend, con la base de datos de Compose en marcha (cada prueba crea y elimina su propia base):
 
 ```bash
-docker compose up -d db
-cd backend && uv sync --locked && uv run pytest        # excluye las pruebas en vivo
-cd ../frontend && npm ci && npm test && npm run build
+cd backend
+uv sync --locked
+export FDH_DB_PASSWORD="$(sed -n 's/^POSTGRES_PASSWORD=//p' ../.env)"
+uv run pytest                      # todas; conexiones externas bloqueadas
+uv run ruff check . && uv run ruff format --check . && uv run mypy
 ```
 
-Esperado: todo en verde con conexiones externas bloqueadas (AC-28, AC-34).
+Sin base de datos: `uv run pytest tests/unit tests/contract tests/architecture tests/api`.
+
+Portal, con Node 24 (`npm ci && npm run lint && npm test && npm run build` en `frontend/`) o solo con Docker:
+
+```bash
+docker build --target build -t fdh-web-check frontend
+docker run --rm --network none fdh-web-check sh -c "npm run lint && npm run typecheck && npm test"
+```
+
+Si un puerto está ocupado, definir `FDH_DB_PORT`, `FDH_API_PORT` o `FDH_WEB_PORT` en `.env`; para las pruebas del backend, exportar también `FDH_DB_PORT`.
 
 ## Escenarios
 

@@ -5,7 +5,7 @@ Etapas aprobadas por la mantenedora el 2026-11-25, sin fechas comprometidas. Los
 | Etapa | Resultado esperado | Estado |
 |---|---|---|
 | FDH-000 Project Foundation | Gobierno, contexto común, flujo de trabajo, Spec Kit y constitución | En revisión |
-| FDH-001 Discovery & Catalog | Descubrimiento y catálogo verificables de Socrata y World Bank | Aprobada; en planificación ([especificación](specs/001-source-discovery/spec.md)) |
+| FDH-001 Discovery & Catalog | Descubrimiento y catálogo verificables de Socrata y World Bank | En implementación ([especificación](specs/001-source-discovery/spec.md)) |
 | FDH-002 Connector Framework | Contratos y conectores reutilizables | Pendiente |
 | FDH-003 Integration Engine | Extracción por lotes e incremental; pruebas de concepto ETL/ELT | Pendiente |
 | FDH-004 Data Storage | Bronze, Silver y Gold, calidad, revisiones y linaje | Pendiente |

@@ -82,5 +82,6 @@ term = "finance"
 - Los límites de `[defaults]` pueden redefinirse por fuente.
 - Licencia, condiciones y su fecha de revisión omitidas significan desconocido y no conceden permisos.
 - `fdh sources sync` aplica los cambios sin red; cambiar el permiso de publicación registra una entrada en la bitácora.
+- Todo cambio de permiso al sincronizar exige `declared_by`, `declared_on` y `evidence`, también hacia `undetermined`; si faltan, la sincronización se rechaza con código 2 y no cambia nada. Para revocar, declarar `denied` o `undetermined` con esos tres datos.
 - Una fuente retirada del archivo pasa a `undetermined` al sincronizar.
 - Los términos de búsqueda son la configuración inicial y pueden cambiarse sin modificar código (AC-02). `presupuesto` y `finance` se probaron en vivo; `finanzas`, no.

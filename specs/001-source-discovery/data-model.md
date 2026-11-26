@@ -130,7 +130,8 @@ running ──► succeeded   rejected = 0 y failures = 0 (aunque valid = 0)
 `fdh sources sync` aplica `sources.toml` usando solo la base de datos, sin solicitudes externas; `discover` la ejecuta antes de empezar.
 
 - Cambiar `metadata_publication` surte efecto al sincronizar y se anota en la bitácora.
-- Una fuente retirada de la configuración conserva sus datos y pasa a `undetermined`.
+- Una fuente retirada de la configuración conserva sus datos y pasa a `undetermined`; la bitácora la anota con el actor `fdh sources sync`.
+- Cualquier otro cambio de permiso exige persona, fecha y evidencia.
 - La sincronización nunca modifica el estado de revisión, los permisos ni las condiciones de un dataset.
 
 ## Correspondencia de fechas
