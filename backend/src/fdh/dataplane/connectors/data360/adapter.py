@@ -87,7 +87,9 @@ def _dataset(item: dict[str, Any], identifier: str) -> DiscoveredDataset:
         raise _Rejected("malformed")
     licenses = tuple(
         dict.fromkeys(
-            DeclaredLicense(_text(entry.get("name")), _text(entry.get("uri")), _text(entry.get("note")))
+            DeclaredLicense(
+                _text(entry.get("name")), _text(entry.get("uri")), _text(entry.get("note"))
+            )
             for entry in _objects(series.get("license"))
         )
     )
