@@ -77,10 +77,11 @@ def source(
     )
 
 
-def test_no_adapter_ships_yet() -> None:
-    assert not default_registry().is_available("socrata")
+def test_only_implemented_adapters_ship() -> None:
+    assert default_registry().is_available("socrata")
+    assert not default_registry().is_available("data360")
     with pytest.raises(LookupError, match="no adapter"):
-        default_registry().create("socrata")
+        default_registry().create("data360")
 
 
 def test_registered_adapter_validates_a_supported_source() -> None:
@@ -130,5 +131,11 @@ def test_config_check_rejects_unsupported_capabilities_without_any_request() -> 
 
 
 def test_config_check_reports_a_missing_adapter(capsys: pytest.CaptureFixture[str]) -> None:
-    assert main(["config", "check", "--config", str(REPOSITORY_CONFIG)]) == 0
+    arguments = ["config", "check", "--config", str(REPOSITORY_CONFIG)]
+    assert main(arguments, registry=AdapterRegistry()) == 0
     assert "adapter=not available yet" in capsys.readouterr().out
+
+
+def test_config_check_reports_the_shipped_adapter(capsys: pytest.CaptureFixture[str]) -> None:
+    assert main(["config", "check", "--config", str(REPOSITORY_CONFIG)]) == 0
+    assert "adapter=available" in capsys.readouterr().out

@@ -1,0 +1,205 @@
+{
+  "_synthetic": "SYNTHETIC response written for tests; not obtained from any provider",
+  "results": [
+    {
+      "resource": {
+        "id": "syn2-0001",
+        "type": "dataset",
+        "name": "Synthetic dataset syn2-0001",
+        "description": "Synthetic description syn2-0001",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0001",
+      "link": "https://data.example.org/Synthetic/syn2-0001"
+    },
+    {
+      "resource": {
+        "type": "dataset",
+        "name": "Synthetic dataset syn2-0002",
+        "description": "Synthetic description syn2-0002",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0002",
+      "link": "https://data.example.org/Synthetic/syn2-0002"
+    },
+    {
+      "resource": {
+        "id": "syn2-0003",
+        "type": "dataset",
+        "name": "   ",
+        "description": "Synthetic description syn2-0003",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0003",
+      "link": "https://data.example.org/Synthetic/syn2-0003"
+    },
+    {
+      "resource": {
+        "id": "syn2-0004",
+        "type": "chart",
+        "name": "Synthetic dataset syn2-0004",
+        "description": "Synthetic description syn2-0004",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0004",
+      "link": "https://data.example.org/Synthetic/syn2-0004"
+    },
+    {
+      "resource": {
+        "id": "syn2-0005",
+        "type": "dataset",
+        "name": 7,
+        "description": "Synthetic description syn2-0005",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0005",
+      "link": "https://data.example.org/Synthetic/syn2-0005"
+    },
+    {
+      "resource": {
+        "id": "syn2-0006",
+        "type": "dataset",
+        "name": "Synthetic dataset syn2-0006",
+        "description": "Synthetic description syn2-0006",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "other.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn2-0006",
+      "link": "https://data.example.org/Synthetic/syn2-0006"
+    },
+    "not an object",
+    {
+      "resource": {
+        "id": "syn2-0007",
+        "type": "dataset",
+        "name": "Synthetic dataset syn2-0007",
+        "description": "Synthetic description syn2-0007",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "not a url",
+      "link": "http://data.example.org/insecure"
+    }
+  ],
+  "resultSetSize": 8,
+  "timings": {
+    "serviceMillis": 1
+  }
+}

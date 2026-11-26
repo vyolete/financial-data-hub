@@ -1,0 +1,37 @@
+{
+  "_synthetic": "SYNTHETIC response written for tests; not obtained from any provider",
+  "results": [
+    {
+      "resource": {
+        "id": "syn1-0003",
+        "type": "dataset",
+        "name": "Synthetic dataset syn1-0003",
+        "description": "Synthetic description syn1-0003",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": []
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn1-0003",
+      "link": "https://data.example.org/Synthetic/syn1-0003"
+    }
+  ],
+  "resultSetSize": 3,
+  "timings": {
+    "serviceMillis": 1
+  }
+}

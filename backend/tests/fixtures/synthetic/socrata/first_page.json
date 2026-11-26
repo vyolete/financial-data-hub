@@ -1,0 +1,67 @@
+{
+  "_synthetic": "SYNTHETIC response written for tests; not obtained from any provider",
+  "results": [
+    {
+      "resource": {
+        "id": "syn1-0001",
+        "type": "dataset",
+        "name": "Synthetic dataset syn1-0001",
+        "description": "Synthetic description syn1-0001",
+        "attribution": "Synthetic Publisher",
+        "createdAt": "2024-01-02T03:04:05.000Z",
+        "updatedAt": "2024-02-02T03:04:05.000Z",
+        "publication_date": "2024-03-02T03:04:05.000Z",
+        "metadata_updated_at": "2024-04-02T03:04:05.000Z",
+        "data_updated_at": "2024-05-02T03:04:05.000Z",
+        "contact_email": "synthetic.contact@example.org"
+      },
+      "classification": {
+        "domain_category": "Synthetic Category",
+        "categories": [
+          "Second Category",
+          "Synthetic Category"
+        ],
+        "domain_tags": [
+          "synthetic-tag"
+        ],
+        "tags": [
+          "other-tag",
+          "synthetic-tag"
+        ],
+        "domain_metadata": [
+          {
+            "key": "Contact",
+            "value": "synthetic.metadata@example.org"
+          }
+        ]
+      },
+      "metadata": {
+        "domain": "data.example.org",
+        "license": "Synthetic License 1.0"
+      },
+      "permalink": "https://data.example.org/d/syn1-0001",
+      "link": "https://data.example.org/Synthetic/syn1-0001",
+      "owner": {
+        "id": "ownr-0001",
+        "display_name": "Synthetic Owner Person"
+      },
+      "creator": {
+        "id": "crtr-0001",
+        "display_name": "Synthetic Creator Person"
+      }
+    },
+    {
+      "resource": {
+        "id": "syn1-0002",
+        "type": "dataset",
+        "name": "Synthetic minimal",
+        "description": "",
+        "attribution": null
+      }
+    }
+  ],
+  "resultSetSize": 3,
+  "timings": {
+    "serviceMillis": 1
+  }
+}

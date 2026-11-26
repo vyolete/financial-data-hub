@@ -7,6 +7,7 @@ from fdh.dataplane.connectors.contract import (
     DiscoveryAdapter,
     check_capabilities,
 )
+from fdh.dataplane.connectors.socrata import SocrataAdapter
 from fdh.domain.sources import SourceDefinition
 
 AdapterFactory = Callable[[], DiscoveryAdapter]
@@ -44,5 +45,7 @@ class AdapterRegistry:
 
 
 def default_registry() -> AdapterRegistry:
-    """Adapters shipped with the product. None is implemented yet."""
-    return AdapterRegistry()
+    """Adapters shipped with the product."""
+    registry = AdapterRegistry()
+    registry.register(SocrataAdapter.platform, SocrataAdapter)
+    return registry
