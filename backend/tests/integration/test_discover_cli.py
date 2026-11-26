@@ -5,7 +5,9 @@ the process and every response is invented.
 """
 
 import asyncio
+import itertools
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +30,8 @@ verified_at = 2026-01-02
 max_retries = 0
 page_size = {page_size}
 max_pages = {max_pages}
+min_request_interval_s = {interval}
+{extra}
 
 [sources.options]
 domains = "{domain}"
@@ -80,6 +84,8 @@ def config(
     max_pages: int = 5,
     domain: str = "data.example.org",
     platform: str = "socrata",
+    interval: float = 0,
+    extra: str = "",
 ) -> str:
     queries = "".join(f'\n[[sources.queries]]\nterm = "{term}"\n' for term in terms)
     text = "".join(
@@ -89,6 +95,8 @@ def config(
             page_size=page_size,
             max_pages=max_pages,
             domain=domain,
+            interval=interval,
+            extra=extra,
         )
         + queries
         for source_id in sources
@@ -347,3 +355,85 @@ def test_runs_list_limit_is_bounded(limit: str) -> None:
     with pytest.raises(SystemExit) as stopped:
         main(["runs", "list", "--limit", limit])
     assert stopped.value.code == 2
+
+
+METRICS = (
+    "SELECT requests, duration_ms >= 0, persistence_ms >= 0, rejection_reasons::text "
+    "FROM runs ORDER BY started_at DESC LIMIT 1"
+)
+
+
+def test_run_metrics_are_persisted_and_listed(
+    migrated: str, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    provider = Provider({"budget": ["a-1", "a-2"], "finance": 503})
+    provider.broken = {"a-2"}
+    assert discover(config(tmp_path, "budget", "finance"), provider) == 3
+    assert query(migrated, METRICS) == [(2, True, True, '{"missing_title": 1}')]
+    capsys.readouterr()
+    assert main(["runs", "list"]) == 0
+    assert " requests=2 " in capsys.readouterr().out
+    query(
+        migrated,
+        "UPDATE runs SET requests = NULL, duration_ms = NULL, persistence_ms = NULL, "
+        "rejection_reasons = NULL",
+    )
+    assert main(["runs", "list"]) == 0
+    assert " requests=- duration=- persistence=-" in capsys.readouterr().out
+
+
+def test_requests_are_spaced_by_the_configured_interval(migrated: str, tmp_path: Path) -> None:
+    starts: list[float] = []
+
+    class Timed(Provider):
+        def __call__(self, request: httpx.Request) -> httpx.Response:
+            starts.append(time.monotonic())
+            return super().__call__(request)
+
+    path = config(tmp_path, "budget", interval=0.2, page_size=1)
+    assert discover(path, Timed({"budget": ["a-1", "a-2", "a-3"]})) == 0
+    assert len(starts) == 3
+    assert all(later - earlier >= 0.2 for earlier, later in itertools.pairwise(starts))
+
+
+TOKEN_SETTING = 'app_token_env = "FDH_SYNTHETIC_APP_TOKEN"'
+TOKEN = "fake-app-token-5566778899"
+
+
+@pytest.mark.parametrize("value", [None, "", TOKEN])
+def test_the_application_token_is_optional_and_never_exposed(
+    migrated: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    value: str | None,
+) -> None:
+    if value is None:
+        monkeypatch.delenv("FDH_SYNTHETIC_APP_TOKEN", raising=False)
+    else:
+        monkeypatch.setenv("FDH_SYNTHETIC_APP_TOKEN", value)
+    provider = Provider({"budget": ["a-1"]})
+    assert discover(config(tmp_path, "budget", extra=TOKEN_SETTING), provider) == 0
+    sent = provider.requests[0].headers.get("x-app-token")
+    assert sent == (value or None)
+    output = capsys.readouterr()
+    stored = query(
+        migrated,
+        "SELECT concat((SELECT json_agg(r) FROM runs r), "
+        "(SELECT json_agg(o) FROM dataset_observations o), "
+        "(SELECT json_agg(s) FROM sources s))",
+    )
+    assert TOKEN not in output.out + output.err + str(stored)
+
+
+def test_a_malformed_token_stops_before_any_request(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setenv("FDH_SYNTHETIC_APP_TOKEN", "broken token value")
+    monkeypatch.setenv("FDH_DB_PORT", "1")  # the database is not reached either
+    provider = Provider({})
+    assert discover(config(tmp_path, "budget", extra=TOKEN_SETTING), provider) == 2
+    assert provider.requests == []
+    output = capsys.readouterr()
+    assert "FDH_SYNTHETIC_APP_TOKEN" in output.err
+    assert "broken token value" not in output.out + output.err

@@ -5,6 +5,7 @@ No request leaves the process. Waits are recorded instead of slept.
 
 import asyncio
 import io
+import itertools
 from collections.abc import AsyncIterator, Callable
 from datetime import UTC, datetime
 
@@ -29,10 +30,17 @@ def accept(_: HttpResponse) -> ErrorKind | None:
 class Harness:
     """An executor over a scripted transport. The last step of the script repeats."""
 
-    def __init__(self, *script: object, limits: DiscoveryLimits | None = None) -> None:
+    def __init__(
+        self,
+        *script: object,
+        limits: DiscoveryLimits | None = None,
+        secret_headers: dict[str, str] | None = None,
+    ) -> None:
         self.script = list(script)
         self.requests: list[httpx.Request] = []
         self.waits: list[float] = []
+        self.time = 100.0  # advances only with the recorded waits
+        self.starts: list[float] = []
         self.client = httpx.AsyncClient(transport=httpx.MockTransport(self._handle), timeout=None)  # noqa: S113
         self.executor = HttpExecutor(
             self.client,
@@ -40,13 +48,17 @@ class Harness:
             limits=limits or DiscoveryLimits(),
             sleep=self._sleep,
             now=lambda: NOW,
+            monotonic=lambda: self.time,
+            secret_headers=secret_headers,
         )
 
     async def _sleep(self, seconds: float) -> None:
         self.waits.append(seconds)
+        self.time += seconds
 
     async def _handle(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)
+        self.starts.append(self.time)
         step = self.script.pop(0) if len(self.script) > 1 else self.script[0]
         if isinstance(step, Exception):
             raise step
@@ -316,3 +328,72 @@ def test_backoff_doubles_and_respects_the_provider() -> None:
     assert [backoff_delay(n, None) for n in (1, 2, 3)] == [1, 2, 4]
     assert backoff_delay(1, 9) == 9
     assert backoff_delay(3, 1) == 4
+
+
+async def test_consecutive_requests_are_spaced_by_the_minimum_interval() -> None:
+    harness = Harness(OK, limits=DiscoveryLimits(min_request_interval_s=5))
+    await harness.executor.execute(REQUEST, accept)
+    assert harness.waits == []
+    harness.time += 2  # the caller spent two seconds before the next request
+    await harness.executor.execute(REQUEST, accept)
+    harness.time += 9
+    await harness.executor.execute(REQUEST, accept)
+    assert harness.waits == [3]
+    assert harness.starts == [100, 105, 114]
+
+
+async def test_retries_also_respect_the_minimum_interval() -> None:
+    harness = Harness(status(503), limits=DiscoveryLimits(min_request_interval_s=3))
+    await harness.failure()
+    gaps = [later - earlier for earlier, later in itertools.pairwise(harness.starts)]
+    assert gaps == [3, 3, 4]  # backoff of 1, 2 and 4 seconds, never below the interval
+    assert harness.waits == [1, 2, 2, 1, 4]
+
+
+async def test_the_interval_can_be_disabled() -> None:
+    harness = Harness(OK, limits=DiscoveryLimits(min_request_interval_s=0))
+    await harness.executor.execute(REQUEST, accept)
+    await harness.executor.execute(REQUEST, accept)
+    assert harness.waits == []
+
+
+def test_the_default_interval_is_one_second() -> None:
+    assert DiscoveryLimits().min_request_interval_s == 1.0
+
+
+TOKEN = "fake-app-token-0123456789"
+
+
+async def test_the_application_token_travels_only_in_its_header() -> None:
+    harness = Harness(OK, secret_headers={"X-App-Token": TOKEN})
+    result = await harness.executor.execute(REQUEST, accept)
+    assert harness.requests[0].headers["x-app-token"] == TOKEN
+    assert TOKEN not in result.url
+    assert TOKEN not in repr(result)
+
+
+async def test_without_a_token_no_token_header_is_sent() -> None:
+    harness = Harness(OK)
+    await harness.executor.execute(REQUEST, accept)
+    assert "x-app-token" not in harness.requests[0].headers
+
+
+async def test_the_token_never_reaches_a_refused_host_or_a_redirect() -> None:
+    harness = Harness(
+        status(302, location="https://attacker.test/"), secret_headers={"X-App-Token": TOKEN}
+    )
+    await harness.failure(HttpRequest("GET", "https://attacker.test/catalog"))
+    assert harness.requests == []
+    await harness.failure()
+    assert [r.url.host for r in harness.requests] == ["api.example.org"]
+
+
+async def test_the_token_is_absent_from_debug_logs_and_errors() -> None:
+    stream = io.StringIO()
+    configure_logging("DEBUG", stream)
+    harness = Harness(status(500), secret_headers={"X-App-Token": TOKEN})
+    error = await harness.failure()
+    assert stream.getvalue()
+    assert TOKEN not in stream.getvalue()
+    assert TOKEN not in str(error)
+    assert TOKEN not in repr(harness.executor)

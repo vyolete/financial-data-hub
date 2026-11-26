@@ -9,7 +9,13 @@ from datetime import date
 from typing import Any, Protocol
 from uuid import UUID
 
-from fdh.controlplane.runs import ObservedPage, RunCounts, RunError, RunRecord
+from fdh.controlplane.runs import (
+    ObservedPage,
+    RunCounts,
+    RunError,
+    RunMetrics,
+    RunRecord,
+)
 from fdh.controlplane.sources import RegisteredSource, SyncPlan
 from fdh.domain.permissions import Permission, ReviewStatus
 from fdh.domain.sources import DiscoveryQuery
@@ -49,7 +55,7 @@ class RunRepository(Protocol):
 
     async def counts(self, run_id: UUID) -> RunCounts: ...
 
-    async def finish(self, run_id: UUID, status: RunStatus) -> None: ...
+    async def finish(self, run_id: UUID, status: RunStatus, metrics: RunMetrics) -> None: ...
 
     async def get(self, run_id: UUID) -> RunRecord: ...
 

@@ -1,5 +1,7 @@
 """Settings taken from the environment. Secrets are never printed."""
 
+import os
+import re
 from pathlib import Path
 
 from pydantic import Field, SecretStr
@@ -21,3 +23,20 @@ class Settings(BaseSettings):
     @property
     def allowed_hosts(self) -> list[str]:
         return [host.strip() for host in self.api_allowed_hosts.split(",") if host.strip()]
+
+
+_TOKEN = re.compile(r"[\x21-\x7e]{1,256}")  # visible ASCII: safe inside an HTTP header
+
+
+class InvalidSecret(Exception):
+    """A secret variable holds an unusable value. Messages name the variable only."""
+
+
+def read_app_token(variable: str) -> SecretStr | None:
+    """The optional application token of a source; absent or empty means none."""
+    value = os.environ.get(variable, "")
+    if not value.strip():
+        return None
+    if not _TOKEN.fullmatch(value):
+        raise InvalidSecret(f"the environment variable {variable} does not hold a valid token")
+    return SecretStr(value)

@@ -14,7 +14,13 @@ from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from fdh.controlplane.runs import ObservedPage, RunCounts, RunError, RunInProgress
+from fdh.controlplane.runs import (
+    ObservedPage,
+    RunCounts,
+    RunError,
+    RunInProgress,
+    RunMetrics,
+)
 from fdh.controlplane.sources import plan_source_sync
 from fdh.domain.datasets import (
     AccessLocator,
@@ -122,7 +128,7 @@ class Store:
     ) -> UUID:
         run_id = await self.start(source_id)
         await self.page(run_id, *datasets, at=at, source_id=source_id)
-        await self.runs.finish(run_id, RunStatus.SUCCEEDED)
+        await self.runs.finish(run_id, RunStatus.SUCCEEDED, RunMetrics())
         return run_id
 
     async def rows(self, statement: str, **values: Any) -> list[tuple[Any, ...]]:
@@ -329,7 +335,7 @@ async def test_a_failed_run_keeps_previous_data(store: Store) -> None:
     await store.run(minimal("x", "kept"))
     run_id = await store.start()
     await store.runs.record_failure(run_id, RunError("timeout", "synthetic", 0, None, 4))
-    await store.runs.finish(run_id, RunStatus.FAILED)
+    await store.runs.finish(run_id, RunStatus.FAILED, RunMetrics())
     record = await store.runs.get(run_id)
     assert (record.status, record.counts.failures) == (RunStatus.FAILED, 1)
     assert record.errors == (RunError("timeout", "synthetic", 0, None, 4),)
@@ -363,7 +369,7 @@ async def test_a_run_records_its_queries_totals_and_truncation(store: Store) -> 
 async def test_a_finished_run_cannot_be_finished_again(store: Store) -> None:
     run_id = await store.run(minimal("x"))
     with pytest.raises(LookupError):
-        await store.runs.finish(run_id, RunStatus.FAILED)
+        await store.runs.finish(run_id, RunStatus.FAILED, RunMetrics())
 
 
 async def test_one_run_per_source_at_a_time(store: Store) -> None:
@@ -416,3 +422,21 @@ async def test_recent_runs_come_first_and_are_limited(store: Store) -> None:
     assert identifiers(await store.runs.recent(None, 10)) == [third, second, first]
     assert identifiers(await store.runs.recent("alpha", 10)) == [third, first]
     assert identifiers(await store.runs.recent(None, 1)) == [third]
+
+
+async def test_metrics_are_stored_when_a_run_finishes(store: Store) -> None:
+    run_id = await store.start()
+    assert (await store.runs.get(run_id)).metrics == RunMetrics()
+    metrics = RunMetrics(4, 1620, 190, {"missing_title": 2})
+    await store.runs.finish(run_id, RunStatus.PARTIAL, metrics)
+    assert (await store.runs.get(run_id)).metrics == metrics
+    empty = await store.start()
+    await store.runs.finish(empty, RunStatus.SUCCEEDED, RunMetrics(1, 0, 0, {}))
+    assert (await store.runs.get(empty)).metrics == RunMetrics(1, 0, 0, {})
+
+
+async def test_an_interrupted_run_has_unknown_metrics(store: Store) -> None:
+    run_id = await store.start()
+    await store.runs.close_abandoned("alpha", INTERRUPTED)
+    assert (await store.runs.get(run_id)).metrics == RunMetrics()
+    assert await store.rows("SELECT requests, rejection_reasons FROM runs") == [(None, None)]

@@ -57,6 +57,16 @@ class RunCounts:
 
 
 @dataclass(frozen=True)
+class RunMetrics:
+    """Measurements stored when a run finishes. ``None`` means unknown, never zero."""
+
+    requests: int | None = None  # attempts sent, retries included
+    duration_ms: int | None = None
+    persistence_ms: int | None = None  # time spent storing pages
+    rejection_reasons: Mapping[str, int] | None = None
+
+
+@dataclass(frozen=True)
 class QueryRecord:
     query_index: int
     term: str | None
@@ -76,3 +86,4 @@ class RunRecord:
     counts: RunCounts
     errors: tuple[RunError, ...]
     queries: tuple[QueryRecord, ...]
+    metrics: RunMetrics = RunMetrics()

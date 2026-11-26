@@ -158,6 +158,7 @@ class SocrataAdapter:
         declares_total=True,
         cursor_pagination=True,
         max_page_size=10000,  # maximum of `limit` in the official reference
+        token_header="X-App-Token",  # noqa: S106  (a header name, not a value)
     )
 
     def validate(self, context: AdapterContext, queries: tuple[DiscoveryQuery, ...]) -> None:

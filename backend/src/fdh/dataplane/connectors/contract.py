@@ -25,6 +25,7 @@ class AdapterCapabilities:
     cursor_pagination: bool
     supported_filters: tuple[str, ...] = ()
     max_page_size: int | None = None  # None: not established
+    token_header: str | None = None  # header for an optional application token
 
 
 @dataclass(frozen=True)

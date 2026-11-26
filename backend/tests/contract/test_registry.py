@@ -1,5 +1,6 @@
 """Adapter registry and capability checks, with a synthetic adapter (AC-33, AC-34)."""
 
+from dataclasses import replace
 from datetime import date
 from pathlib import Path
 
@@ -139,3 +140,13 @@ def test_config_check_reports_a_missing_adapter(capsys: pytest.CaptureFixture[st
 def test_config_check_reports_the_shipped_adapter(capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["config", "check", "--config", str(REPOSITORY_CONFIG)]) == 0
     assert "adapter=available" in capsys.readouterr().out
+
+
+def test_a_token_variable_needs_a_platform_that_accepts_a_token() -> None:
+    definition = replace(source(), app_token_env="FDH_SYNTHETIC_APP_TOKEN")
+    with pytest.raises(UnsupportedConfiguration, match="application token"):
+        registry().validate(definition)
+
+
+def test_the_shipped_socrata_adapter_declares_its_token_header() -> None:
+    assert default_registry().create("socrata").capabilities.token_header == "X-App-Token"

@@ -1,12 +1,14 @@
 """The only component that sends discovery requests.
 
-It enforces the allowed hosts, the deadline of each attempt, the retry policy and the size
-limit for every platform. Errors carry fixed messages: never URLs, headers or bodies.
+It enforces the allowed hosts, the deadline of each attempt, the minimum interval between
+requests, the retry policy and the size limit for every platform. Errors carry fixed messages:
+never URLs, headers or bodies.
 """
 
 import asyncio
 import logging
-from collections.abc import Awaitable, Callable
+import time
+from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
@@ -63,7 +65,10 @@ class _Failure:
 
 
 class HttpExecutor:
-    """Executes the requests of one source. The clock and the waits can be replaced."""
+    """Executes the requests of one source. Clocks and waits can be replaced.
+
+    ``secret_headers`` are added to requests for allowed hosts only and are never logged.
+    """
 
     def __init__(
         self,
@@ -73,12 +78,17 @@ class HttpExecutor:
         limits: DiscoveryLimits,
         sleep: Callable[[float], Awaitable[None]] = asyncio.sleep,
         now: Callable[[], datetime] = lambda: datetime.now(UTC),
+        monotonic: Callable[[], float] = time.monotonic,
+        secret_headers: Mapping[str, str] | None = None,
     ) -> None:
         self._client = client
         self._hosts = frozenset(host.casefold() for host in allowed_hosts)
         self._limits = limits
         self._sleep = sleep
         self._now = now
+        self._monotonic = monotonic
+        self._secret_headers = dict(secret_headers or {})
+        self._last_start: float | None = None
         self._pending_wait = 0.0
         self.requests_sent = 0  # attempts, retries included
 
@@ -91,6 +101,7 @@ class HttpExecutor:
         attempt = 0
         while True:
             attempt += 1
+            await self._keep_interval()
             self.requests_sent += 1
             outcome = await self._attempt(request, url, classify)
             if isinstance(outcome, HttpResponse):
@@ -131,6 +142,15 @@ class HttpExecutor:
                 attempts=attempt,
             )
 
+    async def _keep_interval(self) -> None:
+        """Wait until the minimum interval since the previous request has passed."""
+        if self._last_start is not None:
+            earliest = self._last_start + self._limits.min_request_interval_s
+            # Repeated because a timer may wake slightly early.
+            while (remaining := earliest - self._monotonic()) > 1e-6:
+                await self._sleep(remaining)
+        self._last_start = self._monotonic()
+
     def _allowed_url(self, request: HttpRequest) -> httpx.URL:
         refused = RequestFailed(
             "host_not_allowed", "the request targets a host that is not allowed"
@@ -166,7 +186,7 @@ class HttpExecutor:
     ) -> HttpResponse | _Failure:
         body = None if request.json_body is None else dict(request.json_body)
         async with self._client.stream(
-            request.method, url, json=body, follow_redirects=False
+            request.method, url, json=body, headers=self._secret_headers, follow_redirects=False
         ) as answer:
             status = answer.status_code
             headers = dict(answer.headers)

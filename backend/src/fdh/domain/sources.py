@@ -23,6 +23,7 @@ class DiscoveryLimits:
     attempt_timeout_s: float = 10.0  # deadline of each attempt
     max_retries: int = 3  # additional to the first attempt
     max_retry_after_s: int = 60
+    min_request_interval_s: float = 1.0  # between the starts of consecutive requests
 
 
 @dataclass(frozen=True)
@@ -69,3 +70,4 @@ class SourceDefinition:
     terms_url: str | None = None
     terms_checked_on: date | None = None
     options: Mapping[str, str] = field(default_factory=dict)
+    app_token_env: str | None = None  # name of an optional secret, never its value

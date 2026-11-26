@@ -152,3 +152,31 @@ def test_repository_configuration_is_valid() -> None:
     assert first.source_id == "co-datos-gov"
     assert first.publication.value is Permission.ALLOWED
     assert first.terms_url and first.access_conditions and first.attribution
+
+
+def test_the_interval_and_the_token_variable_are_configurable(tmp_path: Path) -> None:
+    (default,) = load_sources(write(tmp_path, BASE.format(extra="")))
+    assert (default.limits.min_request_interval_s, default.app_token_env) == (1.0, None)
+    extra = 'min_request_interval_s = 2.5\napp_token_env = "FDH_SOCRATA_APP_TOKEN"'
+    (source,) = load_sources(write(tmp_path, BASE.format(extra=extra)))
+    assert source.limits.min_request_interval_s == 2.5
+    assert source.app_token_env == "FDH_SOCRATA_APP_TOKEN"
+
+
+@pytest.mark.parametrize(
+    "extra",
+    [
+        "min_request_interval_s = -1",
+        "min_request_interval_s = 61",
+        # Only application token variables may be named: never another secret.
+        'app_token_env = "FDH_DB_PASSWORD"',
+        'app_token_env = "HOME"',
+        'app_token_env = "fdh_app_token"',
+        'app_token_env = ""',
+        'app_token = "a-literal-token"',
+    ],
+)
+def test_rejects_an_invalid_interval_or_token_setting(tmp_path: Path, extra: str) -> None:
+    with pytest.raises(ConfigError) as error:
+        load(tmp_path, BASE.format(extra=extra))
+    assert "a-literal-token" not in str(error.value)

@@ -5,6 +5,7 @@ from collections.abc import Callable
 from fdh.dataplane.connectors.contract import (
     AdapterContext,
     DiscoveryAdapter,
+    UnsupportedConfiguration,
     check_capabilities,
 )
 from fdh.dataplane.connectors.socrata import SocrataAdapter
@@ -41,6 +42,8 @@ class AdapterRegistry:
             options=source.options,
         )
         check_capabilities(adapter.capabilities, context, source.queries)
+        if source.app_token_env and not adapter.capabilities.token_header:
+            raise UnsupportedConfiguration("the platform does not accept an application token")
         adapter.validate(context, source.queries)
 
 

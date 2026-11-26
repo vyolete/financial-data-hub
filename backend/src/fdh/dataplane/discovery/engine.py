@@ -7,7 +7,7 @@ database or API. The caller validates the configuration and synchronises the sou
 import logging
 import time
 from collections import Counter
-from collections.abc import Callable, Mapping
+from collections.abc import Callable
 from contextlib import AbstractContextManager, nullcontext
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
@@ -15,7 +15,7 @@ from typing import Any, Protocol
 from uuid import UUID
 
 from fdh.controlplane.ports import CatalogRepository, RunRepository
-from fdh.controlplane.runs import ObservedPage, RunError, RunRecord
+from fdh.controlplane.runs import ObservedPage, RunError, RunMetrics, RunRecord
 from fdh.dataplane.connectors.contract import (
     AdapterContext,
     DiscoveryAdapter,
@@ -38,17 +38,8 @@ class RequestSender(Protocol):
 
 
 @dataclass(frozen=True)
-class RunMetrics:
-    requests: int  # attempts sent, retries included
-    duration_s: float
-    persistence_s: float  # time spent storing pages
-
-
-@dataclass(frozen=True)
 class RunSummary:
     record: RunRecord
-    metrics: RunMetrics
-    rejection_reasons: Mapping[str, int]
     abandoned_closed: int
 
 
@@ -111,13 +102,14 @@ class DiscoveryEngine:
                 status = final_status(
                     valid=counts.valid, rejected=counts.rejected, failures=counts.failures
                 )
-                await self._runs.finish(run_id, status)
-                record = await self._runs.get(run_id)
                 metrics = RunMetrics(
-                    progress.sender.requests_sent,
-                    self._timer() - started,
-                    progress.persistence_s,
+                    requests=progress.sender.requests_sent,
+                    duration_ms=round((self._timer() - started) * 1000),
+                    persistence_ms=round(progress.persistence_s * 1000),
+                    rejection_reasons=dict(progress.rejections),
                 )
+                await self._runs.finish(run_id, status, metrics)
+                record = await self._runs.get(run_id)
                 log.info(
                     "discovery run finished",
                     extra={
@@ -127,11 +119,11 @@ class DiscoveryEngine:
                         # Nested: `created` is a reserved attribute of a log record.
                         "counts": {**asdict(counts), "unique": counts.valid},
                         "requests": metrics.requests,
-                        "duration_s": round(metrics.duration_s, 3),
-                        "persistence_s": round(metrics.persistence_s, 3),
+                        "duration_ms": metrics.duration_ms,
+                        "persistence_ms": metrics.persistence_ms,
                     },
                 )
-        return RunSummary(record, metrics, dict(progress.rejections), abandoned)
+        return RunSummary(record, abandoned)
 
     async def _query(
         self,

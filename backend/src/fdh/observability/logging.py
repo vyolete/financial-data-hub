@@ -88,6 +88,8 @@ def configure_logging(level: str = "INFO", stream: TextIO | None = None) -> None
         library = logging.getLogger(name)
         library.handlers, library.propagate = [], True
         library.setLevel(logging.NOTSET)
+    # The transport traces connections at DEBUG level: never let it write request details.
+    logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 
 @contextmanager

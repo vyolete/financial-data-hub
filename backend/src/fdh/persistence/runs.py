@@ -15,6 +15,7 @@ from fdh.controlplane.runs import (
     RunCounts,
     RunError,
     RunInProgress,
+    RunMetrics,
     RunRecord,
 )
 from fdh.domain.sources import DiscoveryQuery
@@ -144,12 +145,12 @@ class SqlRunRepository:
         async with self._sessions() as session:
             return _counts(await session.get_one(Run, run_id))
 
-    async def finish(self, run_id: UUID, status: RunStatus) -> None:
+    async def finish(self, run_id: UUID, status: RunStatus, metrics: RunMetrics) -> None:
         async with self._sessions() as session, session.begin():
             finished = await session.execute(
                 update(Run)
                 .where(Run.id == run_id, Run.status == RunStatus.RUNNING)
-                .values(status=status, finished_at=func.clock_timestamp())
+                .values(status=status, finished_at=func.clock_timestamp(), **asdict(metrics))
                 .returning(Run.id)
             )
             if finished.first() is None:
@@ -193,6 +194,9 @@ class SqlRunRepository:
                 _counts(row),
                 tuple(RunError(**error) for error in row.errors),
                 tuple(queries[row.id]),
+                RunMetrics(
+                    row.requests, row.duration_ms, row.persistence_ms, row.rejection_reasons
+                ),
             )
             for row in rows
         ]

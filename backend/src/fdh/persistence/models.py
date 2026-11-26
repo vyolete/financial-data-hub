@@ -90,6 +90,10 @@ class Source(Base):
 
 class Run(Base):
     __tablename__ = "runs"
+    __table_args__ = tuple(
+        CheckConstraint(f"{column} >= 0", name=f"{column}_not_negative")
+        for column in ("requests", "duration_ms", "persistence_ms")
+    )
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     source_id: Mapped[str] = mapped_column(ForeignKey("sources.source_id"))
@@ -105,6 +109,11 @@ class Run(Base):
     rejected: Mapped[int] = mapped_column(server_default=text("0"))
     failures: Mapped[int] = mapped_column(server_default=text("0"))
     errors: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
+    # Written when the run finishes. NULL means unknown, as in runs older than these columns.
+    requests: Mapped[int | None]
+    duration_ms: Mapped[int | None]
+    persistence_ms: Mapped[int | None]
+    rejection_reasons: Mapped[dict[str, int] | None] = mapped_column(JSONB(none_as_null=True))
 
 
 Index("ix_runs_source_id_started_at", Run.source_id, Run.started_at.desc())

@@ -3,9 +3,10 @@
 import json
 import logging
 import sys
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 
 import httpx
+from pydantic import SecretStr
 
 from fdh.cli.database import database_engine
 from fdh.controlplane.runs import RunInProgress, RunRecord
@@ -46,6 +47,10 @@ def _counts(record: RunRecord) -> str:
     )
 
 
+def _seconds(milliseconds: int | None) -> str:
+    return "-" if milliseconds is None else f"{milliseconds / 1000:.2f}s"
+
+
 def _errors(record: RunRecord) -> list[str]:
     return [
         f"  error: code={e.code} query={_optional(e.query_index)} "
@@ -55,19 +60,20 @@ def _errors(record: RunRecord) -> list[str]:
 
 
 def format_summary(summary: RunSummary) -> str:
-    record, metrics = summary.record, summary.metrics
+    record, metrics = summary.record, summary.record.metrics
     lines = [
         f"{record.source_id}: run {record.run_id} {record.status.value}",
-        f"  requests={metrics.requests} {_counts(record)}",
-        f"  duration={metrics.duration_s:.2f}s persistence={metrics.persistence_s:.2f}s",
+        f"  requests={_optional(metrics.requests)} {_counts(record)}",
+        f"  duration={_seconds(metrics.duration_ms)} "
+        f"persistence={_seconds(metrics.persistence_ms)}",
     ]
     lines += [
         f"  query {q.query_index}: term={_quoted(q.term)} pages={q.pages_processed} "
         f"total_declared={_optional(q.total_declared)} truncated={'yes' if q.truncated else 'no'}"
         for q in record.queries
     ]
-    if summary.rejection_reasons:
-        reasons = " ".join(f"{k}={v}" for k, v in sorted(summary.rejection_reasons.items()))
+    if metrics.rejection_reasons:
+        reasons = " ".join(f"{k}={v}" for k, v in sorted(metrics.rejection_reasons.items()))
         lines.append(f"  rejected: {reasons}")
     if summary.abandoned_closed:
         lines.append(f"  closed {summary.abandoned_closed} interrupted run(s)")
@@ -75,12 +81,13 @@ def format_summary(summary: RunSummary) -> str:
 
 
 def format_run(record: RunRecord) -> str:
-    finished = record.finished_at
-    duration = "-" if finished is None else f"{(finished - record.started_at).total_seconds():.2f}s"
+    metrics = record.metrics
     truncated = sum(query.truncated for query in record.queries)
     line = (
         f"{record.started_at:%Y-%m-%dT%H:%M:%SZ} {record.run_id} {record.source_id} "
-        f"{record.status.value} {_counts(record)} truncated={truncated} duration={duration}"
+        f"{record.status.value} {_counts(record)} truncated={truncated} "
+        f"requests={_optional(metrics.requests)} duration={_seconds(metrics.duration_ms)} "
+        f"persistence={_seconds(metrics.persistence_ms)}"
     )
     return "\n".join([line, *_errors(record)])
 
@@ -90,8 +97,21 @@ async def discover(
     sources: Sequence[SourceDefinition],
     registry: AdapterRegistry,
     transport: httpx.AsyncBaseTransport | None = None,
+    tokens: Mapping[str, SecretStr] | None = None,
 ) -> int:
     """Discover each source in turn. One source never prevents the following ones."""
+
+    def sender(source: SourceDefinition) -> HttpExecutor:
+        header = registry.create(source.platform).capabilities.token_header
+        token = (tokens or {}).get(source.source_id)
+        secrets = {header: token.get_secret_value()} if header and token else None
+        return HttpExecutor(
+            client,
+            allowed_hosts=source.allowed_hosts,
+            limits=source.limits,
+            secret_headers=secrets,
+        )
+
     engine = database_engine(settings)
     codes = [OK]
     try:
@@ -106,9 +126,7 @@ async def discover(
             discovery = DiscoveryEngine(
                 runs=SqlRunRepository(engine),
                 catalog=SqlCatalogRepository(create_sessions(engine)),
-                sender_factory=lambda source: HttpExecutor(
-                    client, allowed_hosts=source.allowed_hosts, limits=source.limits
-                ),
+                sender_factory=sender,
                 run_scope=run_context,
             )
             for source in sources:

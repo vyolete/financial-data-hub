@@ -114,9 +114,9 @@ La especificación tiene dos escenarios sin prioridad. Se descomponen así:
 
 ### Decisiones añadidas a E2 (sesión del 2026-11-26)
 
-- [ ] T074 [US1] Intervalo mínimo configurable entre solicitudes por fuente, en `config/sources.toml`, `settings` y el ejecutor HTTP, con pruebas de reloj falso (NFR-01; AC-39)
-- [ ] T075 [US1] Token de aplicación opcional desde el entorno, con cabecera declarada por el adaptador y pruebas con valores ficticios de que no se filtra (NFR-01; AC-24, AC-38)
-- [ ] T076 [US2] Migración `0002` con las métricas de ejecución, persistidas por el motor y mostradas por la CLI; prueba de que las ejecuciones existentes quedan desconocidas (FR-03, FR-04; AC-40)
+- [X] T074 [US1] Intervalo mínimo configurable entre solicitudes por fuente, en `config/sources.toml`, `settings` y el ejecutor HTTP, con pruebas de reloj falso (NFR-01; AC-39)
+- [X] T075 [US1] Token de aplicación opcional desde el entorno, con cabecera declarada por el adaptador y pruebas con valores ficticios de que no se filtra (NFR-01; AC-24, AC-38)
+- [X] T076 [US2] Migración `0002` con las métricas de ejecución, persistidas por el motor y mostradas por la CLI; prueba de que las ejecuciones existentes quedan desconocidas (FR-03, FR-04; AC-40)
 - [ ] T077 [US2] `scripts/browser_check.mjs`: comprobación del portal en Chrome sin interfaz contra la API real, sin dependencias, ejecutada en local y en el trabajo `compose` de la CI (NFR-03; AC-16, AC-17, AC-27, AC-37)
 
 ## Fase 5: US3 — World Bank Data360 (P2, E3)

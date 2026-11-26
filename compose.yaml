@@ -4,7 +4,7 @@ name: financial-data-hub
 x-backend: &backend
   build: ./backend
   image: fdh-backend:local
-  environment:
+  environment: &backend-environment
     FDH_DB_HOST: db
     FDH_DB_PORT: "5432"
     FDH_DB_NAME: fdh
@@ -46,6 +46,10 @@ services:
 
   api:
     <<: *backend
+    environment:
+      <<: *backend-environment
+      # Optional; only used by `fdh discover`, which runs in this service.
+      FDH_SOCRATA_APP_TOKEN: ${FDH_SOCRATA_APP_TOKEN:-}
     ports:
       - "127.0.0.1:${FDH_API_PORT:-8000}:8000"
     depends_on:

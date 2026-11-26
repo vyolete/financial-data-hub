@@ -32,6 +32,7 @@ LIMIT_FIELDS = (
     "attempt_timeout_s",
     "max_retries",
     "max_retry_after_s",
+    "min_request_interval_s",
 )
 
 
@@ -49,6 +50,7 @@ class Limits(Strict):
     attempt_timeout_s: float | None = Field(default=None, gt=0, le=120)
     max_retries: int | None = Field(default=None, ge=0, le=3, strict=True)
     max_retry_after_s: int | None = Field(default=None, ge=0, le=3600, strict=True)
+    min_request_interval_s: float | None = Field(default=None, ge=0, le=60)
 
 
 class Publication(Strict):
@@ -86,6 +88,8 @@ class Source(Limits):
     terms_url: str | None = None
     terms_checked_on: date | None = None
     options: dict[str, str] = Field(default_factory=dict)
+    # Restricted names: the configuration must never point at another secret.
+    app_token_env: str | None = Field(default=None, pattern=r"^FDH_[A-Z0-9_]*APP_TOKEN$")
     metadata_publication: Publication = Field(default_factory=Publication)
     queries: list[Query] = Field(min_length=1)
 
@@ -139,6 +143,7 @@ def _definition(source: Source, defaults: Limits) -> SourceDefinition:
         terms_url=source.terms_url,
         terms_checked_on=source.terms_checked_on,
         options=dict(source.options),
+        app_token_env=source.app_token_env,
     )
 
 

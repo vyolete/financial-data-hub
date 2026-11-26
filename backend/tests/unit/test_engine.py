@@ -20,6 +20,7 @@ from fdh.controlplane.runs import (
     RunCounts,
     RunError,
     RunInProgress,
+    RunMetrics,
     RunRecord,
 )
 from fdh.dataplane.connectors.contract import (
@@ -209,9 +210,11 @@ class FakeStore:
     async def counts(self, run_id: UUID) -> RunCounts:
         return self.records[run_id].counts
 
-    async def finish(self, run_id: UUID, status: RunStatus) -> None:
+    async def finish(self, run_id: UUID, status: RunStatus, metrics: RunMetrics) -> None:
         self.events.append("finish")
-        self.records[run_id] = replace(self.records[run_id], status=status, finished_at=NOW)
+        self.records[run_id] = replace(
+            self.records[run_id], status=status, finished_at=NOW, metrics=metrics
+        )
 
     async def get(self, run_id: UUID) -> RunRecord:
         return self.records[run_id]
@@ -262,7 +265,7 @@ async def test_follows_the_cursor_and_stops_without_more_results() -> None:
     assert summary.record.counts == RunCounts(pages_processed=2, received=3, created=3)
     assert summary.record.queries[0].truncated is False
     assert summary.record.queries[0].total_declared == 3
-    assert summary.metrics.requests == len(sender.requests) == 2
+    assert summary.record.metrics.requests == len(sender.requests) == 2
     assert store.events == ["lock", "close_abandoned", "start", "finish", "unlock"]
 
 
@@ -320,7 +323,7 @@ async def test_rejected_records_with_valid_ones_make_the_run_partial() -> None:
     summary, _, _ = await run(ScriptedAdapter({"a": [page("1", rejected=2)]}), source("a"))
     assert summary.record.status is RunStatus.PARTIAL
     assert (summary.record.counts.rejected, summary.record.counts.received) == (2, 3)
-    assert summary.rejection_reasons == {"missing_id": 2}
+    assert summary.record.metrics.rejection_reasons == {"missing_id": 2}
 
 
 async def test_only_rejected_records_make_the_run_failed() -> None:
@@ -344,7 +347,7 @@ async def test_a_failed_query_does_not_stop_the_following_ones() -> None:
         RunError("http_error", "synthetic failure", query_index=0, http_status=503, attempts=4),
     )
     assert summary.record.queries[0].truncated is False
-    assert summary.metrics.requests == 6
+    assert summary.record.metrics.requests == 6
 
 
 async def test_failures_without_valid_records_make_the_run_failed() -> None:
@@ -432,4 +435,20 @@ async def test_the_status_follows_the_domain_rule() -> None:
     counts = summary.record.counts
     assert summary.record.status is final_status(
         valid=counts.valid, rejected=counts.rejected, failures=counts.failures
+    )
+
+
+async def test_measured_metrics_are_persisted_with_the_run() -> None:
+    ticks = iter([10.0, 20.0, 20.25, 30.0])  # run start, storing a page, storing end, run end
+    store, sender = FakeStore(), FakeSender({})
+    engine = DiscoveryEngine(
+        runs=store,
+        catalog=store,
+        sender_factory=lambda _: sender,
+        clock=lambda: NOW,
+        timer=lambda: next(ticks),
+    )
+    summary = await engine.discover(source("a"), ScriptedAdapter({"a": [page("1")]}))
+    assert summary.record.metrics == RunMetrics(
+        requests=1, duration_ms=20000, persistence_ms=250, rejection_reasons={}
     )

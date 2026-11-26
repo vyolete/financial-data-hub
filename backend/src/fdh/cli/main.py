@@ -13,6 +13,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
+from pydantic import SecretStr
 
 from fdh.cli.database import database_engine
 from fdh.cli.discover import discover, list_runs
@@ -23,7 +24,7 @@ from fdh.domain.sources import SourceDefinition
 from fdh.observability.logging import configure_logging
 from fdh.persistence.session import create_sessions
 from fdh.persistence.sources import SqlSourceRepository
-from fdh.settings.env import Settings
+from fdh.settings.env import InvalidSecret, Settings, read_app_token
 from fdh.settings.sources import ConfigError, load_sources
 
 OK, RUNTIME_ERROR, USAGE_ERROR = 0, 1, 2
@@ -87,6 +88,15 @@ async def synchronise(settings: Settings, sources: Sequence[SourceDefinition]) -
         await engine.dispose()
 
 
+def _app_tokens(sources: Sequence[SourceDefinition]) -> dict[str, SecretStr]:
+    """Optional application tokens, by source, from the variables each source names."""
+    found = {}
+    for source in sources:
+        if source.app_token_env and (token := read_app_token(source.app_token_env)):
+            found[source.source_id] = token
+    return found
+
+
 def _usage_error(message: object) -> int:
     print(f"error: {message}", file=sys.stderr)
     return USAGE_ERROR
@@ -142,6 +152,10 @@ def main(
         missing = sorted({source.platform for source, available in selected if not available})
         if missing:
             return _usage_error(f"no adapter is available for: {', '.join(missing)}")
+        try:
+            tokens = _app_tokens([source for source, _ in selected])
+        except InvalidSecret as error:
+            return _usage_error(error)
 
     try:
         plan = asyncio.run(synchronise(settings, sources))
@@ -152,7 +166,7 @@ def main(
 
     if arguments.group == "discover":
         targets = [source for source, _ in selected]
-        return asyncio.run(discover(settings, targets, registry, transport))
+        return asyncio.run(discover(settings, targets, registry, transport, tokens))
 
     for change in plan.publication_changes:
         print(f"{change.source_id}: publication {change.old.value} -> {change.new.value}")
