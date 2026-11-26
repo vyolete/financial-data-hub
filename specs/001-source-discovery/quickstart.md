@@ -60,7 +60,7 @@ Tras el escenario 8, restaurar la configuración y volver a sincronizar.
 ## Evidencia en vivo
 
 ```bash
-cd backend && uv run pytest -m live --enable-socket
+cd backend && uv run pytest -m live
 ```
 
 Registra fecha UTC, solicitudes, commit y resultado, incluidos los fallos, en `research/sources/` (AC-19, AC-29). No guarda datasets, nombres ni datos personales. Un fallo del proveedor se documenta como fallo.
