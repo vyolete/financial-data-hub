@@ -1,0 +1,424 @@
+{
+ "target": "socrata",
+ "started_utc": "2026-11-26T01:02:40Z",
+ "finished_utc": "2026-11-26T01:03:01Z",
+ "repository_commit": "2d4ee6bc837ff30353ef2b1dc620262f8c5c7c12",
+ "script_sha256": "1d81b8d73f11b23e6570882999679cf19ceef192594d09ff33b9f544b859f47a",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "settings": {
+  "timeout_s": 10,
+  "delay_s": 1.1,
+  "authentication": "none"
+ },
+ "checks": {
+  "resultSetSize": 145,
+  "cursor_pages": [
+   100,
+   45,
+   0
+  ],
+  "cursor_returned": 145,
+  "cursor_unique": 145,
+  "offset_and_cursor_first_page_same_ids": false
+ },
+ "requests": [
+  {
+   "id": "S30",
+   "purpose": "baseline, 100 results",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100",
+   "utc": "2026-11-26T01:02:40Z",
+   "status": 200,
+   "elapsed_ms": 2271,
+   "bytes": 716861,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "9bf09b704b2faf9dd7a1042d9ba5c99ea8b8df5f08f056bc3c39807e97bc44cb",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 100,
+    "unique_ids": 100,
+    "server_timings": {
+     "serviceMillis": 30,
+     "searchMillis": [
+      2,
+      5
+     ]
+    },
+    "types": {
+     "dataset": 100
+    },
+    "domains": {
+     "www.datos.gov.co": 100
+    },
+    "filled_fields": {
+     "resource.id": 100,
+     "resource.name": 100,
+     "resource.description": 100,
+     "resource.attribution": 100,
+     "resource.createdAt": 100,
+     "resource.updatedAt": 100,
+     "resource.data_updated_at": 100,
+     "resource.metadata_updated_at": 100,
+     "resource.publication_date": 100,
+     "classification.domain_category": 92,
+     "classification.domain_tags": 85,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 100,
+     "metadata.license": 100,
+     "permalink": 100,
+     "link": 100
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 99,
+     "Creative Commons Attribution 4.0 International": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 30,
+     "Economía y Finanzas": 13,
+     "Presupuestos Gubernamentales": 10,
+     "<NoneType>": 8,
+     "Gastos Gubernamentales": 7,
+     "Organismos de Control": 6,
+     "Estadísticas Nacionales": 4,
+     "Vivienda, Ciudad y Territorio": 3,
+     "Función pública": 3,
+     "Salud y Protección Social": 3,
+     "Planeación": 3,
+     "Seguridad y Defensa": 2,
+     "Minas y Energía": 1,
+     "Cultura": 1,
+     "Transporte": 1
+    }
+   }
+  },
+  {
+   "id": "S31",
+   "purpose": "cursor paging, empty scroll_id",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&scroll_id=",
+   "utc": "2026-11-26T01:02:44Z",
+   "status": 200,
+   "elapsed_ms": 1210,
+   "bytes": 858858,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "c94b733ba5ebbbb006db089c59711e388f802e52be268c3e045e095c1f89119f",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 100,
+    "unique_ids": 100,
+    "server_timings": {
+     "serviceMillis": 40,
+     "searchMillis": [
+      2,
+      6
+     ]
+    },
+    "types": {
+     "dataset": 100
+    },
+    "domains": {
+     "www.datos.gov.co": 100
+    },
+    "filled_fields": {
+     "resource.id": 100,
+     "resource.name": 100,
+     "resource.description": 100,
+     "resource.attribution": 100,
+     "resource.createdAt": 100,
+     "resource.updatedAt": 100,
+     "resource.data_updated_at": 100,
+     "resource.metadata_updated_at": 100,
+     "resource.publication_date": 100,
+     "classification.domain_category": 98,
+     "classification.domain_tags": 87,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 100,
+     "metadata.license": 100,
+     "permalink": 100,
+     "link": 100
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 99,
+     "Creative Commons Attribution | NoDerivatives 4.0 International License": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 24,
+     "Presupuestos Gubernamentales": 11,
+     "Organismos de Control": 10,
+     "Economía y Finanzas": 10,
+     "Gastos Gubernamentales": 8,
+     "Estadísticas Nacionales": 8,
+     "Planeación": 5,
+     "Función pública": 4,
+     "Vivienda, Ciudad y Territorio": 3,
+     "Salud y Protección Social": 3,
+     "Seguridad y Defensa": 2,
+     "Inclusión Social y Reconciliación": 2,
+     "<NoneType>": 2,
+     "Transporte": 2,
+     "Participación Ciudadana": 1
+    }
+   }
+  },
+  {
+   "id": "S32",
+   "purpose": "cursor paging, page 2",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&scroll_id=<last-id>",
+   "utc": "2026-11-26T01:02:46Z",
+   "status": 200,
+   "elapsed_ms": 921,
+   "bytes": 361015,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "6dbb56230d0875171582f85a38979100e4bb713ad013ee2f3f55250b60236177",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 45,
+    "unique_ids": 45,
+    "server_timings": {
+     "serviceMillis": 30,
+     "searchMillis": [
+      3,
+      8
+     ]
+    },
+    "types": {
+     "dataset": 45
+    },
+    "domains": {
+     "www.datos.gov.co": 45
+    },
+    "filled_fields": {
+     "resource.id": 45,
+     "resource.name": 45,
+     "resource.description": 45,
+     "resource.attribution": 45,
+     "resource.createdAt": 45,
+     "resource.updatedAt": 45,
+     "resource.data_updated_at": 45,
+     "resource.metadata_updated_at": 45,
+     "resource.publication_date": 45,
+     "classification.domain_category": 38,
+     "classification.domain_tags": 38,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 45,
+     "metadata.license": 45,
+     "permalink": 45,
+     "link": 45
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 43,
+     "Creative Commons Attribution 4.0 International": 1,
+     "Creative Commons 1.0 Universal (Public Domain Dedication)": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 12,
+     "<NoneType>": 7,
+     "Presupuestos Gubernamentales": 5,
+     "Estadísticas Nacionales": 3,
+     "Organismos de Control": 3,
+     "Economía y Finanzas": 3,
+     "Gastos Gubernamentales": 2,
+     "Planeación": 2,
+     "Transporte": 2,
+     "Vivienda, Ciudad y Territorio": 1,
+     "Cultura": 1,
+     "Participación Ciudadana": 1,
+     "Comercio, Industria y Turismo": 1,
+     "Inclusión Social y Reconciliación": 1,
+     "Educación": 1
+    }
+   }
+  },
+  {
+   "id": "S33",
+   "purpose": "cursor paging, page 3",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=100&scroll_id=<last-id>",
+   "utc": "2026-11-26T01:02:48Z",
+   "status": 200,
+   "elapsed_ms": 404,
+   "bytes": 131,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "f999fe7a96c25c9cae0b2e002e758de5f017e56496f570c30f7898a40cac9cfe",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 0,
+    "unique_ids": 0,
+    "server_timings": {
+     "serviceMillis": 16,
+     "searchMillis": [
+      3,
+      5
+     ]
+    },
+    "types": {},
+    "domains": {},
+    "filled_fields": {
+     "resource.id": 0,
+     "resource.name": 0,
+     "resource.description": 0,
+     "resource.attribution": 0,
+     "resource.createdAt": 0,
+     "resource.updatedAt": 0,
+     "resource.data_updated_at": 0,
+     "resource.metadata_updated_at": 0,
+     "resource.publication_date": 0,
+     "classification.domain_category": 0,
+     "classification.domain_tags": 0,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 0,
+     "metadata.license": 0,
+     "permalink": 0,
+     "link": 0
+    },
+    "licenses": {},
+    "domain_categories": {}
+   }
+  },
+  {
+   "id": "S34",
+   "purpose": "cursor combined with order",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=5&scroll_id=&order=name",
+   "utc": "2026-11-26T01:02:50Z",
+   "status": 400,
+   "elapsed_ms": 7801,
+   "bytes": 75,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "9ccbe3bd98d23296b588d84a46ea118625654c2f36c6efd844b3d3d5e2c6fb42",
+   "json": true,
+   "error_excerpt": "{\"error\":\"The `order` and `scroll_id` parameters cannot both be specified\"}",
+   "summary": {
+    "top_level_keys": [
+     "error"
+    ],
+    "error": "The `order` and `scroll_id` parameters cannot both be specified"
+   }
+  },
+  {
+   "id": "S35",
+   "purpose": "limit above 100",
+   "url": "https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co&only=datasets&q=presupuesto&limit=150",
+   "utc": "2026-11-26T01:02:59Z",
+   "status": 200,
+   "elapsed_ms": 1246,
+   "bytes": 1219734,
+   "truncated": false,
+   "content_type": "application/json;charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "c78392ca963cf376f1f589f2bdea85f196dc33f5d065dcd4d310516ad8013eb7",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "resultSetSize",
+     "results",
+     "timings",
+     "warnings"
+    ],
+    "resultSetSize": 145,
+    "returned": 145,
+    "unique_ids": 145,
+    "server_timings": {
+     "serviceMillis": 41,
+     "searchMillis": [
+      3,
+      8
+     ]
+    },
+    "types": {
+     "dataset": 145
+    },
+    "domains": {
+     "www.datos.gov.co": 145
+    },
+    "filled_fields": {
+     "resource.id": 145,
+     "resource.name": 145,
+     "resource.description": 145,
+     "resource.attribution": 145,
+     "resource.createdAt": 145,
+     "resource.updatedAt": 145,
+     "resource.data_updated_at": 145,
+     "resource.metadata_updated_at": 145,
+     "resource.publication_date": 145,
+     "classification.domain_category": 136,
+     "classification.domain_tags": 125,
+     "classification.categories": 0,
+     "classification.tags": 0,
+     "metadata.domain": 145,
+     "metadata.license": 145,
+     "permalink": 145,
+     "link": 145
+    },
+    "licenses": {
+     "Creative Commons Attribution | Share Alike 4.0 International": 142,
+     "Creative Commons Attribution 4.0 International": 1,
+     "Creative Commons Attribution | NoDerivatives 4.0 International License": 1,
+     "Creative Commons 1.0 Universal (Public Domain Dedication)": 1
+    },
+    "domain_categories": {
+     "Hacienda y Crédito Público": 36,
+     "Presupuestos Gubernamentales": 16,
+     "Economía y Finanzas": 13,
+     "Organismos de Control": 13,
+     "Estadísticas Nacionales": 11,
+     "Gastos Gubernamentales": 10,
+     "<NoneType>": 9,
+     "Planeación": 7,
+     "Vivienda, Ciudad y Territorio": 4,
+     "Función pública": 4,
+     "Transporte": 4,
+     "Salud y Protección Social": 3,
+     "Inclusión Social y Reconciliación": 3,
+     "Seguridad y Defensa": 2,
+     "Participación Ciudadana": 2
+    }
+   }
+  }
+ ]
+}

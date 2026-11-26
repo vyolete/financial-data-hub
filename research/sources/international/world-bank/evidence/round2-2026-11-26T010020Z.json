@@ -1,0 +1,2416 @@
+{
+ "target": "data360",
+ "started_utc": "2026-11-26T01:00:20Z",
+ "finished_utc": "2026-11-26T01:02:40Z",
+ "repository_commit": "2d4ee6bc837ff30353ef2b1dc620262f8c5c7c12",
+ "script_sha256": "1d81b8d73f11b23e6570882999679cf19ceef192594d09ff33b9f544b859f47a",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "settings": {
+  "timeout_s": 10,
+  "delay_s": 1.1,
+  "authentication": "none"
+ },
+ "checks": {
+  "page5_overlap": 1,
+  "page5_repeat_same_order": true,
+  "finance_two_pages": {
+   "returned": 42,
+   "unique": 1
+  },
+  "all_two_pages": {
+   "returned": 174,
+   "unique": 1,
+   "count": 174
+  }
+ },
+ "requests": [
+  {
+   "id": "T00",
+   "purpose": "official OpenAPI specification",
+   "url": "https://raw.githubusercontent.com/worldbank/open-api-specs/main/Data360%20Open_API.json",
+   "utc": "2026-11-26T01:00:20Z",
+   "status": 200,
+   "elapsed_ms": 251,
+   "bytes": 27940,
+   "truncated": false,
+   "content_type": "text/plain; charset=utf-8",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "3b011f6a840f29e19a90b1dfd88be61f447486658a01ef609d5093548c5c52b8",
+   "json": true,
+   "summary": {
+    "info_version": "v1",
+    "paths": [
+     "/data360/data",
+     "/data360/disaggregation",
+     "/data360/indicators",
+     "/data360/metadata",
+     "/data360/searchv2"
+    ]
+   }
+  },
+  {
+   "id": "T01",
+   "purpose": "count by type",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "facets": [
+     "type"
+    ],
+    "top": 1
+   },
+   "utc": "2026-11-26T01:00:21Z",
+   "status": 200,
+   "elapsed_ms": 1500,
+   "bytes": 14885,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "8f2e6b55b1e26c30e144afc830a84260a41b8468efb25bc90c528ae9220ad6ab",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "@search.facets",
+     "value"
+    ],
+    "count": 12601,
+    "returned": 1,
+    "unique_ids": 1,
+    "facets": {
+     "type": [
+      {
+       "value": "indicator",
+       "count": 9859
+      },
+      {
+       "value": "analytics",
+       "count": 2151
+      },
+      {
+       "value": "document",
+       "count": 198
+      },
+      {
+       "value": "dataset",
+       "count": 174
+      },
+      {
+       "value": "insights-resources",
+       "count": 89
+      },
+      {
+       "value": "country factsheets",
+       "count": 85
+      },
+      {
+       "value": "global report",
+       "count": 45
+      }
+     ]
+    },
+    "filled_fields": {
+     "@search.score": 1,
+     "additional.metadata_link": 0,
+     "additional.visualization": 1,
+     "data_confidentiality_code": 1,
+     "data_confidentiality_name": 1,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 1,
+     "dsd_name": 1,
+     "dsd_version": 1,
+     "id": 1,
+     "idno": 0,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 1,
+     "metadata_information.prod_date": 1,
+     "metadata_information.producers": 1,
+     "metadata_information.title": 1,
+     "metadata_information.version_statement": 1,
+     "product": 0,
+     "remove_chart_type": 1,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 1,
+     "series_description.api_link": 1,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 0,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 1,
+     "series_description.csv_link": 1,
+     "series_description.database_id": 1,
+     "series_description.database_name": 1,
+     "series_description.date_last_update": 0,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 1,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 1,
+     "series_description.doi": 0,
+     "series_description.economies_count": 0,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 1,
+     "series_description.idno": 1,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 0,
+     "series_description.json_link": 1,
+     "series_description.languages": 0,
+     "series_description.license": 0,
+     "series_description.limitation": 1,
+     "series_description.links": 0,
+     "series_description.measurement_unit": 1,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 1,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 1,
+     "series_description.related_indicators": 1,
+     "series_description.release_calendar": 0,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 0,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 1,
+     "series_description.topics": 0,
+     "series_description.version_statement": 1,
+     "subtype": 1,
+     "tags": 0,
+     "type": 1
+    },
+    "types": {
+     "indicator": 1
+    }
+   }
+  },
+  {
+   "id": "T02",
+   "purpose": "datasets, page 1 of 5",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 5,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:00:24Z",
+   "status": 200,
+   "elapsed_ms": 445,
+   "bytes": 45198,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "73f4046ef1a5bf54ccd265b952397da6a6f237d3b34e84f1c355268ddfc0c9ae",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 42,
+    "returned": 5,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 5,
+     "additional.metadata_link": 0,
+     "additional.visualization": 5,
+     "data_confidentiality_code": 5,
+     "data_confidentiality_name": 5,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 5,
+     "idno": 5,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 5,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 5,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 5,
+     "series_description.api_link": 5,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 5,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 5,
+     "series_description.database_id": 5,
+     "series_description.database_name": 5,
+     "series_description.date_last_update": 5,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 5,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 5,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 0,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 5,
+     "series_description.json_link": 5,
+     "series_description.languages": 0,
+     "series_description.license": 5,
+     "series_description.limitation": 0,
+     "series_description.links": 5,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 5,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 5,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 5,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 0,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 5,
+     "series_description.topics": 0,
+     "series_description.version_statement": 5,
+     "subtype": 0,
+     "tags": 0,
+     "type": 5
+    },
+    "types": {
+     "dataset": 5
+    }
+   }
+  },
+  {
+   "id": "T03",
+   "purpose": "datasets, page 2 of 5",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 5,
+    "skip": 5
+   },
+   "utc": "2026-11-26T01:00:25Z",
+   "status": 200,
+   "elapsed_ms": 293,
+   "bytes": 44123,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "b0e79897f9cfb1cf07b4af677f253d69a6fd13f1e1d46c2e7b6216c9dfe1b860",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 42,
+    "returned": 5,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 5,
+     "additional.metadata_link": 0,
+     "additional.visualization": 5,
+     "data_confidentiality_code": 5,
+     "data_confidentiality_name": 5,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 5,
+     "idno": 5,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 5,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 5,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 5,
+     "series_description.api_link": 5,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 2,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 5,
+     "series_description.database_id": 5,
+     "series_description.database_name": 5,
+     "series_description.date_last_update": 5,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 4,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 5,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 1,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 5,
+     "series_description.json_link": 5,
+     "series_description.languages": 0,
+     "series_description.license": 4,
+     "series_description.limitation": 0,
+     "series_description.links": 5,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 5,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 5,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 5,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 3,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 5,
+     "series_description.topics": 1,
+     "series_description.version_statement": 5,
+     "subtype": 0,
+     "tags": 0,
+     "type": 5
+    },
+    "types": {
+     "dataset": 5
+    }
+   }
+  },
+  {
+   "id": "T04",
+   "purpose": "repeat of T02",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 5,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:00:27Z",
+   "status": 200,
+   "elapsed_ms": 358,
+   "bytes": 45200,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "081f7be1cdc9657d7e51ef11a9757a70e6f29ae4974bf76db51be6441eea4cef",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 42,
+    "returned": 5,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 5,
+     "additional.metadata_link": 0,
+     "additional.visualization": 5,
+     "data_confidentiality_code": 5,
+     "data_confidentiality_name": 5,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 5,
+     "idno": 5,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 5,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 5,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 5,
+     "series_description.api_link": 5,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 5,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 5,
+     "series_description.database_id": 5,
+     "series_description.database_name": 5,
+     "series_description.date_last_update": 5,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 5,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 5,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 0,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 5,
+     "series_description.json_link": 5,
+     "series_description.languages": 0,
+     "series_description.license": 5,
+     "series_description.limitation": 0,
+     "series_description.links": 5,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 5,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 5,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 5,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 0,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 5,
+     "series_description.topics": 0,
+     "series_description.version_statement": 5,
+     "subtype": 0,
+     "tags": 0,
+     "type": 5
+    },
+    "types": {
+     "dataset": 5
+    }
+   }
+  },
+  {
+   "id": "T05",
+   "purpose": "datasets, page of 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:00:28Z",
+   "status": 200,
+   "elapsed_ms": 944,
+   "bytes": 477047,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "8994ad1d3999cc7b60a06441b39e64423f01ae57903e6359697eed9f65e5a52d",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.@odata.context": [
+     "str"
+    ],
+    "$.@odata.count": [
+     "int"
+    ],
+    "$.value": [
+     "list"
+    ],
+    "$.value[]": [
+     "dict"
+    ],
+    "$.value[].@search.score": [
+     "float"
+    ],
+    "$.value[].additional": [
+     "dict"
+    ],
+    "$.value[].additional.metadata_link": [
+     "list"
+    ],
+    "$.value[].additional.visualization": [
+     "dict"
+    ],
+    "$.value[].additional.visualization.axis_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.axis_type_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.axis_values": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.axis_values_params": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.bin_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.chart_type": [
+     "list"
+    ],
+    "$.value[].additional.visualization.display_name": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.div_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.legend_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.missing_data": [
+     "list"
+    ],
+    "$.value[].additional.visualization.notes": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.scale_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.suppression": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.temporal_cutoff": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.temporal_default": [
+     "NoneType"
+    ],
+    "$.value[].data_confidentiality_code": [
+     "str"
+    ],
+    "$.value[].data_confidentiality_name": [
+     "str"
+    ],
+    "$.value[].disaggregation_codes": [
+     "list"
+    ],
+    "$.value[].disaggregation_types": [
+     "list"
+    ],
+    "$.value[].doc_type": [
+     "NoneType"
+    ],
+    "$.value[].dsd_codelist": [
+     "list"
+    ],
+    "$.value[].dsd_name": [
+     "NoneType"
+    ],
+    "$.value[].dsd_version": [
+     "NoneType"
+    ],
+    "$.value[].id": [
+     "str"
+    ],
+    "$.value[].idno": [
+     "str"
+    ],
+    "$.value[].isDelete": [
+     "NoneType"
+    ],
+    "$.value[].is_active": [
+     "NoneType"
+    ],
+    "$.value[].metadata_information": [
+     "dict"
+    ],
+    "$.value[].metadata_information.idno": [
+     "str"
+    ],
+    "$.value[].metadata_information.prod_date": [
+     "NoneType"
+    ],
+    "$.value[].metadata_information.producers": [
+     "list"
+    ],
+    "$.value[].metadata_information.title": [
+     "str"
+    ],
+    "$.value[].metadata_information.version_statement": [
+     "NoneType"
+    ],
+    "$.value[].product": [
+     "NoneType"
+    ],
+    "$.value[].remove_chart_type": [
+     "NoneType"
+    ],
+    "$.value[].series_description": [
+     "dict"
+    ],
+    "$.value[].series_description.acknowledgement_statement": [
+     "NoneType"
+    ],
+    "$.value[].series_description.aggregation_method": [
+     "NoneType"
+    ],
+    "$.value[].series_description.aggregation_method_references": [
+     "list"
+    ],
+    "$.value[].series_description.aliases": [
+     "list"
+    ],
+    "$.value[].series_description.alternate_identifiers": [
+     "list"
+    ],
+    "$.value[].series_description.api_documentation": [
+     "list"
+    ],
+    "$.value[].series_description.api_explorer_link": [
+     "str"
+    ],
+    "$.value[].series_description.api_link": [
+     "str"
+    ],
+    "$.value[].series_description.authoring_entity": [
+     "list"
+    ],
+    "$.value[].series_description.base_period": [
+     "NoneType"
+    ],
+    "$.value[].series_description.citation_requirement": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.confidentiality": [
+     "NoneType"
+    ],
+    "$.value[].series_description.confidentiality_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.confidentiality_status": [
+     "NoneType"
+    ],
+    "$.value[].series_description.csv_link": [
+     "str"
+    ],
+    "$.value[].series_description.database_id": [
+     "str"
+    ],
+    "$.value[].series_description.database_name": [
+     "str"
+    ],
+    "$.value[].series_description.date_last_update": [
+     "str"
+    ],
+    "$.value[].series_description.date_released": [
+     "NoneType"
+    ],
+    "$.value[].series_description.definition_long": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.definition_references": [
+     "list"
+    ],
+    "$.value[].series_description.definition_short": [
+     "NoneType"
+    ],
+    "$.value[].series_description.derivation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.derivation_references": [
+     "list"
+    ],
+    "$.value[].series_description.dimensions": [
+     "list"
+    ],
+    "$.value[].series_description.disaggregation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.disclaimer": [
+     "NoneType"
+    ],
+    "$.value[].series_description.display_name": [
+     "NoneType"
+    ],
+    "$.value[].series_description.doi": [
+     "NoneType"
+    ],
+    "$.value[].series_description.economies_count": [
+     "int"
+    ],
+    "$.value[].series_description.excel_link": [
+     "NoneType"
+    ],
+    "$.value[].series_description.geographic_units": [
+     "list"
+    ],
+    "$.value[].series_description.geographic_units[]": [
+     "dict"
+    ],
+    "$.value[].series_description.geographic_units[].code": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.geographic_units[].name": [
+     "str"
+    ],
+    "$.value[].series_description.geographic_units[].type": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.idno": [
+     "NoneType"
+    ],
+    "$.value[].series_description.imputation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.imputation_references": [
+     "list"
+    ],
+    "$.value[].series_description.indicator_count": [
+     "int"
+    ],
+    "$.value[].series_description.json_link": [
+     "str"
+    ],
+    "$.value[].series_description.languages": [
+     "list"
+    ],
+    "$.value[].series_description.license": [
+     "list"
+    ],
+    "$.value[].series_description.license[]": [
+     "dict"
+    ],
+    "$.value[].series_description.license[].name": [
+     "str"
+    ],
+    "$.value[].series_description.license[].note": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.license[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.limitation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links": [
+     "list"
+    ],
+    "$.value[].series_description.links[]": [
+     "dict"
+    ],
+    "$.value[].series_description.links[].description": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].image_uri": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.measurement_unit": [
+     "NoneType"
+    ],
+    "$.value[].series_description.methodology": [
+     "NoneType"
+    ],
+    "$.value[].series_description.methodology_references": [
+     "list"
+    ],
+    "$.value[].series_description.missing": [
+     "NoneType"
+    ],
+    "$.value[].series_description.name": [
+     "str"
+    ],
+    "$.value[].series_description.notes": [
+     "list"
+    ],
+    "$.value[].series_description.periodicity": [
+     "NoneType"
+    ],
+    "$.value[].series_description.quality_checks": [
+     "NoneType"
+    ],
+    "$.value[].series_description.quality_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.ref_country": [
+     "list"
+    ],
+    "$.value[].series_description.ref_country[]": [
+     "dict"
+    ],
+    "$.value[].series_description.ref_country[].code": [
+     "str"
+    ],
+    "$.value[].series_description.ref_country[].name": [
+     "str"
+    ],
+    "$.value[].series_description.related_indicators": [
+     "list"
+    ],
+    "$.value[].series_description.release_calendar": [
+     "str"
+    ],
+    "$.value[].series_description.relevance": [
+     "NoneType"
+    ],
+    "$.value[].series_description.remove_chart_type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.series_break": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources": [
+     "list"
+    ],
+    "$.value[].series_description.sources[]": [
+     "dict"
+    ],
+    "$.value[].series_description.sources[].access_date": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].authors": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].datasets": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].idno": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].name": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.sources[].note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].organization": [
+     "str"
+    ],
+    "$.value[].series_description.sources[].other_identifiers": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].publication_date": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].publisher": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.sources_discrepancies": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.statistical_concept": [
+     "NoneType"
+    ],
+    "$.value[].series_description.statistical_concept_references": [
+     "list"
+    ],
+    "$.value[].series_description.time_periods": [
+     "list"
+    ],
+    "$.value[].series_description.time_periods[]": [
+     "dict"
+    ],
+    "$.value[].series_description.time_periods[].end": [
+     "str"
+    ],
+    "$.value[].series_description.time_periods[].notes": [
+     "NoneType"
+    ],
+    "$.value[].series_description.time_periods[].start": [
+     "str"
+    ],
+    "$.value[].series_description.topics": [
+     "list"
+    ],
+    "$.value[].series_description.topics[]": [
+     "dict"
+    ],
+    "$.value[].series_description.topics[].id": [
+     "str"
+    ],
+    "$.value[].series_description.topics[].name": [
+     "str"
+    ],
+    "$.value[].series_description.topics[].parent_id": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.topics[].uri": [
+     "str"
+    ],
+    "$.value[].series_description.topics[].vocabulary": [
+     "str"
+    ],
+    "$.value[].series_description.version_statement": [
+     "dict"
+    ],
+    "$.value[].series_description.version_statement.version": [
+     "NoneType"
+    ],
+    "$.value[].series_description.version_statement.version_date": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.version_statement.version_notes": [
+     "NoneType"
+    ],
+    "$.value[].series_description.version_statement.version_resp": [
+     "NoneType"
+    ],
+    "$.value[].subtype": [
+     "NoneType"
+    ],
+    "$.value[].tags": [
+     "list"
+    ],
+    "$.value[].tags[]": [
+     "dict"
+    ],
+    "$.value[].tags[].tag": [
+     "str"
+    ],
+    "$.value[].tags[].tag_group": [
+     "str"
+    ],
+    "$.value[].type": [
+     "str"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 42,
+    "returned": 42,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 42,
+     "additional.metadata_link": 0,
+     "additional.visualization": 42,
+     "data_confidentiality_code": 42,
+     "data_confidentiality_name": 42,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 42,
+     "idno": 42,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 42,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 42,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 42,
+     "series_description.api_link": 42,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 31,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 42,
+     "series_description.database_id": 42,
+     "series_description.database_name": 42,
+     "series_description.date_last_update": 42,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 41,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 42,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 13,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 42,
+     "series_description.json_link": 42,
+     "series_description.languages": 0,
+     "series_description.license": 37,
+     "series_description.limitation": 0,
+     "series_description.links": 42,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 42,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 42,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 42,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 34,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 42,
+     "series_description.topics": 30,
+     "series_description.version_statement": 42,
+     "subtype": 0,
+     "tags": 10,
+     "type": 42
+    },
+    "types": {
+     "dataset": 42
+    }
+   }
+  },
+  {
+   "id": "T06",
+   "purpose": "datasets, second page of 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 100
+   },
+   "utc": "2026-11-26T01:00:30Z",
+   "status": 200,
+   "elapsed_ms": 467,
+   "bytes": 147,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "6bf0d7be0a5bab71e20ce5727ab0bbd64bde0a94a83cb13b144cab3240704083",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 42,
+    "returned": 0,
+    "unique_ids": 0,
+    "facets": null,
+    "filled_fields": {},
+    "types": {}
+   }
+  },
+  {
+   "id": "T07",
+   "purpose": "all datasets, first 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:00:32Z",
+   "status": 200,
+   "elapsed_ms": 1213,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "b8506e1b4486d0d6d8b848f5091626a9bf0d4aa140edf13a9aa8aa0d4efa18d1",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.@odata.context": [
+     "str"
+    ],
+    "$.@odata.count": [
+     "int"
+    ],
+    "$.value": [
+     "list"
+    ],
+    "$.value[]": [
+     "dict"
+    ],
+    "$.value[].@search.score": [
+     "float"
+    ],
+    "$.value[].additional": [
+     "NoneType",
+     "dict"
+    ],
+    "$.value[].additional.metadata_link": [
+     "list"
+    ],
+    "$.value[].additional.visualization": [
+     "dict"
+    ],
+    "$.value[].additional.visualization.axis_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.axis_type_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.axis_values": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.axis_values_params": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.bin_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.chart_type": [
+     "list"
+    ],
+    "$.value[].additional.visualization.display_name": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.div_params": [
+     "list"
+    ],
+    "$.value[].additional.visualization.legend_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.missing_data": [
+     "list"
+    ],
+    "$.value[].additional.visualization.notes": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.scale_type": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.suppression": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.temporal_cutoff": [
+     "NoneType"
+    ],
+    "$.value[].additional.visualization.temporal_default": [
+     "NoneType"
+    ],
+    "$.value[].data_confidentiality_code": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].data_confidentiality_name": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].disaggregation_codes": [
+     "list"
+    ],
+    "$.value[].disaggregation_types": [
+     "list"
+    ],
+    "$.value[].doc_type": [
+     "NoneType"
+    ],
+    "$.value[].dsd_codelist": [
+     "list"
+    ],
+    "$.value[].dsd_name": [
+     "NoneType"
+    ],
+    "$.value[].dsd_version": [
+     "NoneType"
+    ],
+    "$.value[].id": [
+     "str"
+    ],
+    "$.value[].idno": [
+     "str"
+    ],
+    "$.value[].isDelete": [
+     "NoneType"
+    ],
+    "$.value[].is_active": [
+     "NoneType"
+    ],
+    "$.value[].metadata_information": [
+     "dict"
+    ],
+    "$.value[].metadata_information.idno": [
+     "str"
+    ],
+    "$.value[].metadata_information.prod_date": [
+     "NoneType"
+    ],
+    "$.value[].metadata_information.producers": [
+     "list"
+    ],
+    "$.value[].metadata_information.title": [
+     "str"
+    ],
+    "$.value[].metadata_information.version_statement": [
+     "NoneType"
+    ],
+    "$.value[].product": [
+     "NoneType"
+    ],
+    "$.value[].remove_chart_type": [
+     "NoneType"
+    ],
+    "$.value[].series_description": [
+     "dict"
+    ],
+    "$.value[].series_description.acknowledgement_statement": [
+     "NoneType"
+    ],
+    "$.value[].series_description.aggregation_method": [
+     "NoneType"
+    ],
+    "$.value[].series_description.aggregation_method_references": [
+     "list"
+    ],
+    "$.value[].series_description.aliases": [
+     "list"
+    ],
+    "$.value[].series_description.alternate_identifiers": [
+     "list"
+    ],
+    "$.value[].series_description.api_documentation": [
+     "list"
+    ],
+    "$.value[].series_description.api_explorer_link": [
+     "str"
+    ],
+    "$.value[].series_description.api_link": [
+     "str"
+    ],
+    "$.value[].series_description.authoring_entity": [
+     "list"
+    ],
+    "$.value[].series_description.base_period": [
+     "NoneType"
+    ],
+    "$.value[].series_description.citation_requirement": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.confidentiality": [
+     "NoneType"
+    ],
+    "$.value[].series_description.confidentiality_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.confidentiality_status": [
+     "NoneType"
+    ],
+    "$.value[].series_description.csv_link": [
+     "str"
+    ],
+    "$.value[].series_description.database_id": [
+     "str"
+    ],
+    "$.value[].series_description.database_name": [
+     "str"
+    ],
+    "$.value[].series_description.date_last_update": [
+     "str"
+    ],
+    "$.value[].series_description.date_released": [
+     "NoneType"
+    ],
+    "$.value[].series_description.definition_long": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.definition_references": [
+     "list"
+    ],
+    "$.value[].series_description.definition_short": [
+     "NoneType"
+    ],
+    "$.value[].series_description.derivation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.derivation_references": [
+     "list"
+    ],
+    "$.value[].series_description.dimensions": [
+     "list"
+    ],
+    "$.value[].series_description.disaggregation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.disclaimer": [
+     "NoneType"
+    ],
+    "$.value[].series_description.display_name": [
+     "NoneType"
+    ],
+    "$.value[].series_description.doi": [
+     "NoneType"
+    ],
+    "$.value[].series_description.economies_count": [
+     "int"
+    ],
+    "$.value[].series_description.excel_link": [
+     "NoneType"
+    ],
+    "$.value[].series_description.geographic_units": [
+     "list"
+    ],
+    "$.value[].series_description.geographic_units[]": [
+     "dict"
+    ],
+    "$.value[].series_description.geographic_units[].code": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.geographic_units[].name": [
+     "str"
+    ],
+    "$.value[].series_description.geographic_units[].type": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.idno": [
+     "NoneType"
+    ],
+    "$.value[].series_description.imputation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.imputation_references": [
+     "list"
+    ],
+    "$.value[].series_description.indicator_count": [
+     "int"
+    ],
+    "$.value[].series_description.json_link": [
+     "str"
+    ],
+    "$.value[].series_description.languages": [
+     "list"
+    ],
+    "$.value[].series_description.license": [
+     "list"
+    ],
+    "$.value[].series_description.license[]": [
+     "dict"
+    ],
+    "$.value[].series_description.license[].name": [
+     "str"
+    ],
+    "$.value[].series_description.license[].note": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.license[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.limitation": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links": [
+     "list"
+    ],
+    "$.value[].series_description.links[]": [
+     "dict"
+    ],
+    "$.value[].series_description.links[].description": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].image_uri": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.links[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.measurement_unit": [
+     "NoneType"
+    ],
+    "$.value[].series_description.methodology": [
+     "NoneType"
+    ],
+    "$.value[].series_description.methodology_references": [
+     "list"
+    ],
+    "$.value[].series_description.missing": [
+     "NoneType"
+    ],
+    "$.value[].series_description.name": [
+     "str"
+    ],
+    "$.value[].series_description.notes": [
+     "list"
+    ],
+    "$.value[].series_description.periodicity": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.quality_checks": [
+     "NoneType"
+    ],
+    "$.value[].series_description.quality_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.ref_country": [
+     "list"
+    ],
+    "$.value[].series_description.ref_country[]": [
+     "dict"
+    ],
+    "$.value[].series_description.ref_country[].code": [
+     "str"
+    ],
+    "$.value[].series_description.ref_country[].name": [
+     "str"
+    ],
+    "$.value[].series_description.related_indicators": [
+     "list"
+    ],
+    "$.value[].series_description.release_calendar": [
+     "str"
+    ],
+    "$.value[].series_description.relevance": [
+     "NoneType"
+    ],
+    "$.value[].series_description.remove_chart_type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.series_break": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources": [
+     "list"
+    ],
+    "$.value[].series_description.sources[]": [
+     "dict"
+    ],
+    "$.value[].series_description.sources[].access_date": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].authors": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].datasets": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].idno": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].name": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.sources[].note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].organization": [
+     "str"
+    ],
+    "$.value[].series_description.sources[].other_identifiers": [
+     "list"
+    ],
+    "$.value[].series_description.sources[].publication_date": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].publisher": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].type": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.sources_discrepancies": [
+     "NoneType"
+    ],
+    "$.value[].series_description.sources_note": [
+     "NoneType"
+    ],
+    "$.value[].series_description.statistical_concept": [
+     "NoneType"
+    ],
+    "$.value[].series_description.statistical_concept_references": [
+     "list"
+    ],
+    "$.value[].series_description.time_periods": [
+     "list"
+    ],
+    "$.value[].series_description.time_periods[]": [
+     "dict"
+    ],
+    "$.value[].series_description.time_periods[].end": [
+     "str"
+    ],
+    "$.value[].series_description.time_periods[].notes": [
+     "NoneType"
+    ],
+    "$.value[].series_description.time_periods[].start": [
+     "str"
+    ],
+    "$.value[].series_description.topics": [
+     "list"
+    ],
+    "$.value[].series_description.topics[]": [
+     "dict"
+    ],
+    "$.value[].series_description.topics[].id": [
+     "str"
+    ],
+    "$.value[].series_description.topics[].name": [
+     "str"
+    ],
+    "$.value[].series_description.topics[].parent_id": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.topics[].uri": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.topics[].vocabulary": [
+     "str"
+    ],
+    "$.value[].series_description.version_statement": [
+     "dict"
+    ],
+    "$.value[].series_description.version_statement.version": [
+     "NoneType"
+    ],
+    "$.value[].series_description.version_statement.version_date": [
+     "NoneType",
+     "str"
+    ],
+    "$.value[].series_description.version_statement.version_notes": [
+     "NoneType"
+    ],
+    "$.value[].series_description.version_statement.version_resp": [
+     "NoneType"
+    ],
+    "$.value[].subtype": [
+     "NoneType"
+    ],
+    "$.value[].tags": [
+     "list"
+    ],
+    "$.value[].tags[]": [
+     "dict"
+    ],
+    "$.value[].tags[].tag": [
+     "str"
+    ],
+    "$.value[].tags[].tag_group": [
+     "str"
+    ],
+    "$.value[].type": [
+     "str"
+    ]
+   },
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 174,
+    "returned": 100,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 100,
+     "additional": 0,
+     "additional.metadata_link": 0,
+     "additional.visualization": 98,
+     "data_confidentiality_code": 99,
+     "data_confidentiality_name": 99,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 100,
+     "idno": 100,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 100,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 100,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 100,
+     "series_description.api_link": 100,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 67,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 100,
+     "series_description.database_id": 100,
+     "series_description.database_name": 100,
+     "series_description.date_last_update": 100,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 99,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 100,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 38,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 100,
+     "series_description.json_link": 100,
+     "series_description.languages": 0,
+     "series_description.license": 89,
+     "series_description.limitation": 0,
+     "series_description.links": 100,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 100,
+     "series_description.notes": 0,
+     "series_description.periodicity": 2,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 100,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 100,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 90,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 100,
+     "series_description.topics": 81,
+     "series_description.version_statement": 100,
+     "subtype": 0,
+     "tags": 21,
+     "type": 100
+    },
+    "types": {
+     "dataset": 100
+    }
+   }
+  },
+  {
+   "id": "T08",
+   "purpose": "all datasets, second 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 100
+   },
+   "utc": "2026-11-26T01:00:34Z",
+   "status": 200,
+   "elapsed_ms": 930,
+   "bytes": 811467,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "789386ac75bb958cf27ba8faa1b673cea7329d45f0916e2913bfaa48ca38ff91",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 174,
+    "returned": 74,
+    "unique_ids": 1,
+    "facets": null,
+    "filled_fields": {
+     "@search.score": 74,
+     "additional.metadata_link": 0,
+     "additional.visualization": 74,
+     "data_confidentiality_code": 74,
+     "data_confidentiality_name": 74,
+     "disaggregation_codes": 0,
+     "disaggregation_types": 0,
+     "doc_type": 0,
+     "dsd_codelist": 0,
+     "dsd_name": 0,
+     "dsd_version": 0,
+     "id": 74,
+     "idno": 74,
+     "isDelete": 0,
+     "is_active": 0,
+     "metadata_information.idno": 74,
+     "metadata_information.prod_date": 0,
+     "metadata_information.producers": 0,
+     "metadata_information.title": 74,
+     "metadata_information.version_statement": 0,
+     "product": 0,
+     "remove_chart_type": 0,
+     "series_description.acknowledgement_statement": 0,
+     "series_description.aggregation_method": 0,
+     "series_description.aggregation_method_references": 0,
+     "series_description.aliases": 0,
+     "series_description.alternate_identifiers": 0,
+     "series_description.api_documentation": 0,
+     "series_description.api_explorer_link": 74,
+     "series_description.api_link": 74,
+     "series_description.authoring_entity": 0,
+     "series_description.base_period": 0,
+     "series_description.citation_requirement": 51,
+     "series_description.confidentiality": 0,
+     "series_description.confidentiality_note": 0,
+     "series_description.confidentiality_status": 0,
+     "series_description.csv_link": 74,
+     "series_description.database_id": 74,
+     "series_description.database_name": 74,
+     "series_description.date_last_update": 74,
+     "series_description.date_released": 0,
+     "series_description.definition_long": 70,
+     "series_description.definition_references": 0,
+     "series_description.definition_short": 0,
+     "series_description.derivation": 0,
+     "series_description.derivation_references": 0,
+     "series_description.dimensions": 0,
+     "series_description.disaggregation": 0,
+     "series_description.disclaimer": 0,
+     "series_description.display_name": 0,
+     "series_description.doi": 0,
+     "series_description.economies_count": 74,
+     "series_description.excel_link": 0,
+     "series_description.geographic_units": 19,
+     "series_description.idno": 0,
+     "series_description.imputation": 0,
+     "series_description.imputation_references": 0,
+     "series_description.indicator_count": 74,
+     "series_description.json_link": 74,
+     "series_description.languages": 0,
+     "series_description.license": 64,
+     "series_description.limitation": 0,
+     "series_description.links": 74,
+     "series_description.measurement_unit": 0,
+     "series_description.methodology": 0,
+     "series_description.methodology_references": 0,
+     "series_description.missing": 0,
+     "series_description.name": 74,
+     "series_description.notes": 0,
+     "series_description.periodicity": 0,
+     "series_description.quality_checks": 0,
+     "series_description.quality_note": 0,
+     "series_description.ref_country": 74,
+     "series_description.related_indicators": 0,
+     "series_description.release_calendar": 74,
+     "series_description.relevance": 0,
+     "series_description.remove_chart_type": 0,
+     "series_description.series_break": 0,
+     "series_description.sources": 63,
+     "series_description.sources_discrepancies": 0,
+     "series_description.sources_note": 0,
+     "series_description.statistical_concept": 0,
+     "series_description.statistical_concept_references": 0,
+     "series_description.time_periods": 74,
+     "series_description.topics": 50,
+     "series_description.version_statement": 74,
+     "subtype": 0,
+     "tags": 19,
+     "type": 74
+    },
+    "types": {
+     "dataset": 74
+    }
+   }
+  },
+  {
+   "id": "T09",
+   "purpose": "skip beyond the total",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 5,
+    "skip": 179
+   },
+   "utc": "2026-11-26T01:00:36Z",
+   "status": 200,
+   "elapsed_ms": 951,
+   "bytes": 148,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "ef5e24ecc877cdd52fcd76ae006692cee53140045c7e3e8b32c57b9472e631a9",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 174,
+    "returned": 0,
+    "unique_ids": 0,
+    "facets": null,
+    "filled_fields": {},
+    "types": {}
+   }
+  },
+  {
+   "id": "T10",
+   "purpose": "no results",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "top": 5
+   },
+   "utc": "2026-11-26T01:00:38Z",
+   "status": 200,
+   "elapsed_ms": 802,
+   "bytes": 146,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "aa339073e14f7570945798744b67a86766b08cb8c9cf366fb6f3356eb72574ef",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 0,
+    "returned": 0,
+    "unique_ids": 0,
+    "facets": null,
+    "filled_fields": {},
+    "types": {}
+   }
+  },
+  {
+   "id": "T11",
+   "purpose": "large top on empty query",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "top": 100000
+   },
+   "utc": "2026-11-26T01:00:40Z",
+   "status": 200,
+   "elapsed_ms": 274,
+   "bytes": 146,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "aa339073e14f7570945798744b67a86766b08cb8c9cf366fb6f3356eb72574ef",
+   "json": true,
+   "summary": {
+    "top_level_keys": [
+     "@odata.context",
+     "@odata.count",
+     "value"
+    ],
+    "count": 0,
+    "returned": 0,
+    "unique_ids": 0,
+    "facets": null,
+    "filled_fields": {},
+    "types": {}
+   }
+  },
+  {
+   "id": "T12",
+   "purpose": "skip above 100000",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "top": 5,
+    "skip": 100001
+   },
+   "utc": "2026-11-26T01:00:42Z",
+   "status": 400,
+   "elapsed_ms": 451,
+   "bytes": 213,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "71010afb8c98b0cfcd2d7f7e38d40e8debb5dc72422200e17ed98f2533466b5f",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"InvalidRequestParameter\",\"message\":\"Value must be between 0 and 100000.\\r\\nParameter name: $skip\",\"details\":[{\"code\":\"ParameterValueOutOfRange\",\"message\":\"Value must be between 0 and 100000.\"}]}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"InvalidRequestParameter\", \"message\": \"Value must be between 0 and 100000.\\r\\nParameter name: $skip\", \"details\": [{\"code\": \"ParameterValueOutOfRange\", \"message\": \"Value must be between 0 and 100000.\"}]}}"
+   }
+  },
+  {
+   "id": "T13",
+   "purpose": "invalid top: negative",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "top": -1
+   },
+   "utc": "2026-11-26T01:00:43Z",
+   "status": 400,
+   "elapsed_ms": 337,
+   "bytes": 166,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "2760ab95f9f093c5ac683fed566bb9cf76b2f7335d222b5267151f1bcfc04309",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"\",\"message\":\"Invalid value '-1' for $top query option found. The $top query option requires a non-negative integer value.\\r\\nParameter name: $top\"}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"\", \"message\": \"Invalid value '-1' for $top query option found. The $top query option requires a non-negative integer value.\\r\\nParameter name: $top\"}}"
+   }
+  },
+  {
+   "id": "T14",
+   "purpose": "invalid top: text",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "top": "abc"
+   },
+   "utc": "2026-11-26T01:00:45Z",
+   "status": 400,
+   "elapsed_ms": 562,
+   "bytes": 133,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "9a9e7aa800c04afa6ca5955e3d16afa7c7da052f4a800d52f2134a8645e4c1cc",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"\",\"message\":\"The request is invalid. Details: Cannot convert the literal 'abc' to the expected type 'Edm.Int32'.\"}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"\", \"message\": \"The request is invalid. Details: Cannot convert the literal 'abc' to the expected type 'Edm.Int32'.\"}}"
+   }
+  },
+  {
+   "id": "T15",
+   "purpose": "invalid filter field",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "filter": "not_a_field eq 'x'"
+   },
+   "utc": "2026-11-26T01:00:46Z",
+   "status": 400,
+   "elapsed_ms": 490,
+   "bytes": 153,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "120e4afdc6065f6cf98646069dfc971aed685ca333f07549eec51c9de9369bfd",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"\",\"message\":\"Invalid expression: Could not find a property named 'not_a_field' on type 'search.document'.\\r\\nParameter name: $filter\"}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"\", \"message\": \"Invalid expression: Could not find a property named 'not_a_field' on type 'search.document'.\\r\\nParameter name: $filter\"}}"
+   }
+  },
+  {
+   "id": "T16",
+   "purpose": "unknown body property",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "zzqxnoresultsfdh",
+    "not_a_property": 1
+   },
+   "utc": "2026-11-26T01:00:48Z",
+   "status": 400,
+   "elapsed_ms": 603,
+   "bytes": 173,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "42af968d97e6cbe6b4b3d8c34106bbb0f849d83f4e0f5696a84701e367930927",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"\",\"message\":\"The request is invalid. Details: The parameter 'not_a_property' in the request payload is not a valid parameter for the operation 'search'.\"}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"\", \"message\": \"The request is invalid. Details: The parameter 'not_a_property' in the request payload is not a valid parameter for the operation 'search'.\"}}"
+   }
+  },
+  {
+   "id": "T17",
+   "purpose": "malformed JSON",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": "{",
+   "utc": "2026-11-26T01:00:50Z",
+   "status": 400,
+   "elapsed_ms": 413,
+   "bytes": 176,
+   "content_type": "application/json; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "5463038aea9cbffd7b95506aea66c7d6de3109dde531382c982b35f74fc0bf0f",
+   "json": true,
+   "error_excerpt": "{\"error\":{\"code\":\"\",\"message\":\"The request is invalid. Details: Invalid JSON. Unexpected end of input was found in JSON content. Not all object and array scopes were closed.\"}}",
+   "summary": {
+    "body_excerpt": "{\"error\": {\"code\": \"\", \"message\": \"The request is invalid. Details: Invalid JSON. Unexpected end of input was found in JSON content. Not all object and array scopes were closed.\"}}"
+   }
+  },
+  {
+   "id": "T18",
+   "purpose": "metadata of one dataset",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/metadata",
+   "request_body": {
+    "query": "&$filter=series_description/idno eq 'None'"
+   },
+   "utc": "2026-11-26T01:00:51Z",
+   "status": 200,
+   "elapsed_ms": 621,
+   "bytes": 156,
+   "content_type": "application/json",
+   "retry_after": null,
+   "body_sha256": "c62f37f77531915a9a5865ae1d8d397987ec29a54b64c0043f77f2e1d20b0617",
+   "json": true,
+   "schema": {
+    "$": [
+     "dict"
+    ],
+    "$.@odata.context": [
+     "str"
+    ],
+    "$.@odata.count": [
+     "int"
+    ],
+    "$.value": [
+     "list"
+    ]
+   }
+  },
+  {
+   "id": "T19",
+   "purpose": "indicators of one database",
+   "url": "https://data360api.worldbank.org/data360/indicators?datasetId=WB_WDI",
+   "utc": "2026-11-26T01:00:53Z",
+   "status": 200,
+   "elapsed_ms": 2598,
+   "bytes": 44192,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": null,
+   "rate_limit_headers": {},
+   "body_sha256": "d8999e3ad653ff5795880bafc73cdd69ba89a532659a34d935a3c0f8b836a761",
+   "json": true,
+   "summary": {
+    "type": "list",
+    "length": 1499
+   }
+  },
+  {
+   "id": "L5.1",
+   "purpose": "latency repeat, 100 datasets",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100
+   },
+   "utc": "2026-11-26T01:00:57Z",
+   "status": 200,
+   "elapsed_ms": 1274,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "acf743215bc05ee66a1b0dff65fa668e9b30901206b45a1edbbc9521a19106f8",
+   "json": true
+  },
+  {
+   "id": "L5.2",
+   "purpose": "latency repeat, 100 datasets",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100
+   },
+   "utc": "2026-11-26T01:00:59Z",
+   "status": 200,
+   "elapsed_ms": 1077,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "b8506e1b4486d0d6d8b848f5091626a9bf0d4aa140edf13a9aa8aa0d4efa18d1",
+   "json": true
+  },
+  {
+   "id": "L5.3",
+   "purpose": "latency repeat, 100 datasets",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100
+   },
+   "utc": "2026-11-26T01:01:01Z",
+   "status": 200,
+   "elapsed_ms": 1155,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "acf743215bc05ee66a1b0dff65fa668e9b30901206b45a1edbbc9521a19106f8",
+   "json": true
+  },
+  {
+   "id": "C01.1",
+   "purpose": "Data Catalog retest",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=1",
+   "utc": "2026-11-26T01:01:03Z",
+   "status": 429,
+   "elapsed_ms": 1539,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "47",
+   "rate_limit_headers": {},
+   "body_sha256": "ac574b0ae30fe261f14b96d1da8d4a52475d89a6706cb3e29b53b4303da1d08b",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 47 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 47 seconds.\"}"
+   }
+  },
+  {
+   "id": "C01.2",
+   "purpose": "Data Catalog retest",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=1",
+   "utc": "2026-11-26T01:01:54Z",
+   "status": 429,
+   "elapsed_ms": 334,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "42",
+   "rate_limit_headers": {},
+   "body_sha256": "d421eacf46312c2e5908027b43a236fc27779e8b044532fb4f40e52630134ab8",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 42 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 42 seconds.\"}"
+   }
+  },
+  {
+   "id": "C01.3",
+   "purpose": "Data Catalog retest",
+   "url": "https://datacatalogapi.worldbank.org/ddhxext/Search?qname=dataset&qterm=finance&$top=1",
+   "utc": "2026-11-26T01:02:38Z",
+   "status": 429,
+   "elapsed_ms": 513,
+   "bytes": 84,
+   "truncated": false,
+   "content_type": "application/json",
+   "retry_after": "31",
+   "rate_limit_headers": {},
+   "body_sha256": "fc6d57efbb44dd28d8db1fa544b85049459bc592ac9da50339c4083b28184137",
+   "json": true,
+   "error_excerpt": "{ \"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 31 seconds.\" }",
+   "summary": {
+    "top_level_keys": [
+     "message",
+     "statusCode"
+    ],
+    "numeric_top_level": {
+     "statusCode": 429
+    },
+    "list_key": null,
+    "returned": 0,
+    "filled_fields": {},
+    "license_like_values": {},
+    "body_excerpt": "{\"statusCode\": 429, \"message\": \"Rate limit is exceeded. Try again in 31 seconds.\"}"
+   }
+  }
+ ]
+}

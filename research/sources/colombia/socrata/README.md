@@ -1,6 +1,6 @@
 # Socrata Discovery API — www.datos.gov.co
 
-**Estado**: probada en vivo; condiciones de uso pendientes de revisión humana. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
+**Estado**: probada en vivo; publicación de metadatos declarada `allowed` (registro en GitHub pendiente); referencia oficial de la API sin leer. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
 
 ## Objetivo
 Comprobar acceso, estructura, paginación, metadatos, errores, tiempos y condiciones de uso antes de implementar el adaptador.
@@ -75,6 +75,15 @@ Una de las 12 solicitudes de 100 registros superó 10 s y otra tardó 9,2 s. El 
 - La respuesta incluye `owner.display_name`, `creator.display_name` y el campo `contact_email` (nulo en el esquema observado). Son datos personales o potencialmente personales: el adaptador no debe conservarlos.
 - `/api/views/{id}.json`, probado con un dataset, expone `licenseId` y `license.termsLink`.
 
+## Segunda ronda: cursor y tamaño de página
+2026-11-26 (UTC), repositorio en `2d4ee6b`: `python3 -I research/experiments/discovery-probe/round2.py socrata`. [Evidencia](evidence/round2-2026-11-26T010240Z.json), 6 solicitudes.
+
+- `scroll_id` vacío y luego con el último identificador de cada página recorrió 145 resultados en páginas de 100, 45 y 0, con 145 distintos.
+- La primera página con cursor no contiene los mismos identificadores que la primera con `offset`: el orden difiere.
+- `scroll_id` junto con `order`: 400 `cannot both be specified`, tras 7,8 s.
+- `limit=150` devolvió los 145 resultados: 100 no es el máximo de la plataforma.
+- Todas las solicitudes con `limit=100` de ambas rondas (16): mediana 1142 ms, máximo 11740 ms, una por encima de 10 s.
+
 ## Documentación y condiciones de uso
 Consultadas el 2026-11-26 (UTC).
 
@@ -87,6 +96,7 @@ Consultadas el 2026-11-26 (UTC).
 
 ## Interpretación y pendientes (no son hechos verificados)
 - **Hipótesis**: los términos permitirían publicar metadatos con la cita exigida. Cada dataset conserva su licencia, incluida alguna sin derivados.
-- **Pendiente humano**: revisar la referencia oficial y los términos, y declarar el permiso de publicación de metadatos de la fuente. Hasta entonces sigue `undetermined`.
+- **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos, con la cita exigida y la licencia declarada (ver [inventario](../../inventory.md)). El registro verificable en GitHub está pendiente.
+- **Pendiente**: leer la referencia oficial de la API.
 - **Pendiente**: la causa del resultado anterior con cero datasets (LAB-01) no se pudo determinar. Estas pruebas sí obtuvieron resultados.
-- **Sin probar**: paginación profunda, token de aplicación, 429 y `Retry-After`, otros dominios.
+- **Sin probar**: token de aplicación, 429 y `Retry-After`, otros dominios, recorridos de más de 10000 resultados.

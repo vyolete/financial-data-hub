@@ -1,6 +1,6 @@
-# World Bank — Data Catalog API e Indicators API
+# World Bank — Data360, Data Catalog API e Indicators API
 
-**Estado**: Data Catalog API no utilizable en las pruebas; Indicators API accesible. Se requiere aprobación antes de elegir. Requisitos: FDH-001-FR-06, NFR-01, NFR-02.
+**Estado**: Data360 accesible y elegida para FDH-001 el 2026-11-25 ([ADR-0008](../../../../docs/adr/0008-world-bank-data360.md)); Data Catalog API no utilizable en las pruebas; Indicators API accesible, no elegida. Requisitos: FDH-001-FR-06, NFR-01, NFR-02.
 
 ## Objetivo
 Determinar qué API puede alimentar el segundo adaptador de descubrimiento y bajo qué condiciones.
@@ -18,11 +18,61 @@ python3 -I research/experiments/discovery-probe/followup.py   # incluye también
 | [probe](evidence/probe-2026-11-26T004520Z.json) | 29: 14 a Indicators y 15 al Data Catalog |
 | [seguimiento del límite](evidence/followup-2026-11-26T004654Z.json) | 4 al Data Catalog |
 
+## Data360 API (`https://data360api.worldbank.org/data360`)
+
+### Método y evidencia
+Segunda ronda, 2026-11-26 (UTC), con Python 3.9.6 y el repositorio en `2d4ee6b`. Los scripts se confirmaron después; cada evidencia registra su SHA-256. Sin credenciales.
+
+```bash
+python3 -I research/experiments/discovery-probe/round2.py data360
+python3 -I research/experiments/discovery-probe/round2_datasets.py
+```
+
+| Evidencia | Solicitudes |
+|---|---|
+| [segunda ronda](evidence/round2-2026-11-26T010020Z.json) | 26: 1 a la especificación, 22 a Data360 y 3 al Data Catalog |
+| [datasets](evidence/round2-datasets-2026-11-26T010325Z.json) | 7 a Data360 |
+
+En la primera evidencia **no son válidos** los campos `checks` sobre solapamiento y unicidad, `unique_ids` ni la solicitud T18: leyeron `series_description.idno`, ausente en los datasets. La segunda evidencia usa `idno` y corrige la paginación. Los conteos por campo de la primera sí son válidos.
+
+### Documentación oficial
+- [Especificación OpenAPI](https://github.com/worldbank/open-api-specs/blob/main/Data360%20Open_API.json) (v1, OpenAPI 3.0.1), que alimenta la [página de la API](https://data360.worldbank.org/en/api). Su [README](https://github.com/worldbank/open-api-specs) indica que no requiere autenticación. La especificación declara CC BY 4.0 en `info.license`.
+- El portal se anuncia como beta.
+
+### Hechos observados
+- `POST /searchv2` con cuerpo JSON: `search`, `filter`, `top`, `skip`, `count`, `facets`. Respuesta: `@odata.count` y `value[]`.
+- `search="*"`: 12601 entradas; 9859 `indicator`, 174 `dataset` y otros tipos. El filtro `type eq 'dataset'` devolvió solo datasets.
+- Paginación: 174 datasets en dos páginas, 174 distintos. `finance`: 42 en tres páginas, 42 distintos y mismo orden al repetir la primera.
+- Más allá del total: 200 vacío. `skip` mayor de 100000: 400.
+- Un dataset se recupera con `filter="type eq 'dataset' and idno eq '<id>'"` (conteo 1). `POST /metadata` **no quedó verificado**: la única solicitud (T18) envió el identificador `None` por el error de campo descrito arriba.
+- Errores: `top` negativo o textual, filtro desconocido, propiedad desconocida y JSON mal formado devuelven **400** con mensaje.
+- Tiempos con páginas de 100 datasets (unos 1,2 MB, 5 muestras): 1077–2971 ms, mediana 1213 ms.
+- No se observó 429 en 29 solicitudes; no se intentó provocarlo.
+
+### Metadatos (174 datasets)
+
+| Campo | Ruta | Con valor |
+|---|---|---|
+| Identificador | `idno` | 174 |
+| Título | `series_description.name` | 174 |
+| Descripción | `series_description.definition_long` | 169 |
+| Última actualización | `series_description.date_last_update` | 174 |
+| Licencia (lista con `name`, `uri`, `note`) | `series_description.license[]` | 153 |
+| Requisito de cita | `series_description.citation_requirement` | 118 |
+| Temas | `series_description.topics[]` | 131 |
+| Fuentes | `series_description.sources[]` | 153 |
+| Etiquetas | `tags[].tag` | 40 |
+| Enlaces | `series_description.links[]`, `api_link`, `csv_link`, `json_link`, `api_explorer_link` | 174 |
+| Entidad autora | `series_description.authoring_entity` | 0 |
+
+- `data_confidentiality_name`: `Public` en 173; uno sin valor.
+- **Licencias heterogéneas**: 61 datasets declaran «License Specified Externally» y 21 no declaran ninguna. Entre el resto hay variantes de CC BY, software GPL, licencias propias y al menos 8 con restricciones no comerciales o sin derivados. Los nombres no están normalizados. El conteo de nombres se limitó a los 15 más frecuentes por página.
+
 ## Data Catalog API (`https://datacatalogapi.worldbank.org/ddhxext`)
 
 ### Hechos observados
-- Las 19 solicitudes respondieron **429** `Rate limit is exceeded`, con `Retry-After` entre 30 y 43 s, incluida la primera.
-- En el seguimiento, una búsqueda se intentó 4 veces esperando lo indicado por `Retry-After`; las 4 respondieron 429.
+- Las 22 solicitudes de las dos rondas respondieron **429** `Rate limit is exceeded`, con `Retry-After` entre 30 y 47 s, incluida la primera.
+- En el seguimiento, una búsqueda se intentó 4 veces esperando lo indicado por `Retry-After`, y en la segunda ronda otras 3; todas respondieron 429.
 - En la primera ejecución el script siguió enviando otras solicitudes mientras recibía 429, sin esperar. Esas 15 respuestas no permiten evaluar cada endpoint.
 - No se obtuvo ningún dato: estructura, paginación, metadatos y errores quedan **sin verificar**.
 
@@ -31,7 +81,7 @@ python3 -I research/experiments/discovery-probe/followup.py   # incluye también
 - El gist describe `DatasetList`, `Search` y `DatasetView` con `$top` y `$skip`. No menciona autenticación ni límites.
 
 ### Interpretación
-La causa es desconocida (cuota anónima compartida, bloqueo por origen o necesidad de clave son **hipótesis**). Las pruebas cubren unos minutos desde un solo equipo: no demuestran que la API sea inviable en general, pero hoy no permiten construir sobre ella.
+La causa es desconocida (cuota anónima compartida, bloqueo por origen o necesidad de clave son **hipótesis**). Las pruebas cubren dos ventanas cortas desde un solo equipo: no demuestran que la API sea inviable en general, pero hoy no permiten construir sobre ella.
 
 ## Indicators API (`https://api.worldbank.org/v2`)
 
@@ -63,14 +113,12 @@ Consultadas el 2026-11-26 (UTC).
 | [Licencias del catálogo](https://datacatalog.worldbank.org/public-licenses) | CC BY 4.0 predeterminada para datos abiertos del Banco; otros datasets tienen otras licencias |
 | [Términos del sitio](https://www.worldbank.org/ext/en/legal/terms-conditions) (25-07-2025) | Volumen razonable de solicitudes; remite a los términos específicos para datasets; para otros materiales, la API solo admite ciertos usos no comerciales |
 
-**Pendiente humano**: decidir si los metadatos de indicadores se rigen por los términos de datasets y declarar el permiso de publicación. Hasta entonces sigue `undetermined`.
+**Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos de Data360, con atribución y licencia declarada de cada dataset (ver [inventario](../../inventory.md)). El registro verificable en GitHub está pendiente. La declaración no cambia el estado de revisión de los datasets ni autoriza redistribuir sus datos.
 
-## Decisión pendiente (requiere aprobación, FR-06)
+## Decisión
+El 2026-11-25 se eligió Data360, con una entrada `dataset` por dataset del catálogo. Alternativas descartadas por ahora: Indicators API (unidad más fina, sin búsqueda por texto observada) y esperar al Data Catalog. Ver [ADR-0008](../../../../docs/adr/0008-world-bank-data360.md).
 
-| Opción | Ventaja | Coste |
-|---|---|---|
-| A. Indicators API, un indicador = un dataset | Accesible y paginada; descripción en parte de los registros | Un indicador es más fino que un dataset; sin búsqueda por texto; sin licencia ni fechas por registro |
-| B. Indicators API, una fuente = un dataset | 71 entradas, más cercanas a una base de datos | Sin descripción ni URL en la respuesta |
-| C. Volver a probar el Data Catalog (otro momento o con clave si existe una oficial) | Es el catálogo de datasets | Plazo y resultado inciertos |
-
-Propuesta: A, limitando por fuente o tema en la configuración, y mantener C como investigación. No se sustituye nada sin aprobación.
+## Pendiente
+- Elegir los campos para URL oficial, publicador y categoría.
+- Revisar los términos aplicables a datasets con licencia externa o ausente.
+- Seguir el estado beta y los cambios de la especificación.

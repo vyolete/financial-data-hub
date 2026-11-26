@@ -1,0 +1,235 @@
+{
+ "target": "data360-datasets",
+ "started_utc": "2026-11-26T01:03:25Z",
+ "finished_utc": "2026-11-26T01:03:40Z",
+ "repository_commit": "2d4ee6bc837ff30353ef2b1dc620262f8c5c7c12",
+ "script_sha256": "1b3074128b451ad8c4a65ae29ecf2d4d2c33a53e947dab345cafba5496a3bc30",
+ "round2_sha256": "1d81b8d73f11b23e6570882999679cf19ceef192594d09ff33b9f544b859f47a",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "checks": {
+  "all": {
+   "count": 174,
+   "returned": 174,
+   "unique": 174
+  },
+  "finance": {
+   "count": 42,
+   "returned": 42,
+   "unique": 42
+  },
+  "finance_repeat_same_order": true
+ },
+ "requests": [
+  {
+   "id": "U01",
+   "purpose": "all datasets, first 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:03:25Z",
+   "status": 200,
+   "elapsed_ms": 2971,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "67bd0c0d1210a05a59d7f2f6991da6cb49f2f877cc360753112b8bc74a1bcc71",
+   "json": true,
+   "summary": {
+    "returned": 100,
+    "unique_idno": 100,
+    "licenses": {
+     "License Specified Externally": 33,
+     "CC BY 4.0": 27,
+     "<none>": 11,
+     "CC BY": 10,
+     "CC BY 3.0 IGO": 5,
+     "CC BY-NC-SA 3.0 IGO": 4,
+     "GNU General Public Licence": 1,
+     "CC-BY": 1,
+     "CC BY-NC-ND 4.0": 1,
+     "Public Use": 1,
+     "CC BY-SA 4.0": 1,
+     "Creative Commons": 1,
+     "CC BY-4.0": 1,
+     "GNU General Public License v2.0": 1,
+     "Custom License": 1
+    },
+    "license_entry_keys": {
+     "name": 91,
+     "note": 80,
+     "uri": 75
+    },
+    "confidentiality": {
+     "Public": 99,
+     "<NoneType>": 1
+    },
+    "with_citation_requirement": 67,
+    "idno_equals_database_id": 0
+   }
+  },
+  {
+   "id": "U02",
+   "purpose": "all datasets, second 100",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 100
+   },
+   "utc": "2026-11-26T01:03:30Z",
+   "status": 200,
+   "elapsed_ms": 1115,
+   "bytes": 811467,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "00ddb7d334bc948836c222712be5c01ecdf78458961fb1a33616914e2ea1d26b",
+   "json": true,
+   "summary": {
+    "returned": 74,
+    "unique_idno": 74,
+    "licenses": {
+     "License Specified Externally": 28,
+     "CC BY 4.0": 15,
+     "<none>": 10,
+     "CC BY": 10,
+     "CC BY-4.0": 2,
+     "CC BY 3.0 IGO": 2,
+     "Custom Licence": 1,
+     "CC-BY 4.0": 1,
+     "CC BY-NC 3.0 IGO": 1,
+     "CC BY-NC-SA 3.0 IGO": 1,
+     "CC BY-NC-SA 4.0": 1,
+     "CC BY-SA": 1,
+     "CC-BY-4.0": 1
+    },
+    "license_entry_keys": {
+     "name": 64,
+     "note": 59,
+     "uri": 52
+    },
+    "confidentiality": {
+     "Public": 74
+    },
+    "with_citation_requirement": 51,
+    "idno_equals_database_id": 0
+   }
+  },
+  {
+   "id": "U03",
+   "purpose": "finance, page 1 of 20",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 20,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:03:32Z",
+   "status": 200,
+   "elapsed_ms": 784,
+   "bytes": 194830,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "4302f416b5853159fa9d949dbf759566b39b9a01b8642426e52c3569eaaa52d7",
+   "json": true
+  },
+  {
+   "id": "U04",
+   "purpose": "finance, page 2 of 20",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 20,
+    "skip": 20
+   },
+   "utc": "2026-11-26T01:03:34Z",
+   "status": 200,
+   "elapsed_ms": 932,
+   "bytes": 234331,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "691598ba991ab649d15b87ccc53ccebb6ab0d242b0cf84c7e4033edbdd8a7c5d",
+   "json": true
+  },
+  {
+   "id": "U05",
+   "purpose": "finance, page 3 of 20",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 20,
+    "skip": 40
+   },
+   "utc": "2026-11-26T01:03:36Z",
+   "status": 200,
+   "elapsed_ms": 377,
+   "bytes": 48190,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "f23f75baf8446405ae0d50c89763e0da76fa7dd7d44ae131e6b991f57a63ab04",
+   "json": true
+  },
+  {
+   "id": "U06",
+   "purpose": "repeat of U03",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "finance",
+    "filter": "type eq 'dataset'",
+    "top": 20,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:03:37Z",
+   "status": 200,
+   "elapsed_ms": 586,
+   "bytes": 194830,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "4302f416b5853159fa9d949dbf759566b39b9a01b8642426e52c3569eaaa52d7",
+   "json": true
+  },
+  {
+   "id": "U07",
+   "purpose": "one dataset by identifier",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset' and idno eq '<dataset-id>'",
+    "top": 2
+   },
+   "utc": "2026-11-26T01:03:39Z",
+   "status": 200,
+   "elapsed_ms": 407,
+   "bytes": 10953,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "4d30650b9976aaf1d5d4ad78e1e0cf534d9c95a8a1fb8cfd526786d1c5965cc4",
+   "json": true,
+   "summary": {
+    "count": 1
+   }
+  }
+ ]
+}
