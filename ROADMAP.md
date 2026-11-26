@@ -13,6 +13,7 @@ Etapas aprobadas por la mantenedora el 2026-11-25, sin fechas comprometidas. Los
 | FDH-006 Data Services | API, exportación y consumo analítico | Pendiente |
 | FDH-007 Financial Analytics | Productos y vistas analíticas | Pendiente |
 | FDH-008 Reliability & Operations | Objetivos de servicio, recuperación y escalabilidad validados | Pendiente |
+| FDH-009 Cloud Platform | Entorno de nube reproducible para los artefactos existentes: IaC, despliegue, secretos, acceso restringido, respaldos y presupuesto | Propuesta ([especificación](specs/009-cloud-platform/spec.md) en Draft); puede avanzar en paralelo a FDH-002 |
 
 El portal evoluciona junto con los componentes funcionales. La seguridad, las pruebas, la observabilidad y la eficiencia se incorporan desde las primeras entregas. La investigación de fuentes acompaña a la etapa que las integra y se registra en el [inventario](research/sources/inventory.md). Las pruebas de concepto de [ADR-0007](docs/adr/0007-integration-and-orchestration.md) preceden a la selección definitiva de integración y orquestación.
 
