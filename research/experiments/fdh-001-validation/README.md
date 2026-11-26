@@ -234,3 +234,36 @@ puede integrar el catálogo mediante el [contrato HTTP de E2](../../../specs/001
   verificar los trabajos de GitHub Actions sobre su SHA y preparar la revisión funcional.
   La revisión cubre búsqueda y filtros, permisos de visibilidad, procedencia, estados
   del portal, métricas históricas y conservación del catálogo migrado en una copia.
+
+### Diagnóstico y ajuste del arranque de Chrome en CI
+
+Base publicada: `60d84f4906f7f3f557e3d6459b0eda1b344281fd`. En el
+[primer intento](https://github.com/vyolete/financial-data-hub/actions/runs/45752180724/job/139682323638)
+y el [segundo intento](https://github.com/vyolete/financial-data-hub/actions/runs/45752180724/job/139683131394),
+Compose completó el arranque, la migración, el reinicio, la carga sintética y el humo.
+El paso de Chrome agotó ocho segundos en `Target.createTarget`, antes de navegar.
+Los dos logs registran Ubuntu 24.04, imagen `20261116.133.1`, y Node `24.22.3`.
+La versión, la ruta resuelta del navegador y el stderr de Chrome no quedaron registrados.
+La evidencia acota el fallo a la preparación de Chrome o su canal CDP en el runner;
+todavía no distingue un arranque lento de un problema del canal o del ejecutable.
+
+El ajuste confirma CDP con `Browser.getVersion` y un plazo único de 30 segundos.
+Los comandos posteriores conservan ocho segundos. El workflow registra ubicación y
+versión del ejecutable. El script registra flags, código o señal de salida y fragmentos
+reconocidos de stderr de arranque dentro de un búfer de 4096 caracteres. Los diagnósticos
+distinguen un error de lanzamiento, un canal cerrado y la salida del proceso. Las
+comprobaciones funcionales y el transporte por tuberías se conservan.
+
+| Comando o comprobación | Resultado local |
+| --- | --- |
+| `node --check scripts/browser_check.mjs` y `node --check scripts/browser_check.test.mjs` | Sintaxis correcta |
+| `node --test scripts/browser_check.test.mjs` | 4 pruebas. Ejecutable ausente, salida prematura con filtrado de stderr, cierre del canal y respuesta de preparación seguida del plazo de 8 s. Correctas en macOS con Node 23.11.0 y en la imagen Linux local `node:24-alpine` con Node 24.22.3 |
+| Parseo del YAML y `git diff --check` | Correctos |
+| `FDH_API_PORT=18000 FDH_WEB_PORT=18080 FDH_EXPECT_SYNTHETIC=1 ./scripts/smoke.sh` | Correcto con la semilla y las imágenes existentes |
+| `FDH_BROWSER_URL=http://127.0.0.1:18080 FDH_CHROME_NO_SANDBOX=1 node scripts/browser_check.mjs` | Chrome real `158.0.8127.38` en macOS con Node `23.11.0`, CDP `1.3` listo en 1337 ms. Pasaron catálogo, búsqueda, procedencia, visibilidad, ejecuciones y estados de interfaz. Se registraron avisos locales del asignador y de `CVDisplayLink` |
+
+La validación reutilizó el bundle de E2 y PostgreSQL con la semilla sintética. Se
+comprobó el espacio antes de ejecutarla y se prescindió de compilaciones Docker.
+La verificación en Ubuntu queda pendiente de la publicación autorizada del commit
+de corrección. Si la preparación agota 30 segundos en Ubuntu, el registro permite
+diagnosticar el lanzador y el canal en ese entorno.

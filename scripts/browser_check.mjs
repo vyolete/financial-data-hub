@@ -9,13 +9,20 @@ import { setTimeout as delay } from "node:timers/promises";
 const origin = process.env.FDH_BROWSER_URL ?? `http://127.0.0.1:${process.env.FDH_WEB_PORT ?? 8080}`;
 const chrome = process.env.CHROME_BIN ?? (process.platform === "darwin"
   ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" : "google-chrome");
+const STARTUP_TIMEOUT = 30_000;
+const COMMAND_TIMEOUT = 8_000;
+const STDERR_LIMIT = 4096;
 const profile = await mkdtemp(join(tmpdir(), "fdh-chrome-"));
 const processArgs = [
   "--headless", "--disable-background-networking", "--no-first-run",
   "--remote-debugging-pipe", `--user-data-dir=${profile}`,
 ];
 if (process.env.FDH_CHROME_NO_SANDBOX === "1") processArgs.push("--no-sandbox");
-const browser = spawn(chrome, processArgs, { stdio: ["ignore", "ignore", "ignore", "pipe", "pipe"] });
+console.log("Chrome launch", JSON.stringify({
+  executable: chrome,
+  args: processArgs.map(arg => arg.startsWith("--user-data-dir=") ? "--user-data-dir=<temporary>" : arg),
+}));
+const browser = spawn(chrome, processArgs, { stdio: ["ignore", "ignore", "pipe", "pipe", "pipe"] });
 const input = browser.stdio[3];
 const output = browser.stdio[4];
 const pending = new Map();
@@ -23,21 +30,71 @@ let buffer = "";
 let nextId = 0;
 let targetSession;
 let pausedDataset;
+let failure;
+let stopping = false;
+let startupStderr = "";
+let starting = true;
+let prematureExit;
+const closed = new Promise(resolve => browser.once("close", resolve));
 
-function rejectPending(error) {
-  for (const { reject } of pending.values()) reject(error);
+browser.stderr.setEncoding("utf8").on("data", chunk => {
+  if (starting) startupStderr = (startupStderr + chunk).slice(-STDERR_LIMIT);
+});
+browser.stderr.on("error", () => {});
+
+// Allowlist diagnostic fragments so stderr cannot publish URLs, paths or arbitrary values.
+function stderrExcerpt() {
+  const known = [
+    /Remote debugging pipe file descriptors are not open/i,
+    /DevToolsActivePort file doesn't exist/i,
+    /No usable sandbox/i,
+    /No space left on device/i,
+    /Permission denied/i,
+    /error while loading shared libraries/i,
+    /Failed to connect to the bus/i,
+    /Trying to load the allocator multiple times/i,
+    /CVDisplayLinkCreateWithCGDisplay failed/i,
+    /Trace\/breakpoint trap/i,
+    /Segmentation fault/i,
+  ];
+  return known.flatMap(pattern => startupStderr.match(pattern)?.[0] ?? []).join("\n");
+}
+
+function failTransport(message) {
+  if (stopping || failure) return;
+  failure = new Error(message);
+  for (const { reject } of pending.values()) reject(failure);
   pending.clear();
 }
 
-browser.on("error", rejectPending);
-browser.on("exit", () => rejectPending(new Error("Chrome closed unexpectedly")));
-input.on("error", rejectPending);
+browser.on("error", error => failTransport(`Chrome launch failed (${error.code ?? "unknown"})`));
+browser.on("exit", (code, signal) => {
+  if (stopping) return;
+  prematureExit = { code, signal };
+  failTransport(`Chrome exited prematurely (code=${code}, signal=${signal})`);
+});
+function cdpClosed(message) {
+  // The pipe can close before Node reports the exit status of the same process.
+  setTimeout(() => failTransport(message), 100).unref();
+}
+
+for (const [stream, direction] of [[input, "input"], [output, "output"]]) {
+  stream.on("error", error => cdpClosed(`Chrome CDP ${direction} failed (${error.code ?? "unknown"})`));
+  stream.on("close", () => cdpClosed(`Chrome CDP ${direction} closed`));
+}
+
 output.setEncoding("utf8");
 output.on("data", chunk => {
   buffer += chunk;
   let separator;
   while ((separator = buffer.indexOf("\0")) >= 0) {
-    const message = JSON.parse(buffer.slice(0, separator));
+    let message;
+    try {
+      message = JSON.parse(buffer.slice(0, separator));
+    } catch {
+      failTransport("Chrome CDP returned an invalid frame");
+      return;
+    }
     buffer = buffer.slice(separator + 1);
     if (message.method === "Fetch.requestPaused") pausedDataset = message.params.requestId;
     const request = pending.get(message.id);
@@ -48,12 +105,13 @@ output.on("data", chunk => {
   }
 });
 
-async function command(method, params = {}, sessionId = targetSession) {
+async function command(method, params = {}, sessionId = targetSession, timeout = COMMAND_TIMEOUT) {
+  if (failure) throw failure;
   const id = ++nextId;
   let timer;
   try {
     return await new Promise((resolve, reject) => {
-      timer = setTimeout(() => reject(new Error(`Timed out: ${method}`)), 8000);
+      timer = setTimeout(() => reject(new Error(`Timed out: ${method} after ${timeout} ms`)), timeout);
       pending.set(id, { resolve, reject });
       input.write(JSON.stringify({ id, method, params, sessionId }) + "\0");
     });
@@ -74,7 +132,12 @@ async function evaluate(expression) {
 async function waitFor(selector, expected) {
   const expression = `Array.from(document.querySelectorAll(${JSON.stringify(selector)}), item => item.textContent.trim())`;
   for (let attempt = 0; attempt < 60; ++attempt) {
-    const values = await evaluate(expression).catch(() => []);
+    if (failure) throw failure;
+    const values = await evaluate(expression).catch(error => {
+      if (failure) throw failure;
+      if (!/execution context|Inspected target navigated/i.test(error.message)) throw error;
+      return [];
+    });
     if (expected(values)) return values;
     await delay(150);
   }
@@ -92,8 +155,14 @@ async function api(path) {
 }
 
 try {
+  const start = performance.now();
+  const { product, protocolVersion } = await command("Browser.getVersion", {}, undefined, STARTUP_TIMEOUT);
+  console.log("Chrome CDP ready", JSON.stringify({
+    product, protocolVersion, elapsedMs: Math.round(performance.now() - start),
+  }));
   const { targetId } = await command("Target.createTarget", { url: "about:blank" });
   ({ sessionId: targetSession } = await command("Target.attachToTarget", { targetId, flatten: true }));
+  starting = false;
   const initial = await api("/api/v1/datasets");
   assert.ok(initial.total > 20 && initial.items.every(item => item.title.startsWith("SINTÉTICO")));
   await command("Fetch.enable", { patterns: [{ urlPattern: "*/api/v1/datasets?*" }] });
@@ -146,11 +215,20 @@ try {
   await waitFor("main [role=alert]", has("No se pudo cargar"));
   console.log("ok   Chrome: API parity, search, provenance, hidden metadata, run metrics, loading, empty, missing and failed states");
 } finally {
+  stopping = true;
   if (browser.pid && browser.exitCode === null && browser.signalCode === null) {
-    await new Promise(resolve => {
-      browser.once("exit", resolve);
-      browser.kill();
-    });
+    browser.kill();
+    const killTimer = setTimeout(() => browser.kill("SIGKILL"), 2000);
+    killTimer.unref();
+    await Promise.race([closed, delay(4000, undefined, { ref: false })]);
+    clearTimeout(killTimer);
+  } else {
+    await Promise.race([closed, delay(2000, undefined, { ref: false })]);
+  }
+  for (const pipe of [browser.stderr, input, output]) pipe.destroy();
+  if (prematureExit) console.error("Chrome premature exit", JSON.stringify(prematureExit));
+  if (startupStderr) {
+    console.error("Chrome startup stderr:", stderrExcerpt() || "<no recognized diagnostic fragments>");
   }
   await rm(profile, { recursive: true, force: true, maxRetries: 3 });
 }
