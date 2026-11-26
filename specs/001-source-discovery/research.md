@@ -76,6 +76,9 @@ Versiones consultadas en PyPI, npm, nodejs.org, Docker Hub y GitHub el 2026-11-2
 - **Lovable**: según su [FAQ](https://docs.lovable.dev/introduction/faq), los proyectos nuevos desde mayo de 2026 usan TanStack Start con renderizado en servidor, sin elegir otro stack, y Git no importa repositorios. Su [integración con GitHub](https://docs.lovable.dev/integrations/github) crea un repositorio nuevo y pide escritura en contenido, flujos de trabajo y administración. Por tanto **no se conecta a este repositorio**: se usa para prototipar aparte y el código se incorpora mediante commits revisados. Los componentes de presentación no dependen del enrutador ni de la red para poder trasladarse.
 - **Alternativas**: TanStack Start en este repositorio (introduce un servidor Node y funciones de servidor, contrarias al principio III sin un ADR).
 - **TypeScript**: 7.x es la última, pero `openapi-typescript` exige 5.x y `typescript-eslint` admite menos de 6.1.
+- **Aplicación en E2**: el alcance del catálogo usa enlaces y `fetch` nativos, React y
+  declaraciones generadas con el PyYAML existente. Las bibliotecas de enrutamiento y
+  consultas de la propuesta inicial se difieren. Visual Pipeline Studio sigue separado.
 
 ### D10. Entorno local
 - **Decisión**: Docker Compose con `db`, `migrate` (misma imagen del backend, termina), `api` y `web`; puertos publicados solo en `127.0.0.1`. El descubrimiento se ejecuta con `docker compose run --rm api fdh discover`.

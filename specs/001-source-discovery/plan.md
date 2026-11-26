@@ -13,8 +13,8 @@ Detalle: [investigación y decisiones](research.md), [modelo de datos](data-mode
 | Aspecto | Decisión |
 |---|---|
 | Lenguaje | Python 3.13 (backend), TypeScript 5.9 (portal) |
-| Dependencias de ejecución | FastAPI, Pydantic, pydantic-settings, Uvicorn, SQLAlchemy asíncrono, asyncpg, Alembic, httpx; React, React Router, TanStack Query, openapi-fetch |
-| Dependencias de desarrollo | pytest, pytest-asyncio, pytest-socket, pytest-cov, ruff, mypy, openapi-spec-validator, PyYAML; Vite, Vitest, Testing Library, jsdom, ESLint, openapi-typescript |
+| Dependencias de ejecución | FastAPI, Pydantic, pydantic-settings, Uvicorn, SQLAlchemy asíncrono, asyncpg, Alembic, httpx; React |
+| Dependencias de desarrollo | pytest, pytest-asyncio, pytest-socket, pytest-cov, ruff, mypy, openapi-spec-validator, PyYAML; Vite, Vitest, Testing Library, jsdom, ESLint |
 | Herramientas de CI | gitleaks, pip-audit, npm audit |
 | Almacenamiento | PostgreSQL 18 |
 | Plataforma | Contenedores Linux con Docker Compose, solo en el equipo local |
@@ -22,6 +22,11 @@ Detalle: [investigación y decisiones](research.md), [modelo de datos](data-mode
 | Objetivos de rendimiento | La especificación no fija ninguno; no se declaran |
 | Restricciones | Límites de la especificación; sin autenticación, solo local; sin extracción de datos |
 | Escala | Dos fuentes; hasta 500 resultados por consulta; miles de datasets |
+
+En E2, el portal usa React y las API nativas del navegador para las pocas rutas y
+peticiones del catálogo. Los tipos se generan desde OpenAPI con el PyYAML ya fijado.
+Esta decisión mantiene el portal desacoplado del Studio de Lovable y deja intactos
+los contratos de la API.
 
 Cada dependencia se justifica en [research.md](research.md) (D02, D03, D09, D11, D16). Las versiones exactas quedan en `backend/uv.lock` y `frontend/package-lock.json`. Antes de fijarlas se comprueba que su licencia sea compatible con Apache-2.0.
 
@@ -189,10 +194,10 @@ Un flujo con `permissions: contents: read`, disparado por `push` en cualquier ra
 
 | Trabajo | Comprueba |
 |---|---|
-| `backend` | `uv sync --locked`, ruff, formato, mypy, pruebas unitarias, de contrato y arquitectura sin red |
-| `integration` | Migraciones, `alembic check`, pruebas de integración y API contra PostgreSQL, deriva de OpenAPI |
-| `frontend` | `npm ci`, ESLint, tipos, pruebas, tipos generados al día, compilación |
-| `compose` | Configuración, puertos solo locales, construcción, arranque y humo con datos sintéticos |
+| `backend` | `uv sync --locked`, ruff, formato, mypy, pruebas unitarias, de contrato y arquitectura sin red, deriva de OpenAPI y tipos generados |
+| `integration` | Migraciones, `alembic check`, pruebas de integración y API contra PostgreSQL |
+| `frontend` | `npm ci`, ESLint, tipos, pruebas y compilación |
+| `compose` | Configuración, puertos solo locales, construcción, arranque, humo y Chrome con datos sintéticos |
 | `security` | gitleaks (bloquea, desde E0) y auditoría de dependencias (informa) |
 
 Ningún trabajo llama a las API externas.

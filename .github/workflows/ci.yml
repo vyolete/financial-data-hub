@@ -39,9 +39,17 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run mypy
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - name: Verify portal declarations against OpenAPI
+        env:
+          FDH_API_PYTHON: ../backend/.venv/bin/python
+        run: npm --prefix ../frontend run api:check
       - name: Tests without network or database
         run: >
-          uv run pytest tests/unit tests/contract tests/architecture tests/api
+          uv run pytest tests/unit tests/contract tests/architecture
+          tests/api/test_health.py tests/api/test_errors.py tests/api/test_openapi_contract.py
           --cov=fdh.domain --cov=fdh.dataplane --cov-fail-under=85
 
   integration:
@@ -75,7 +83,7 @@ jobs:
       - run: uv sync --locked
       - run: uv run alembic upgrade head
       - run: uv run alembic check
-      - run: uv run pytest tests/integration
+      - run: uv run pytest tests/integration tests/api
 
   frontend:
     runs-on: ubuntu-24.04
@@ -116,6 +124,17 @@ jobs:
           docker compose restart db
           docker compose up --detach --wait --wait-timeout 120
           docker compose exec -T db psql -U fdh -d fdh -Atc "select count(*) from sources" | grep -qx 1
+      - name: Seed the disposable Compose catalog
+        run: docker compose exec -T api python - < backend/tests/fixtures/synthetic/seed.py
+      - name: Seeded catalog smoke
+        run: FDH_EXPECT_SYNTHETIC=1 ./scripts/smoke.sh
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - name: Verify the portal in Chrome
+        env:
+          FDH_CHROME_NO_SANDBOX: "1"
+        run: node scripts/browser_check.mjs
       - name: Logs on failure
         if: failure()
         run: docker compose logs --no-color --tail 200

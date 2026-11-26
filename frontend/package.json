@@ -10,7 +10,8 @@
     "build": "tsc --noEmit && vite build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "api:check": "${FDH_API_PYTHON:-python3} ../scripts/generate_api_types.py --check"
   },
   "dependencies": {
     "react": "19.3.1",

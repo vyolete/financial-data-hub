@@ -2,7 +2,7 @@
 
 **Estado**: In Progress (aprobada; implementación iniciada el 2026-11-26)
 **Registro de aprobación**: [comentario en el issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit `afe2090dda25295a98164c507a99cc52d3644ec1` (2026-11-26 UTC)
-**Cambios posteriores a la aprobación**: decisiones de la [sesión del 2026-11-26](#session-2026-11-26-e2), indicadas por quien opera la sesión y **pendientes de registro de aprobación** (afectan a FR-03, FR-04, NFR-01 y añaden AC-38 a AC-40)
+**Cambios posteriores a la aprobación**: decisiones de la [sesión del 2026-11-26](#session-2026-11-26-e2), aprobadas en el [comentario del issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7181780344) sobre `aa1d4f982f2bdb8e00be4175a603305451472c19` (afectan a FR-03, FR-04, NFR-01 y añaden AC-38 a AC-40)
 **Issue de seguimiento**: [#2](https://github.com/vyolete/financial-data-hub/issues/2)
 
 ## Clarifications

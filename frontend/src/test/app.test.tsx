@@ -5,14 +5,16 @@ import { App } from "../App";
 
 // Synthetic responses: the tests never reach a server.
 function answer(status: number, body: unknown) {
-  vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status })));
+  vi.stubGlobal("fetch", vi.fn().mockImplementation((path: string) => Promise.resolve(new Response(
+    JSON.stringify(path === "/health" ? body : { items: [], total: 0 }), { status },
+  ))));
 }
 
 describe("App", () => {
   it("shows that it is checking while the service has not answered", () => {
     vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise(() => {})));
     render(<App />);
-    expect(screen.getByRole("status").textContent).toBe("Comprobando el servicio…");
+    expect(screen.getByText("Comprobando el servicio…").textContent).toBe("Comprobando el servicio…");
   });
 
   it("shows that the service is available", async () => {

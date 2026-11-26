@@ -89,35 +89,38 @@ La especificación tiene dos escenarios sin prioridad. Se descomponen así:
 
 ### Pruebas
 
-- [ ] T039 [P] [US2] Escribir `backend/tests/api/test_openapi_contract.py`: rutas, parámetros, límites y respuestas generados coinciden con contracts/openapi.yaml y solo existe el método GET (FR-04; AC-15)
-- [ ] T040 [P] [US2] Escribir `backend/tests/api/test_datasets.py`: `page` de 1 a 10000, `page_size` de 1 a 100 con 20 por defecto y 422 al exceder; `q` y filtros de máximo 200 caracteres, sin tildes, comodines escapados; categoría o tema; detalle completo con licencia y condiciones de la fuente y las 20 observaciones más recientes con su total; procedencia paginada; 404; ocultación de fuentes `undetermined` o `denied` y de `restricted`; `pending` identificado; atribución, varias licencias, externas y ausentes; conexión de solo lectura (FR-04, NFR-02; AC-12, AC-13, AC-14, AC-15, AC-26, AC-27, AC-31)
-- [ ] T041 [P] [US2] Escribir `backend/tests/api/test_runs.py`: lista y detalle con estado, conteos, truncamiento y total por consulta, errores sanitizados; `partial` y `failed` nunca como éxito; `/health` y 503 (FR-03, FR-04; AC-09, AC-15, AC-30)
-- [ ] T042 [P] [US2] Escribir `frontend/src/test/catalog.test.tsx` y `frontend/src/test/detail.test.tsx`: cargando, vacío y fallido distintos; mismos registros que la respuesta de la API; licencias, requisito de cita, atribución, permisos, revisión, procedencia, verificación, «desconocido», enlaces solo HTTPS y contenido como texto (FR-03, FR-05, NFR-02; AC-16, AC-17, AC-18, AC-31, AC-36)
-- [ ] T043 [P] [US2] Escribir `frontend/src/test/runs.test.tsx`: cuatro estados distinguibles, truncamiento visible y estados cargando, vacío y fallido (FR-05; AC-16, AC-17, AC-30)
+- [X] T039 [P] [US2] Escribir `backend/tests/api/test_openapi_contract.py`: rutas, parámetros, límites y respuestas generados coinciden con contracts/openapi.yaml y solo existe el método GET (FR-04; AC-15)
+- [X] T040 [P] [US2] Escribir `backend/tests/api/test_datasets.py`: `page` de 1 a 10000, `page_size` de 1 a 100 con 20 por defecto y 422 al exceder; `q` y filtros de máximo 200 caracteres, sin tildes, comodines escapados; categoría o tema; detalle completo con licencia y condiciones de la fuente y las 20 observaciones más recientes con su total; procedencia paginada; 404; ocultación de fuentes `undetermined` o `denied` y de `restricted`; `pending` identificado; atribución, varias licencias, externas y ausentes; conexión de solo lectura (FR-04, NFR-02; AC-12, AC-13, AC-14, AC-15, AC-26, AC-27, AC-31)
+- [X] T041 [P] [US2] Escribir `backend/tests/api/test_runs.py`: lista y detalle con estado, conteos, truncamiento y total por consulta, errores sanitizados; `partial` y `failed` nunca como éxito; `/health` y 503 (FR-03, FR-04; AC-09, AC-15, AC-30)
+- [X] T042 [P] [US2] Escribir `frontend/src/test/catalog.test.tsx` y `frontend/src/test/detail.test.tsx`: cargando, vacío y fallido distintos; mismos registros que la respuesta de la API; licencias, requisito de cita, atribución, permisos, revisión, procedencia, verificación, «desconocido», enlaces solo HTTPS y contenido como texto (FR-03, FR-05, NFR-02; AC-16, AC-17, AC-18, AC-31, AC-36)
+- [X] T043 [P] [US2] Escribir `frontend/src/test/runs.test.tsx`: cuatro estados distinguibles, truncamiento visible y estados cargando, vacío y fallido (FR-05; AC-16, AC-17, AC-30)
 
 ### Implementación
 
-- [ ] T044 [US2] Implementar `backend/src/fdh/persistence/queries.py`: la regla de visibilidad en un único punto, búsqueda `unaccent` e `ILIKE`, filtro por `category_keys`, paginación, proveedores, categorías, procedencia y ejecuciones (FR-04, NFR-02; AC-12, AC-13, AC-27)
-- [ ] T045 [P] [US2] Implementar `backend/src/fdh/api/schemas.py` según contracts/openapi.yaml, incluida la procedencia reciente del detalle y la licencia de la fuente (FR-04; AC-14, AC-31)
-- [ ] T046 [US2] Ampliar `backend/src/fdh/api/app.py`: validación de `Host`, sin CORS, transacciones de solo lectura, errores sanitizados 404, 422 y 503 y registro de rutas, tras T045 (FR-04, NFR-01; AC-15, AC-25)
-- [ ] T047 [P] [US2] Implementar `backend/src/fdh/api/routes/datasets.py` (datasets, detalle con procedencia reciente, procedencia paginada, proveedores, categorías), tras T044 y T046 (FR-04, NFR-02; AC-12, AC-13, AC-14, AC-27, AC-31)
-- [ ] T048 [P] [US2] Implementar `backend/src/fdh/api/routes/runs.py`, tras T044 y T046 (FR-04; AC-15, AC-30)
-- [ ] T049 [P] [US2] Generar `frontend/src/api/schema.d.ts` desde contracts/openapi.yaml y crear `frontend/src/api/client.ts` y `frontend/src/api/queries.ts`; añadir el script `api:check` en `frontend/package.json` (FR-05)
-- [ ] T050 [US2] Implementar componentes sin red ni enrutador en `frontend/src/components/` (`StateView`, `DatasetCard`, `LicenseList`, `Attribution`, `LocatorList`, `SafeLink`, `RunStatusBadge`, `Pagination`, `Filters`), accesibles por teclado (FR-03, FR-05, NFR-02; AC-16, AC-31, AC-36)
-- [ ] T051 [P] [US2] Implementar `frontend/src/pages/CatalogPage.tsx`, tras T049 y T050 (FR-05; AC-16, AC-17, AC-31)
-- [ ] T052 [P] [US2] Implementar `frontend/src/pages/DatasetPage.tsx`, tras T049 y T050 (FR-05, NFR-02; AC-18, AC-31)
-- [ ] T053 [P] [US2] Implementar `frontend/src/pages/RunsPage.tsx`, tras T049 y T050 (FR-05; AC-17, AC-30)
-- [ ] T054 [US2] Implementar `frontend/src/main.tsx`, `frontend/src/App.tsx` (rutas y diseño), tras T051 a T053 (FR-05; AC-17)
-- [ ] T055 [US2] Crear `backend/tests/fixtures/synthetic/seed.py` (datos sintéticos identificados), ampliar `scripts/smoke.sh` con el catálogo sembrado y añadir a `.github/workflows/ci.yml` la comprobación de deriva de OpenAPI y `api:check`, tras T047, T048 y T054 (FR-04, FR-05, NFR-01, NFR-03; AC-25, AC-28, AC-37)
+- [X] T044 [US2] Implementar `backend/src/fdh/persistence/queries.py`: la regla de visibilidad en un único punto, búsqueda `unaccent` e `ILIKE`, filtro por `category_keys`, paginación, proveedores, categorías, procedencia y ejecuciones (FR-04, NFR-02; AC-12, AC-13, AC-27)
+- [X] T045 [P] [US2] Implementar `backend/src/fdh/api/schemas.py` según contracts/openapi.yaml, incluida la procedencia reciente del detalle y la licencia de la fuente (FR-04; AC-14, AC-31)
+- [X] T046 [US2] Ampliar `backend/src/fdh/api/app.py`: validación de `Host`, sin CORS, transacciones de solo lectura, errores sanitizados 404, 422 y 503 y registro de rutas, tras T045 (FR-04, NFR-01; AC-15, AC-25)
+- [X] T047 [P] [US2] Implementar `backend/src/fdh/api/routes/datasets.py` (datasets, detalle con procedencia reciente, procedencia paginada, proveedores, categorías), tras T044 y T046 (FR-04, NFR-02; AC-12, AC-13, AC-14, AC-27, AC-31)
+- [X] T048 [P] [US2] Implementar `backend/src/fdh/api/routes/runs.py`, tras T044 y T046 (FR-04; AC-15, AC-30)
+- [X] T049 [P] [US2] Generar `frontend/src/api/schema.d.ts` desde contracts/openapi.yaml y crear `frontend/src/api/client.ts` y `frontend/src/api/queries.ts`; añadir el script `api:check` en `frontend/package.json` (FR-05)
+- [X] T050 [US2] Implementar componentes sin red ni enrutador en `frontend/src/components/` (`StateView`, `DatasetCard`, `LicenseList`, `Attribution`, `LocatorList`, `SafeLink`, `RunStatusBadge`, `Pagination`, `Filters`), accesibles por teclado (FR-03, FR-05, NFR-02; AC-16, AC-31, AC-36)
+- [X] T051 [P] [US2] Implementar `frontend/src/pages/CatalogPage.tsx`, tras T049 y T050 (FR-05; AC-16, AC-17, AC-31)
+- [X] T052 [P] [US2] Implementar `frontend/src/pages/DatasetPage.tsx`, tras T049 y T050 (FR-05, NFR-02; AC-18, AC-31)
+- [X] T053 [P] [US2] Implementar `frontend/src/pages/RunsPage.tsx`, tras T049 y T050 (FR-05; AC-17, AC-30)
+- [X] T054 [US2] Implementar `frontend/src/main.tsx`, `frontend/src/App.tsx` (rutas y diseño), tras T051 a T053 (FR-05; AC-17)
+- [X] T055 [US2] Crear `backend/tests/fixtures/synthetic/seed.py` (datos sintéticos identificados), ampliar `scripts/smoke.sh` con el catálogo sembrado y añadir a `.github/workflows/ci.yml` la comprobación de deriva de OpenAPI y `api:check`, tras T047, T048 y T054 (FR-04, FR-05, NFR-01, NFR-03; AC-25, AC-28, AC-37)
 
 **Punto de control E2**: primer corte utilizable; descubrir en Socrata y verlo en API y portal.
+[Evidencia local de E2](../../research/experiments/fdh-001-validation/README.md#e2--implementación-y-validación-local).
+Estado de cierre: E2 verificada localmente. La publicación, GitHub Actions sobre el SHA de E2
+y la revisión humana de aceptación están pendientes.
 
 ### Decisiones añadidas a E2 (sesión del 2026-11-26)
 
 - [X] T074 [US1] Intervalo mínimo configurable entre solicitudes por fuente, en `config/sources.toml`, `settings` y el ejecutor HTTP, con pruebas de reloj falso (NFR-01; AC-39)
 - [X] T075 [US1] Token de aplicación opcional desde el entorno, con cabecera declarada por el adaptador y pruebas con valores ficticios de que no se filtra (NFR-01; AC-24, AC-38)
 - [X] T076 [US2] Migración `0002` con las métricas de ejecución, persistidas por el motor y mostradas por la CLI; prueba de que las ejecuciones existentes quedan desconocidas (FR-03, FR-04; AC-40)
-- [ ] T077 [US2] `scripts/browser_check.mjs`: comprobación del portal en Chrome sin interfaz contra la API real, sin dependencias, ejecutada en local y en el trabajo `compose` de la CI (NFR-03; AC-16, AC-17, AC-27, AC-37)
+- [X] T077 [US2] `scripts/browser_check.mjs`: comprobación del portal en Chrome sin interfaz contra la API real, sin dependencias, verificada en local y configurada en el trabajo `compose` de la CI. Ejecución alojada pendiente (NFR-03; AC-16, AC-17, AC-27, AC-37)
 
 ## Fase 5: US3 — World Bank Data360 (P2, E3)
 

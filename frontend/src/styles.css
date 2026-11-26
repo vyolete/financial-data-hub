@@ -1,15 +1,39 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
+  color: #202b32;
+  background: #f7f9f8;
 }
-
-main {
-  max-width: 48rem;
-  margin: 3rem auto;
-  padding: 0 1rem;
-}
-
-[data-state="unavailable"] {
-  font-weight: 600;
-}
+body { margin: 0; }
+a { color: #08544b; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid #08544b; outline-offset: 3px; }
+header { background: white; border-bottom: 1px solid #d7e0dd; }
+.shell { max-width: 66rem; margin-inline: auto; padding-inline: 1.25rem; }
+.masthead { min-height: 4.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.brand { font-weight: 750; text-decoration: none; }
+nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+nav [aria-current] { font-weight: 700; text-decoration-thickness: 2px; }
+main { padding-block: 2rem; overflow-wrap: anywhere; }
+h1 { font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.2; }
+h2 { font-size: 1.15rem; }
+.filters { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem; margin-bottom: 1.5rem; }
+label { display: grid; gap: 0.25rem; flex: 1 1 11rem; }
+input, button { border: 1px solid #758780; border-radius: 0.35rem; font: inherit; padding: 0.55rem 0.65rem; }
+input { min-width: 0; }
+button { background: #08544b; color: white; cursor: pointer; }
+button:disabled { background: #e4e9e7; color: #445751; cursor: default; }
+.results { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr)); gap: 0.9rem; }
+article { background: white; border: 1px solid #d7e0dd; padding: 1rem 1.2rem; border-radius: 0.5rem; }
+article h2 { margin-top: 0; }
+dl { margin-block: 0.7rem; }
+dt { margin-top: 0.35rem; font-weight: 650; }
+dd { margin-inline-start: 0; }
+.pagination { margin-top: 1.25rem; }
+.run-status { border: 1px solid currentColor; border-radius: 0.35rem; padding: 0.1rem 0.4rem; }
+.run-status[data-status="succeeded"] { color: #0b6147; }
+.run-status[data-status="partial"] { color: #7d4a00; }
+.run-status[data-status="failed"] { color: #a21d28; }
+.run-status[data-status="running"] { color: #1b5690; }
+footer { border-top: 1px solid #d7e0dd; color: #465b53; }

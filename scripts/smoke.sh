@@ -23,4 +23,36 @@ echo "ok   security headers"
 echo "ok   foreign Host rejected"
 [ "$(status -X POST "$API/health")" = "405" ] || fail "API accepted a write method"
 echo "ok   write method rejected"
+if [ "${FDH_EXPECT_SYNTHETIC:-0}" = 1 ]; then
+  python3 - "$WEB" <<'PYTHON'
+import json
+import sys
+from urllib.error import HTTPError
+from urllib.request import urlopen
+
+def get(path):
+    with urlopen(sys.argv[1] + "/api/v1" + path, timeout=10) as response:
+        return json.load(response)
+
+page = get("/datasets?q=ejecucion")
+assert page["total"] == 1, "synthetic budget"
+dataset_id = page["items"][0]["id"]
+assert get(f"/datasets/{dataset_id}")["provenance"]["total"] > 20
+assert get(f"/datasets/{dataset_id}/provenance?page=2")["items"]
+for word in ("oculto", "restringido", "denegada"):
+    assert get(f"/datasets?q={word}")["total"] == 0, word
+runs = get("/runs")["items"]
+assert {r["status"] for r in runs} == {"running", "succeeded", "partial", "failed"}
+assert any(r["truncated"] for r in runs)
+assert any(r["status"] == "failed" and r["persistence_ms"] == 0 for r in runs)
+assert any(r["status"] == "running" and r["requests"] is None for r in runs)
+try:
+    get("/datasets?page_size=101")
+except HTTPError as error:
+    assert error.code == 422
+else:
+    raise AssertionError("unbounded page accepted")
+print("ok   synthetic catalog and discovery runs through the portal proxy")
+PYTHON
+fi
 echo "smoke test passed"

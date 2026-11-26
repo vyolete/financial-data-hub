@@ -1,6 +1,10 @@
 # Guía de validación de FDH-001
 
-Comprueba el MVP. **Estado: E0 y E1 implementadas.** Funcionan la preparación, las pruebas, `fdh config check`, `fdh sources sync`, `fdh discover` y `fdh runs list` para Socrata, `/health` y la página inicial del portal. Los escenarios 2 y 4 funcionan para `co-datos-gov`; los escenarios 3 y 5 a 9 requieren entregas posteriores. Contratos: [CLI](contracts/cli.md), [configuración](contracts/sources-config.md), [API](contracts/openapi.yaml); datos: [modelo](data-model.md).
+**Estado: E0, E1 y E2 implementadas.** El descubrimiento de Socrata alimenta el catálogo.
+La API y el portal permiten buscar datasets, consultar su procedencia y revisar ejecuciones y
+métricas. Los escenarios de Data360 y el comando de revisión de permisos corresponden a E3 y E4.
+Consulta los contratos de [CLI](contracts/cli.md), [configuración](contracts/sources-config.md) y
+[API](contracts/openapi.yaml), y el [modelo de datos](data-model.md).
 
 ## Requisitos previos
 Docker con Compose en ejecución, [uv](https://docs.astral.sh/uv/) y Git. Node 24 solo si se quiere trabajar en el portal fuera de Docker. La primera instalación de dependencias e imágenes necesita red; las pruebas ordinarias, no. Reservar unos 3 GB libres.
@@ -29,7 +33,12 @@ uv run pytest                      # todas; conexiones externas bloqueadas
 uv run ruff check . && uv run ruff format --check . && uv run mypy
 ```
 
-Sin base de datos: `uv run pytest tests/unit tests/contract tests/architecture tests/api`.
+Sin base de datos, desde `backend/`:
+
+```bash
+uv run pytest tests/unit tests/contract tests/architecture \
+  tests/api/test_health.py tests/api/test_errors.py tests/api/test_openapi_contract.py
+```
 
 Portal, con Node 24 (`npm ci && npm run lint && npm test && npm run build` en `frontend/`) o solo con Docker:
 
@@ -39,6 +48,25 @@ docker run --rm --network none fdh-web-check sh -c "npm run lint && npm run type
 ```
 
 Si un puerto está ocupado, definir `FDH_DB_PORT`, `FDH_API_PORT` o `FDH_WEB_PORT` en `.env`; para las pruebas del backend, exportar también `FDH_DB_PORT`.
+
+## Contrato, catálogo sintético y Chrome (E2)
+
+Para verificar los tipos del portal, ejecuta `FDH_API_PYTHON=../backend/.venv/bin/python npm run api:check`
+desde `frontend/` después de preparar el entorno de backend. Si cambia el contrato aprobado,
+regenera las declaraciones con `cd backend && uv run python ../scripts/generate_api_types.py`.
+
+En una instancia de Compose desechable, con la migración aplicada y sin datos reales:
+
+```bash
+docker compose exec -T api python - < backend/tests/fixtures/synthetic/seed.py
+FDH_EXPECT_SYNTHETIC=1 ./scripts/smoke.sh
+node scripts/browser_check.mjs
+```
+
+El script usa Chrome instalado localmente. `CHROME_BIN` permite indicar su ruta.
+`FDH_BROWSER_URL` permite verificar otro portal local. El portal y la API deben compartir origen.
+Para integrar Visual Pipeline Studio, consume el contrato HTTP publicado en `/openapi.json`
+desde el proyecto independiente de Lovable, mediante un proxy de mismo origen cuando corresponda.
 
 ## Descubrimiento en Socrata (E1)
 
