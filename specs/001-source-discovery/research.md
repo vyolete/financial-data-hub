@@ -1,3 +1,8 @@
-# Research backlog
+# Investigación pendiente
 
-LAB-01 Socrata previously reported zero datasets with insufficient evidence. Reproduce independent HTTP requests, inspect response schema, pagination and errors before implementing. Verify official documentation, access and redistribution terms. Test World Bank discovery separately. Store sanitized evidence in research/sources/; do not commit credentials or bulk data. No live validation has been completed in this branch.
+- **LAB-01**: un informe anterior sobre Socrata registró cero datasets con evidencia insuficiente. Antes de implementar, reproducir solicitudes HTTP independientes e inspeccionar el esquema de respuesta, la paginación y los errores.
+- Verificar la documentación oficial y las condiciones de acceso y redistribución.
+- Probar por separado el descubrimiento en World Bank.
+- Guardar evidencia sanitizada en `research/sources/`; no versionar credenciales ni datos masivos.
+
+En esta rama no se ha completado ninguna validación en vivo.
