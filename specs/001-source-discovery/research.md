@@ -4,7 +4,7 @@ Pruebas en vivo ejecutadas el 2026-11-26 (UTC). Los detalles y la evidencia vive
 
 | Tema | Resultado | Evidencia |
 |---|---|---|
-| Socrata Discovery API, `www.datos.gov.co` | Accesible; paginación con `offset` y cursor, errores y metadatos observados. Referencia oficial de la API sin revisar | [informe](../../research/sources/colombia/socrata/README.md) |
+| Socrata Discovery API, `www.datos.gov.co` | Accesible; paginación con `offset` y cursor, errores y metadatos observados. Referencia oficial revisada el 2026-11-26 | [informe](../../research/sources/colombia/socrata/README.md) |
 | World Bank Data360 | Accesible; elegida para FR-06 ([ADR-0008](../../docs/adr/0008-world-bank-data360.md)) | [informe](../../research/sources/international/world-bank/README.md) |
 | World Bank Data Catalog API | No utilizable en las pruebas: HTTP 429 persistente | [informe](../../research/sources/international/world-bank/README.md) |
 | World Bank Indicators API | Accesible; candidata para extracción en FDH-002 y FDH-003. Su código de indicador no es único entre fuentes | [informe](../../research/sources/international/world-bank/README.md) |
@@ -13,7 +13,7 @@ Pruebas en vivo ejecutadas el 2026-11-26 (UTC). Los detalles y la evidencia vive
 
 ## Pendiente
 - Revisión humana de las licencias externas y ausentes de Data360 antes de extraer datos.
-- Leer la referencia oficial de Socrata Discovery API (tarea previa al adaptador).
+- Decidir si se usa un app token de Socrata, recomendado por su referencia.
 - Verificar si existe un patrón documentado de URL de página de dataset en Data360.
 - **LAB-01**: un informe anterior registró cero datasets en Socrata. Las pruebas actuales obtuvieron resultados; la causa del informe anterior sigue sin determinar.
 
@@ -54,7 +54,7 @@ Versiones consultadas en PyPI, npm, nodejs.org, Docker Hub y GitHub el 2026-11-2
 - **Decisión**: cursor `scroll_id`, sin `order`.
 - **Razón**: recorrió 145 resultados distintos; con `offset` se observó un registro repetido y hay un tope de 10000.
 - **Alternativas**: `offset`.
-- **Riesgo**: comportamiento observado y mencionado en un mensaje de error, con la referencia oficial sin leer. Una tarea la revisa antes de implementar.
+- **Confirmación** (2026-11-26, T025): la [referencia oficial](../../research/sources/colombia/socrata/README.md#referencia-oficial-de-la-discovery-api) documenta `scroll_id` y su incompatibilidad con `order` y `offset`.
 
 ### D06. URL oficial, publicador y fuentes de datos en Data360
 - **Decisión**: `official_url` y `publisher` quedan desconocidos. Los enlaces se guardan como localizadores y `sources[].organization` como fuentes de los datos para la atribución.

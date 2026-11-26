@@ -1,6 +1,6 @@
 # Socrata Discovery API — www.datos.gov.co
 
-**Estado**: probada en vivo; publicación de metadatos declarada `allowed` (recogida en la especificación aprobada); referencia oficial de la API sin leer. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
+**Estado**: probada en vivo; publicación de metadatos declarada `allowed` (recogida en la especificación aprobada); [referencia oficial de la API revisada](#referencia-oficial-de-la-discovery-api) el 2026-11-26. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
 
 ## Objetivo
 Comprobar acceso, estructura, paginación, metadatos, errores, tiempos y condiciones de uso antes de implementar el adaptador.
@@ -92,11 +92,32 @@ Consultadas el 2026-11-26 (UTC).
 | [Términos del portal](https://herramientas.datos.gov.co/terminos) | Los datos e información publicados son públicos; permite redistribución, compilación, extracción, copia, difusión, modificación y adaptación; exige citar «Fuente: Portal de Datos Abiertos www.datos.gov.co» y la última actualización cuando exista; prohíbe alterar o suprimir los metadatos de actualización y condiciones de uso. La página no indica fecha de versión ni menciona la API |
 | [Application Tokens](https://dev.socrata.com/docs/app-tokens.html) | Sin token se aplica un límite mucho menor; el exceso responde 429 |
 | [robots.txt](https://www.datos.gov.co/robots.txt) | `Crawl-delay: 1`; `/api/catalog` no figura excluido |
-| [Referencia de Discovery API](https://socratadiscovery.docs.apiary.io/) | La página no pudo leerse de forma automática: **los parámetros descritos aquí provienen de las pruebas, no de su documentación** |
+| [Referencia de Discovery API](https://socratadiscovery.docs.apiary.io/) | La página de Apiary no entrega su contenido de forma automática. La especificación oficial vigente se leyó después desde dev.socrata.com (sección siguiente) |
+
+## Referencia oficial de la Discovery API
+
+Consultada el 2026-11-26 (UTC), sin autenticación. La página <https://dev.socrata.com/docs/other/discovery> se genera en el navegador a partir de la especificación OpenAPI <https://dev.socrata.com/apis/discovery.yaml> (95988 bytes, SHA-256 `54e2bfc164ac111b079f3c1300fd3ab3ec5681a03d60dcd1f28af16783180071`). No se versiona una copia: el pie de la documentación la licencia como CC BY-NC-SA 3.0.
+
+| Tema | Lo que declara la referencia | Efecto en el adaptador |
+|---|---|---|
+| Extremos | `https://api.us.socrata.com/api/catalog/v1` para dominios de Norteamérica; `api.eu.socrata.com` para los demás | Se mantiene el extremo configurado; la prueba en vivo confirmó que responde para `www.datos.gov.co` |
+| `domains` | Dominio propietario del activo; admite lista separada por comas. Sin `domains` ni `search_context` se buscan todos los dominios | `domains` es obligatorio |
+| `only` | Tipo de activo; admite singular o plural | Fijo `only=datasets` |
+| `q` | Busca en nombre, descripción, categoría, etiquetas, columnas y atribución. `min_should_match` predeterminado `3<60%` | Un término puede no exigir todas sus palabras si son más de tres |
+| `limit` | Predeterminado 100, máximo 10000 | Capacidad `max_page_size` = 10000; la configuración sigue limitada a 100 |
+| `offset` | Máximo 10000; `offset + limit > 10000` responde 400 | No se usa |
+| `scroll_id` | Vacío en la primera solicitud; después, el identificador del último activo recibido. Incompatible con `order` y con `offset` (400) | Confirma la decisión D05 |
+| Parámetros desconocidos | Se interpretan como metadatos propios del portal: un nombre mal escrito produce resultados vacíos | El adaptador rechaza opciones desconocidas antes de solicitar |
+| Respuesta | `results[]`, `resultSetSize` (total recuperable), `timings`. En `resource`: `contact_email`, `description` (`""` si falta), `attribution` (nulo si falta), fechas | `contact_email` se descarta; `""` es desconocido |
+| Errores | 400 de parámetros, 401 sin autorización, 404 `Domain not found` | Un único intento |
+| Autenticación | No se exige para leer activos públicos | Sin credenciales |
+| App token | «All programmatic usage of Socrata APIs should include an app token» (cabecera `X-App-Token`) | **No se usa todavía**; ver pendientes |
+
+[Application Tokens](https://dev.socrata.com/docs/app-tokens.html) indica que las solicitudes sin token comparten una cuota por dirección IP y que el exceso responde 429. No se encontró documentación de `Retry-After`. La especificación no declara cuotas numéricas.
 
 ## Interpretación y pendientes (no son hechos verificados)
 - **Hipótesis**: los términos permitirían publicar metadatos con la cita exigida. Cada dataset conserva su licencia, incluida alguna sin derivados.
 - **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos, con la cita exigida y la licencia declarada (ver [inventario](../../inventory.md)). Consta en la especificación aprobada ([registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)).
-- **Pendiente**: leer la referencia oficial de la API.
+- **Pendiente de decisión**: registrar un app token propio, como recomienda la referencia. Exigiría un secreto leído del entorno y no entra en E1; hoy las solicitudes se acotan a dos consultas de hasta cinco páginas.
 - **Pendiente**: la causa del resultado anterior con cero datasets (LAB-01) no se pudo determinar. Estas pruebas sí obtuvieron resultados.
 - **Sin probar**: token de aplicación, 429 y `Retry-After`, otros dominios, recorridos de más de 10000 resultados.

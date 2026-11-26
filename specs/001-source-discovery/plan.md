@@ -235,7 +235,7 @@ Reglas: una sola sesión integra y publica; cada espacio toca archivos distintos
 
 | Riesgo | Mitigación |
 |---|---|
-| `scroll_id` sin referencia oficial revisada | Tarea previa; paginación aislada en el adaptador |
+| Cambios en la paginación de Socrata (`scroll_id`, confirmado en su referencia) | Paginación aislada en el adaptador y pruebas de contrato |
 | Data360 en beta | Validación de cada respuesta y pruebas de contrato |
 | Data360 sin URL oficial ni publicador | Se muestran como desconocidos; revisar si existe un patrón documentado |
 | Licencias externas o ausentes | Permisos `undetermined`; revisión humana antes de extraer |
