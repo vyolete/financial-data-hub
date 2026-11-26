@@ -14,6 +14,6 @@ Registrar decisiones significativas con identificador estable, fecha, estado (Pr
 | [0007](0007-integration-and-orchestration.md) | dlt y Dagster como referencias condicionadas | Accepted (condicionada) |
 | [0008](0008-world-bank-data360.md) | Data360 como fuente de World Bank | Accepted |
 
-Las decisiones 0001 a 0008 tienen pendiente su registro verificable en GitHub.
+Las decisiones 0001 a 0008 constan en el [registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit `afe2090dda25295a98164c507a99cc52d3644ec1`.
 
 Pendientes: confirmación del motor de integración y del orquestador, producto de almacenamiento de objetos, evaluación de DuckDB y herramientas de observabilidad. No se consideran decisiones aprobadas por aparecer aquí.

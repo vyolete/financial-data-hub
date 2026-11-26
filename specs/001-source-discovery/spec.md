@@ -1,6 +1,7 @@
 # FDH-001 — Descubrimiento y catálogo de datos financieros
 
-**Estado**: In Review (requiere aprobación de la persona mantenedora antes de implementar)
+**Estado**: Approved
+**Registro de aprobación**: [comentario en el issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit `afe2090dda25295a98164c507a99cc52d3644ec1` (2026-11-26 UTC)
 **Issue de seguimiento**: [#2](https://github.com/vyolete/financial-data-hub/issues/2)
 
 ## Clarifications

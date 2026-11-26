@@ -219,4 +219,7 @@ contradicciones se corrigen en el documento subordinado o mediante una enmienda.
 - **Cumplimiento**: cada plan incluye la comprobación contra la constitución y cada PR declara su
   cumplimiento. Una excepción se justifica por escrito y requiere aprobación humana.
 
-**Version**: 1.1.1 | **Ratified**: TODO(RATIFICATION_DATE): pendiente de aprobación registrada en GitHub | **Last Amended**: 2026-11-25
+Registro de ratificación: [comentario en el issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit
+`afe2090dda25295a98164c507a99cc52d3644ec1`.
+
+**Version**: 1.1.1 | **Ratified**: 2026-11-26 | **Last Amended**: 2026-11-25

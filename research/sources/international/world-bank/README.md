@@ -139,7 +139,7 @@ Consultadas el 2026-11-26 (UTC).
 | [Licencias del catálogo](https://datacatalog.worldbank.org/public-licenses) | CC BY 4.0 predeterminada para datos abiertos del Banco; otros datasets tienen otras licencias |
 | [Términos del sitio](https://www.worldbank.org/ext/en/legal/terms-conditions) (25-07-2025) | Volumen razonable de solicitudes; remite a los términos específicos para datasets; para otros materiales, la API solo admite ciertos usos no comerciales |
 
-**Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos de Data360, con atribución y licencia declarada de cada dataset (ver [inventario](../../inventory.md)). El registro verificable en GitHub está pendiente. La declaración no cambia el estado de revisión de los datasets ni autoriza redistribuir sus datos.
+**Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos de Data360, con atribución y licencia declarada de cada dataset (ver [inventario](../../inventory.md)). Consta en la especificación aprobada ([registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)). La declaración no cambia el estado de revisión de los datasets ni autoriza redistribuir sus datos.
 
 ## Decisión
 El 2026-11-25 se eligió Data360 para FDH-001, con una entrada `dataset` por dataset del catálogo. Indicators API queda como candidata para extraer indicadores y series económicas en FDH-002 y FDH-003. El Data Catalog queda como investigación. Ver [ADR-0008](../../../../docs/adr/0008-world-bank-data360.md).

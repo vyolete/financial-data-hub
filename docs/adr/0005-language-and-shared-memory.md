@@ -1,10 +1,10 @@
 # ADR-0005: Idioma y memoria compartida
 
 - **Fecha**: 2026-11-25
-- **Estado**: Accepted (registro verificable en GitHub pendiente)
+- **Estado**: Accepted
 - **Autoridad**: aprobada por la dirección del proyecto en sesión de trabajo del 2026-11-25.
-  El registro verificable es un comentario personal de la persona mantenedora en el
-  [issue #2](https://github.com/vyolete/financial-data-hub/issues/2); aún no consta.
+  Registro verificable: [comentario en el issue #2](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703) sobre el commit
+  `afe2090dda25295a98164c507a99cc52d3644ec1` (2026-11-26 UTC).
 
 ## Contexto
 

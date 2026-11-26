@@ -1,6 +1,6 @@
 # Socrata Discovery API — www.datos.gov.co
 
-**Estado**: probada en vivo; publicación de metadatos declarada `allowed` (registro en GitHub pendiente); referencia oficial de la API sin leer. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
+**Estado**: probada en vivo; publicación de metadatos declarada `allowed` (recogida en la especificación aprobada); referencia oficial de la API sin leer. Requisitos: FDH-001-FR-01, FR-02, NFR-01, NFR-02.
 
 ## Objetivo
 Comprobar acceso, estructura, paginación, metadatos, errores, tiempos y condiciones de uso antes de implementar el adaptador.
@@ -96,7 +96,7 @@ Consultadas el 2026-11-26 (UTC).
 
 ## Interpretación y pendientes (no son hechos verificados)
 - **Hipótesis**: los términos permitirían publicar metadatos con la cita exigida. Cada dataset conserva su licencia, incluida alguna sin derivados.
-- **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos, con la cita exigida y la licencia declarada (ver [inventario](../../inventory.md)). El registro verificable en GitHub está pendiente.
+- **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos, con la cita exigida y la licencia declarada (ver [inventario](../../inventory.md)). Consta en la especificación aprobada ([registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)).
 - **Pendiente**: leer la referencia oficial de la API.
 - **Pendiente**: la causa del resultado anterior con cero datasets (LAB-01) no se pudo determinar. Estas pruebas sí obtuvieron resultados.
 - **Sin probar**: token de aplicación, 429 y `Retry-After`, otros dominios, recorridos de más de 10000 resultados.

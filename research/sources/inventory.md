@@ -54,7 +54,7 @@ Registro central de las fuentes candidatas aprobadas por la mantenedora el 2026-
 | `co-datos-gov` | `allowed` para metadatos | «Fuente: Portal de Datos Abiertos www.datos.gov.co» y fecha de última actualización cuando exista; sin alterar los metadatos de actualización ni las condiciones de uso | [Términos del portal](https://herramientas.datos.gov.co/terminos) |
 | `int-worldbank-data360` | `allowed` para metadatos | The World Bank, nombre del dataset y fuente de los datos cuando se conozca; mostrar la licencia declarada | [Términos para datasets](https://www.worldbank.org/ext/en/legal/terms-conditions/datasets) |
 
-- **Quién y cuándo**: la mantenedora, en sesión de trabajo del 2026-11-25. Registro verificable en el [issue #2](https://github.com/vyolete/financial-data-hub/issues/2): aún no consta.
+- **Quién y cuándo**: la mantenedora, en sesión de trabajo del 2026-11-25. Recogidas en la especificación aprobada: [registro de aprobación](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703).
 - **Alcance**: mostrar metadatos con atribución. No autoriza extraer ni redistribuir datos, que permanecen `undetermined` en todas las fuentes, ni marca datasets como `verified`.
 - **Data360**: no todos sus datasets comparten condiciones; hay licencias externas, ausentes y restrictivas ([revisión](international/world-bank/README.md)).
 

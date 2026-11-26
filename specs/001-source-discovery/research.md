@@ -9,7 +9,7 @@ Pruebas en vivo ejecutadas el 2026-11-26 (UTC). Los detalles y la evidencia vive
 | World Bank Data Catalog API | No utilizable en las pruebas: HTTP 429 persistente | [informe](../../research/sources/international/world-bank/README.md) |
 | World Bank Indicators API | Accesible; candidata para extracción en FDH-002 y FDH-003. Su código de indicador no es único entre fuentes | [informe](../../research/sources/international/world-bank/README.md) |
 | Contrato común de descubrimiento | Propuesta sin aprobar, con boceto de relación con la extracción | [propuesta](../../research/experiments/discovery-probe/discovery-contract-proposal.md) |
-| Permisos de publicación | `allowed` declarado para ambas fuentes; registro en GitHub pendiente | [inventario](../../research/sources/inventory.md) |
+| Permisos de publicación | `allowed` declarado para ambas fuentes y recogido en la especificación aprobada | [inventario](../../research/sources/inventory.md) |
 
 ## Pendiente para el plan
 - Los cuatro puntos abiertos de la [especificación](spec.md).

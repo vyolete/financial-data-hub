@@ -1,6 +1,6 @@
 # Arquitectura objetivo
 
-**Estado**: objetivo aprobado por la mantenedora el 2026-11-25 (registro verificable en GitHub pendiente). **Nada está implementado todavía.** Decisiones: [ADR-0002](../adr/0002-modular-monolith.md), [ADR-0003](../adr/0003-technology-stack.md), [ADR-0006](../adr/0006-metadata-driven-architecture.md), [ADR-0007](../adr/0007-integration-and-orchestration.md).
+**Estado**: objetivo aprobado por la mantenedora el 2026-11-25 (decisiones en los ADR aprobados: [registro](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)). **Nada está implementado todavía.** Decisiones: [ADR-0002](../adr/0002-modular-monolith.md), [ADR-0003](../adr/0003-technology-stack.md), [ADR-0006](../adr/0006-metadata-driven-architecture.md), [ADR-0007](../adr/0007-integration-and-orchestration.md).
 
 Diagrama editable: [target-architecture.drawio](target-architecture.drawio) (abrir con draw.io o diagrams.net).
 
