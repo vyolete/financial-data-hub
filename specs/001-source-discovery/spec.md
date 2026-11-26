@@ -29,6 +29,8 @@
 - Q: ¿Cómo se administran los permisos? → A: Mediante configuración o comando local. Los permisos de metadatos se separan de los de extracción y redistribución de datos. No se asume que los datasets de Data360 compartan condiciones de uso.
 - Q: ¿Qué se exige a los adaptadores? → A: Capacidades explícitas, independencia de la red y de la persistencia, localizadores de acceso extensibles y verificables e identidad estable por fuente e identificador externo.
 - Q: ¿Entra la integración continua en FDH-001? → A: Sí, con pruebas y controles proporcionales al alcance.
+- Q: ¿Anula el permiso de metadatos de una fuente las restricciones específicas de un dataset? → A: No; la restricción del dataset prevalece.
+- Q: ¿Qué ocurre con un dataset que tiene un localizador inválido? → A: Permanece en el catálogo; el localizador no puede usarse para extracción hasta que se corrija.
 
 ## Escenarios de usuario
 
@@ -68,7 +70,7 @@ La publicación de metadatos no concede extracción ni redistribución de datos,
 - **FDH-001-FR-02**: Deduplicar por fuente e identificador externo, y conservar la procedencia y el historial de búsquedas. Repetir el descubrimiento actualiza los metadatos. Un dataset que deja de aparecer no se elimina automáticamente.
 - **FDH-001-FR-03**: Persistir en PostgreSQL los metadatos y los registros de ejecución; repetir el descubrimiento no debe duplicar datasets.
   - Metadatos: identificador externo, título, descripción, proveedor, plataforma, publicador, categorías y temas originales (cero o varios de cada uno, textuales), etiquetas, URL oficial, fechas disponibles, licencias declaradas, estado de verificación y procedencia. Un valor ausente se registra como desconocido.
-  - Se conservan los localizadores de acceso que declare la fuente, para la futura extracción. Cada uno registra tipo (lista extensible), URL, campo de origen y estado de verificación: `unverified` o, si su sintaxis no es una URL HTTPS válida, `invalid`. FDH-001 no los consulta ni descarga los datos que señalan.
+  - Se conservan los localizadores de acceso que declare la fuente, para la futura extracción. Cada uno registra tipo (lista extensible), URL, campo de origen y estado de verificación: `unverified` o, si su sintaxis no es una URL HTTPS válida, `invalid`. FDH-001 no los consulta ni descarga los datos que señalan. Un localizador `invalid` no elimina el dataset del catálogo, pero no puede usarse para extracción hasta que se corrija y supere de nuevo la validación.
   - Ejecución: identificador, fuente, parámetros, inicio y fin en UTC, estado, páginas procesadas, conteos (recibidos, creados, actualizados y rechazados), errores sanitizados y, por consulta, total declarado por la fuente (si lo hay) y marca `truncated`.
   - Estados: `running`; `succeeded` (sin fallos ni rechazos, aunque no haya resultados); `partial` (se recuperó al menos un registro válido y hubo fallos o rechazos); `failed` (hubo fallos o rechazos y no se recuperó ningún registro válido, incluido el caso de que todos se rechacen).
   - `truncated` indica que quedaron resultados tras alcanzar el máximo de páginas de una consulta. Es un límite intencional: no es un error ni cambia por sí solo el estado.
@@ -85,6 +87,7 @@ La publicación de metadatos no concede extracción ni redistribución de datos,
   - Estado de revisión: `pending` (predeterminado), `verified` o `restricted`. Cambiarlo requiere una revisión humana con evidencia y fecha.
   - Las condiciones de acceso y de redistribución se registran por separado. La disponibilidad pública no implica permisos.
   - Cada fuente tiene un permiso de publicación de metadatos: `allowed`, `denied` o `undetermined` (predeterminado). La API y el portal solo muestran metadatos de fuentes `allowed`, y nunca los de datasets `restricted`.
+  - El permiso de la fuente no anula una restricción específica de un dataset: una persona la registra como `restricted`, con evidencia y fecha, y prevalece.
   - Cada dataset tiene, por separado, un permiso de extracción y otro de redistribución de datos, con los mismos valores y `undetermined` por defecto. No se heredan del permiso de metadatos ni de una licencia declarada.
   - Permisos y estados de revisión se administran mediante configuración o comando local, con evidencia y fecha de una persona. La API y el portal no los modifican.
   - Las licencias se conservan textualmente, con su enlace y requisito de cita si se declaran. Pueden ser varias, externas o estar ausentes.
@@ -135,7 +138,7 @@ Salvo indicación contraria, las fuentes de los criterios tienen publicación de
 | FDH-001-AC-24 | NFR-01 | Los logs identifican la ejecución y, en pruebas con credenciales ficticias, no las contienen; el repositorio no contiene secretos |
 | FDH-001-AC-25 | NFR-01 | Con la configuración documentada, API, portal y base de datos solo aceptan conexiones desde el equipo local |
 | FDH-001-AC-26 | NFR-02 | Cada fuente registra URL oficial y fecha de verificación; todo dataset nuevo queda `pending`, con acceso y redistribución por separado y sin permisos inferidos |
-| FDH-001-AC-27 | NFR-02 | Los metadatos de una fuente `undetermined` o `denied`, y los de datasets `restricted`, no aparecen en búsquedas ni detalles; los `pending` de una fuente `allowed` aparecen identificados como pendientes |
+| FDH-001-AC-27 | NFR-02 | Los metadatos de una fuente `undetermined` o `denied`, y los de datasets `restricted` aunque su fuente sea `allowed`, no aparecen en búsquedas ni detalles; los `pending` de una fuente `allowed` aparecen identificados como pendientes |
 | FDH-001-AC-28 | NFR-03 | Desde un clon limpio, los comandos documentados ejecutan sin red las pruebas de paginación, deduplicación, fallos, reintentos, estados de ejecución y filtros |
 | FDH-001-AC-29 | NFR-03 | Cada prueba en vivo registra fecha UTC, solicitud, versión del código y resultado, incluidos los fallos |
 | FDH-001-AC-30 | FR-03, FR-04, FR-05 | Si la fuente indica más resultados tras el máximo de páginas de una consulta, la ejecución registra para ella `truncated` y el total declarado si lo hay, sin registrar un error; sin fallos ni rechazos queda `succeeded`, y la API y el portal muestran el truncamiento |
@@ -144,7 +147,7 @@ Salvo indicación contraria, las fuentes de los criterios tienen publicación de
 | FDH-001-AC-33 | FR-06 | Cada adaptador declara sus capacidades, y una configuración que exija una no soportada se rechaza sin enviar ninguna solicitud |
 | FDH-001-AC-34 | FR-06 | Las pruebas de cada adaptador se ejecutan con respuestas sintéticas, sin red ni base de datos |
 | FDH-001-AC-35 | NFR-02 | Ni declarar `allowed` los metadatos de una fuente ni la licencia declarada cambian los permisos de extracción y redistribución, `undetermined` por defecto; los permisos solo cambian por configuración o comando local, con evidencia y fecha |
-| FDH-001-AC-36 | FR-03 | Cada localizador conserva tipo, URL, campo de origen y estado; se aceptan tipos nuevos, una URL no HTTPS o mal formada queda `invalid` sin rechazar el dataset y ninguna se consulta |
+| FDH-001-AC-36 | FR-03 | Cada localizador conserva tipo, URL, campo de origen y estado; se aceptan tipos nuevos, una URL no HTTPS o mal formada queda `invalid` sin rechazar ni eliminar el dataset, no figura entre las utilizables para extracción hasta que una versión corregida supere la validación, y ninguna se consulta |
 | FDH-001-AC-37 | NFR-03 | Un cambio publicado en la rama o propuesto en un PR ejecuta en GitHub Actions las pruebas sin red y los controles definidos en el plan, y un fallo es visible |
 
 ## Fuera de alcance

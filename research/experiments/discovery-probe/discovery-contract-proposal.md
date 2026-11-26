@@ -177,8 +177,8 @@ El núcleo ejecuta `HttpRequest`. Así la política de reintentos es única y la
 7. El adaptador descarta nombres de propietarios, creadores y contactos.
 8. Toda respuesta se valida: estado 200 no implica éxito.
 9. `validate` rechaza opciones desconocidas o capacidades no soportadas antes de la primera solicitud.
-10. Las solicitudes solo van a `allowed_hosts`. El núcleo guarda cada localizador como `unverified`, o `invalid` si no es una URL HTTPS bien formada; no los consulta.
-11. `metadata_publication` no concede extracción ni redistribución; esos permisos son de cada dataset y los administra el núcleo.
+10. Las solicitudes solo van a `allowed_hosts`. El núcleo guarda cada localizador como `unverified`, o `invalid` si no es una URL HTTPS bien formada; no los consulta. Un localizador `invalid` no elimina el dataset y no puede usarse para extracción hasta que se corrija y supere de nuevo la validación.
+11. `metadata_publication` no concede extracción ni redistribución; esos permisos son de cada dataset y los administra el núcleo. Tampoco anula una restricción específica de un dataset, que prevalece.
 12. Un conjunto de pruebas de contrato se ejecuta contra cada adaptador, sin red ni base de datos.
 
 ## Capacidades observadas
