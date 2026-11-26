@@ -6,7 +6,7 @@ GitHub es la memoria externa versionada, no una sincronización de memorias inte
 |---|---|
 | Instrucciones comunes | AGENTS.md |
 | Visión | docs/product/vision.md |
-| Principios formales | Constitución, pendiente |
+| Principios formales | .specify/memory/constitution.md |
 | Decisiones | docs/adr/ |
 | Requisitos | specs/ |
 | Contratos aprobados | contracts/ cuando existan |

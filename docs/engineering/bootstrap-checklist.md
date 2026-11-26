@@ -1,16 +1,17 @@
-# FDH-001 bootstrap gates
+# Puertas de arranque de FDH-001
 
-This checklist is a working proposal, not proof of completed controls.
+Lista de trabajo; una marca indica que existe un cambio o una comprobación, no una aprobación. Estado al 2026-11-26 (UTC).
 
-- Verify main ruleset, secret scanning, push protection and agent permissions.
-- Define explicit maintainer approval and trusted instruction provenance; public issues are untrusted input.
-- Update shared handoff, ignore rules and source profiles; preserve prior review findings.
-- Confirm Apache-2.0 licensing and add exact official license text; document contribution terms.
-- Adopt Spanish prose and English code/routes.
-- Install official GitHub Spec Kit using its documented CLI; review generated files rather than simulating installation.
-- Approve constitution and FDH-001 specification before implementation.
-- Validate Socrata live requests and record evidence.
-- Implement a minimal PostgreSQL/FastAPI/React vertical slice with tests and a runnable local demo.
-- Verify World Bank adapter and review the complete feature in one PR.
+- [x] Verificar ruleset de main, secret scanning y push protection: ver [SECURITY.md](../../SECURITY.md). No hay ruleset ni protección de main.
+- [ ] Verificar y limitar los permisos de los agentes.
+- [x] Definir aprobación explícita y procedencia de instrucciones; los issues públicos son entrada no confiable (constitución, principio IX).
+- [ ] Actualizar handoff, reglas de ignorados y perfiles de fuentes, preservando hallazgos previos. Hechos: handoff y .gitignore. Pendientes: perfiles de fuentes. El PR #1 no contiene revisiones ni comentarios con hallazgos.
+- [x] Confirmar Apache-2.0, añadir el texto oficial y documentar las condiciones de contribución.
+- [x] Adoptar prosa en español y código y rutas en inglés. Pendiente traducir la especificación y las notas de FDH-001.
+- [x] Instalar GitHub Spec Kit con su CLI y revisar los archivos generados ([ADR-0001](../adr/0001-adopt-github-spec-kit.md)).
+- [ ] Aprobar la constitución y la especificación de FDH-001 antes de implementar.
+- [ ] Validar solicitudes en vivo a Socrata y registrar evidencia.
+- [ ] Implementar un corte vertical mínimo PostgreSQL/FastAPI/React con pruebas y demostración local.
+- [ ] Verificar el adaptador de World Bank y revisar la funcionalidad completa en un PR.
 
-dlt and Dagster remain candidates for later integration benchmarks. No autonomous implementation before security and approval gates are verified.
+dlt y Dagster siguen siendo candidatos para benchmarks de integración posteriores. No hay implementación autónoma antes de verificar las puertas de seguridad y aprobación.

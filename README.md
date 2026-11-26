@@ -16,4 +16,7 @@ Facilitar el acceso reproducible a fuentes públicas, con trazabilidad, calidad,
 - [Seguridad](SECURITY.md)
 
 ## Estado
-FDH-000: fundación documental. Framework SDD, licencia, idioma definitivo y stack tecnológico pendientes de decisión. La visibilidad pública no concede por sí sola permisos generales de reutilización. No se publican datos externos sin revisar sus condiciones.
+FDH-001 en definición: [especificación](specs/001-source-discovery/spec.md) en borrador. Decisiones de framework SDD, arquitectura, stack, licencia e idioma en los [ADR](docs/adr/README.md); principios en la [constitución](.specify/memory/constitution.md).
+
+## Licencia
+Software bajo [Apache License 2.0](LICENSE). La licencia no cubre datos de terceros. No se publican datos externos sin revisar sus condiciones.

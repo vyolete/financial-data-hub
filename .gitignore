@@ -221,3 +221,25 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Financial Data Hub
+# Secrets
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local agent settings (shared Spec Kit skills stay versioned)
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Frontend
+node_modules/
+# The generic Python "lib/" rule above must not hide frontend sources
+!**/src/lib/
+
+# Local data
+/data/
+
+# macOS
+.DS_Store

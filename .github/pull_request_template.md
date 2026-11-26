@@ -13,6 +13,7 @@ Estado, bloqueos y siguiente acción:
 
 ## Checklist
 - [ ] Alcance y criterios de aceptación revisados
+- [ ] Cumplimiento de la constitución declarado y registro de aprobación enlazado
 - [ ] Documentación y contratos coherentes
 - [ ] Evidencias verificables; sin resultados inventados
 - [ ] Sin secretos ni datos de redistribución no autorizada

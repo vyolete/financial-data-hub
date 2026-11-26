@@ -5,7 +5,7 @@ Etapas propuestas, sin fechas comprometidas. Seguridad, calidad y confiabilidad 
 | Etapa | Resultado esperado | Estado |
 |---|---|---|
 | FDH-000 Foundation | Gobierno, contexto común y flujo de trabajo | En revisión |
-| SDD Foundation | Evaluación de framework y constitución aprobada | Pendiente |
+| SDD Foundation | Framework adoptado y constitución aprobada | En revisión |
 | Source Research | Fuentes y condiciones de acceso verificadas | Pendiente |
 | Discovery & Catalog | Descubrimiento y catálogo verificables | Pendiente |
 | Integration Framework | Contratos y conectores reutilizables; benchmark ETL/ELT | Pendiente |
