@@ -104,6 +104,9 @@ La causa es desconocida (cuota anónima compartida, bloqueo por origen o necesid
 ### Documentación
 [Acerca de la API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation): versión 2, sin claves. [Estructura de llamadas](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures): `per_page` predeterminado 50.
 
+### Evidencia adicional sin analizar
+[identity](evidence/identity-2026-11-26T010521Z.json) (176 solicitudes, script `research/experiments/discovery-probe/worldbank_identity.py`) estudia la unicidad de identificadores entre fuentes. La produjo otra sesión de trabajo y **sus resultados no se han revisado ni se usan en este informe**. Su campo `repository_commit` registra el identificador que tenía ese commit antes de corregir su autoría; el contenido es el mismo que el de `6bfd09b`.
+
 ## Condiciones de uso
 Consultadas el 2026-11-26 (UTC).
 
