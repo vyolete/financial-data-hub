@@ -115,7 +115,8 @@ class DiscoveredDataset:
 @dataclass(frozen=True)
 class RejectedRecord:
     external_id: str | None
-    reason: str     # "missing_id", "missing_title", "unexpected_type", "malformed"
+    reason: str     # "missing_id", "missing_title", "unexpected_type",
+                    # "unexpected_domain", "malformed"
 
 
 @dataclass(frozen=True)
@@ -182,11 +183,23 @@ class DiscoveryAdapter(Protocol):
 
 Los valores repetidos dentro de una colección se conservan una vez, en su orden.
 
+Reglas del adaptador de Socrata (E1):
+
+| Caso | Comportamiento |
+|---|---|
+| Capacidades | Búsqueda por texto, total declarado y cursor; sin filtros; `max_page_size` 10000, según la referencia oficial |
+| Opciones | Solo `domains`, obligatoria: nombres de host separados por comas |
+| `metadata.domain` distinto de los configurados | Rechazo `unexpected_domain`: el permiso de publicación cubre solo los portales configurados. Si falta, se acepta |
+| Texto vacío o en blanco | Desconocido |
+| Tipo inesperado en un campo leído, carácter nulo o texto no codificable en UTF-8 | Rechazo `malformed` |
+| Identificador de más de 200 caracteres o categoría de más de 600 | Rechazo `malformed`: ambos se indexan |
+| Fecha sin zona horaria o ilegible | Desconocida; no se supone UTC |
+
 ## Cursores
 
 | Adaptador | Primera solicitud | Siguiente |
 |---|---|---|
-| Socrata | `scroll_id` vacío | `scroll_id` = último identificador; fin si vistos ≥ total o página vacía |
+| Socrata | `scroll_id` vacío | `scroll_id` = último identificador; fin si vistos ≥ total o página vacía. Un cursor que no puede avanzar es una respuesta inválida |
 | Data360 | `skip=0` | `skip` = vistos; fin si vistos ≥ total o página vacía; `skip` nunca supera 100000 |
 
 ## Suite de contrato

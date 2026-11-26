@@ -31,4 +31,12 @@ Comando `fdh`, ejecutable local y dentro de la imagen del backend. Requisitos: F
 | 4 | Alguna ejecución `failed` |
 | 5 | Ya hay una ejecución en curso para la fuente |
 
-Con `--all`, una fuente fallida no impide ejecutar las demás.
+Con `--all`, una fuente fallida no impide ejecutar las demás y se devuelve el resultado más grave, en este orden: 1, 4, 5, 3 y 0.
+
+`discover` devuelve 2, sin solicitudes ni cambios en la base de datos, si la fuente no existe o si alguna fuente seleccionada no tiene adaptador.
+
+## Salida
+
+`discover` imprime por fuente el identificador y estado de la ejecución, solicitudes enviadas (reintentos incluidos), páginas, registros recibidos, únicos, creados, actualizados, sin cambios y rechazados, fallos, duración total y de persistencia, cada consulta con su total declarado y truncamiento, motivos de rechazo y errores. El número de solicitudes, los motivos de rechazo y el tiempo de persistencia constan en la salida y en los logs, no en la base de datos.
+
+`runs list` imprime una línea por ejecución, la más reciente primero, con sus conteos, consultas truncadas y duración, seguida de sus errores.

@@ -76,6 +76,8 @@ El redescubrimiento **no modifica** `review_status`, permisos ni condiciones reg
 | `pages_processed`, `received`, `created`, `updated`, `unchanged`, `rejected`, `failures` | integer | |
 | `errors` | jsonb | `{code, message, query_index, http_status, attempts}` sanitizados |
 
+Códigos de `errors`: `timeout`, `connection_error`, `rate_limited`, `http_error`, `retry_after_too_long`, `redirect_rejected`, `host_not_allowed`, `response_too_large`, `invalid_response`, `provider_error`, `persistence_error`, `internal_error` e `interrupted`.
+
 `received` cuenta todos los registros recibidos, repetidos incluidos. `created`, `updated` y `unchanged` cuentan datasets distintos, una sola vez por ejecución según su primera aparición: nuevo, con metadatos distintos o iguales. Las repeticiones solo suman en `received` y como observaciones. `rejected` cuenta registros rechazados.
 
 ## `run_queries`

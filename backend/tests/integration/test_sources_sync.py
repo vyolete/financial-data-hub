@@ -23,6 +23,9 @@ allowed_hosts = ["api.example.org"]
 official_url = "https://www.example.org"
 verified_at = 2026-01-02
 
+[sources.options]
+domains = "data.example.org"
+
 [sources.metadata_publication]
 value = "{value}"
 {audit}

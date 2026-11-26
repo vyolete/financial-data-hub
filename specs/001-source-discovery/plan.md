@@ -123,7 +123,7 @@ El adaptador es puro: `validate`, `build_request`, `classify` y `parse`, y decla
 |---|---|---|
 | Solicitud | `GET /api/catalog/v1` con `domains`, `only=datasets`, `q`, `limit`, `scroll_id` | `POST /data360/searchv2` con `search`, `filter="type eq 'dataset'"`, `top`, `skip`, `count=true` |
 | Fin de páginas | Vistos ≥ `resultSetSize` o página vacía | `skip` + devueltos ≥ `@odata.count` o página vacía |
-| Rechazo | Sin `resource.id` o sin nombre; tipo distinto de dataset | Sin `idno` o sin nombre; tipo distinto de dataset |
+| Rechazo | Sin `resource.id` o sin nombre; tipo distinto de dataset; dominio no configurado | Sin `idno` o sin nombre; tipo distinto de dataset |
 | Descarta | `owner`, `creator`, `contact_email` | Campos fuera del modelo |
 
 La correspondencia de campos está en [adapter-contract.md](contracts/adapter-contract.md).
@@ -144,7 +144,7 @@ La correspondencia de campos está en [adapter-contract.md](contracts/adapter-co
 |---|---|
 | Plazo por intento, incluida la lectura | 10 s, configurable |
 | Reintentos adicionales | 3; esperas de 1, 2 y 4 s, nunca menores que `Retry-After` |
-| `Retry-After` | Segundos o fecha HTTP; mayor de 60 s: sin reintento |
+| `Retry-After` | Segundos o fecha HTTP; mayor de 60 s: sin reintento. Si se agotan los reintentos con una espera aceptada, se cumple antes de la siguiente solicitud |
 | Reintentable | Fallo de conexión, plazo agotado, 429, 500, 502, 503, 504 |
 | Hosts | Solo `allowed_hosts`, por HTTPS; sin seguir redirecciones |
 | Tamaño máximo de respuesta | 10 MB; superarlo es un error permanente |

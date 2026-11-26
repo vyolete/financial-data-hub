@@ -51,4 +51,5 @@ class DiscoveredDataset:
 @dataclass(frozen=True)
 class RejectedRecord:
     external_id: str | None
-    reason: str  # "missing_id", "missing_title", "unexpected_type" or "malformed"
+    # "missing_id", "missing_title", "unexpected_type", "unexpected_domain" or "malformed"
+    reason: str
