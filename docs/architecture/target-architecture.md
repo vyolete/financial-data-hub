@@ -1,6 +1,6 @@
 # Arquitectura objetivo
 
-**Estado**: objetivo aprobado por la mantenedora el 2026-11-25 (decisiones en los ADR aprobados: [registro](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)). **Nada está implementado todavía.** Decisiones: [ADR-0002](../adr/0002-modular-monolith.md), [ADR-0003](../adr/0003-technology-stack.md), [ADR-0006](../adr/0006-metadata-driven-architecture.md), [ADR-0007](../adr/0007-integration-and-orchestration.md).
+**Estado**: objetivo aprobado por la mantenedora el 2026-11-25 (decisiones en los ADR aprobados: [registro](https://github.com/vyolete/financial-data-hub/issues/2#issuecomment-7179859703)). La implementación es parcial y avanza por etapas; lo que existe en el código está en la [estructura del repositorio](repository-structure.md). Decisiones: [ADR-0002](../adr/0002-modular-monolith.md), [ADR-0003](../adr/0003-technology-stack.md), [ADR-0006](../adr/0006-metadata-driven-architecture.md), [ADR-0007](../adr/0007-integration-and-orchestration.md).
 
 Diagrama editable: [target-architecture.drawio](target-architecture.drawio) (abrir con draw.io o diagrams.net).
 
@@ -74,7 +74,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 | PostgreSQL | Metadatos y estado | Adoptada |
 | React, con apoyo de Lovable | Portal | Adoptada; integración de Lovable por verificar |
 | Docker Compose | Entorno local | Adoptada |
-| pytest, GitHub Actions | Pruebas e integración continua desde FDH-001, proporcional al alcance | Adoptadas; sin configurar |
+| pytest, GitHub Actions | Pruebas e integración continua desde FDH-001, proporcional al alcance | Adoptadas; configuradas en E0 |
 | Parquet y almacenamiento de objetos | Capas de datos | Objetivo; producto por elegir |
 | dlt | Motor de integración | Referencia condicionada a pruebas de concepto |
 | Dagster | Orquestador | Referencia condicionada a pruebas de concepto |

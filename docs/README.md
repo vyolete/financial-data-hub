@@ -2,6 +2,7 @@
 
 - [Visión](product/vision.md)
 - [Arquitectura objetivo](architecture/target-architecture.md) y su [diagrama editable](architecture/target-architecture.drawio)
+- [Estructura del repositorio: actual y objetivo](architecture/repository-structure.md)
 - [Flujo de desarrollo](engineering/development-workflow.md)
 - [Colaboración IA](engineering/ai-collaboration.md)
 - [Gestión de contexto](engineering/context-management.md)

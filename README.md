@@ -20,6 +20,7 @@ Portal en <http://127.0.0.1:8080> y API en <http://127.0.0.1:8000/health>, solo 
 ## Navegación
 - [Visión](docs/product/vision.md)
 - [Arquitectura objetivo](docs/architecture/target-architecture.md)
+- [Estructura del repositorio: actual y objetivo](docs/architecture/repository-structure.md)
 - [Inventario de fuentes](research/sources/inventory.md)
 - [Roadmap](ROADMAP.md)
 - [Documentación](docs/README.md)
