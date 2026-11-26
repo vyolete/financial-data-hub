@@ -1,6 +1,6 @@
 # World Bank — Data360, Data Catalog API e Indicators API
 
-**Estado**: Data360 accesible y elegida para FDH-001 el 2026-11-25 ([ADR-0008](../../../../docs/adr/0008-world-bank-data360.md)); Data Catalog API no utilizable en las pruebas; Indicators API accesible, no elegida. Requisitos: FDH-001-FR-06, NFR-01, NFR-02.
+**Estado**: Data360 accesible y elegida para FDH-001 el 2026-11-25 ([ADR-0008](../../../../docs/adr/0008-world-bank-data360.md)); Data Catalog API no utilizable en las pruebas; Indicators API accesible, candidata para extracción en FDH-002 y FDH-003. Requisitos: FDH-001-FR-06, NFR-01, NFR-02.
 
 ## Objetivo
 Determinar qué API puede alimentar el segundo adaptador de descubrimiento y bajo qué condiciones.
@@ -66,7 +66,23 @@ En la primera evidencia **no son válidos** los campos `checks` sobre solapamien
 | Entidad autora | `series_description.authoring_entity` | 0 |
 
 - `data_confidentiality_name`: `Public` en 173; uno sin valor.
-- **Licencias heterogéneas**: 61 datasets declaran «License Specified Externally» y 21 no declaran ninguna. Entre el resto hay variantes de CC BY, software GPL, licencias propias y al menos 8 con restricciones no comerciales o sin derivados. Los nombres no están normalizados. El conteo de nombres se limitó a los 15 más frecuentes por página.
+- **Licencias heterogéneas**: ver la revisión siguiente.
+
+### Revisión de licencias
+2026-11-26 (UTC), repositorio en `d7cb98e`: `python3 -I research/experiments/discovery-probe/data360_licenses.py`. [Evidencia](evidence/licences-2026-11-26T011922Z.json), 2 solicitudes, 174 datasets distintos. Corrige una cifra anterior: **61 eran entradas de licencia externa, no datasets**; son 59 datasets.
+
+| Grupo (excluyente) | Datasets | Con enlace | Con nota | Con requisito de cita |
+|---|---|---|---|---|
+| CC BY 4.0 o sin versión | 69 | 67 | 59 | 45 |
+| Licencia especificada externamente | 59 | 36 | 56 | 48 |
+| Sin licencia declarada | 21 | 0 | 0 | 3 |
+| Otras con nombre (CC BY 3.0 IGO, SA, GPL, propias, etc.) | 16 | 14 | 13 | 15 |
+| No comercial o sin derivados | 9 | 9 | 9 | 7 |
+
+- 152 datasets declaran una licencia, uno declara tres y 21 ninguna.
+- 23 de los 59 externos no tienen enlace a la licencia. Los enlaces existentes apuntan sobre todo a terceros; el más frecuente es `www.imf.org` (13).
+- La agrupación usa solo los nombres declarados. **No se leyeron los textos enlazados ni las notas**, y no determina qué está permitido.
+- Consecuencia: extracción y redistribución quedan `undetermined` en cada dataset. Los 21 sin licencia y los 59 externos requieren revisión humana antes de usar sus datos.
 
 ## Data Catalog API (`https://datacatalogapi.worldbank.org/ddhxext`)
 
@@ -104,8 +120,15 @@ La causa es desconocida (cuota anónima compartida, bloqueo por origen o necesid
 ### Documentación
 [Acerca de la API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation): versión 2, sin claves. [Estructura de llamadas](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures): `per_page` predeterminado 50.
 
-### Evidencia adicional sin analizar
-[identity](evidence/identity-2026-11-26T010521Z.json) (176 solicitudes, script `research/experiments/discovery-probe/worldbank_identity.py`) estudia la unicidad de identificadores entre fuentes. La produjo otra sesión de trabajo y **sus resultados no se han revisado ni se usan en este informe**. Su campo `repository_commit` registra el identificador que tenía ese commit antes de corregir su autoría; el contenido es el mismo que el de `6bfd09b`.
+### Unicidad de identificadores en Indicators API
+[identity](evidence/identity-2026-11-26T010521Z.json) (176 solicitudes, script `research/experiments/discovery-probe/worldbank_identity.py`) estudia la unicidad de identificadores entre fuentes. La produjo otra sesión de trabajo. Se revisaron el código, los hashes de los scripts y la coherencia interna de las cifras; **no se reprodujo**.
+
+- 71 fuentes; el listado global devolvió 29544 filas con 29490 códigos distintos.
+- 3581 códigos aparecen en más de una fuente (hasta en 14), sin diferencias de nombre.
+- Las fuentes 67 y 90 entregaron menos filas que el total declarado (104 de 114 y 47 de 48).
+- En una muestra de 95 indicadores, 75 devolvieron metadatos; 49 declaran `CC BY-4.0` y 26 no declaran licencia.
+- Consecuencia para FDH-002 y FDH-003: el código de indicador no basta como identidad; hay que combinarlo con la fuente.
+- La ejecución usó un tiempo de espera de 60 s y hasta 260 solicitudes, límites propios de investigación y no del producto. Su campo `repository_commit` registra el identificador que tenía ese commit antes de corregir su autoría; el contenido es el mismo que el de `6bfd09b`.
 
 ## Condiciones de uso
 Consultadas el 2026-11-26 (UTC).
@@ -119,7 +142,7 @@ Consultadas el 2026-11-26 (UTC).
 **Declaración**: el 2026-11-25 la mantenedora declaró en sesión de trabajo `allowed` la publicación de metadatos de Data360, con atribución y licencia declarada de cada dataset (ver [inventario](../../inventory.md)). El registro verificable en GitHub está pendiente. La declaración no cambia el estado de revisión de los datasets ni autoriza redistribuir sus datos.
 
 ## Decisión
-El 2026-11-25 se eligió Data360, con una entrada `dataset` por dataset del catálogo. Alternativas descartadas por ahora: Indicators API (unidad más fina, sin búsqueda por texto observada) y esperar al Data Catalog. Ver [ADR-0008](../../../../docs/adr/0008-world-bank-data360.md).
+El 2026-11-25 se eligió Data360 para FDH-001, con una entrada `dataset` por dataset del catálogo. Indicators API queda como candidata para extraer indicadores y series económicas en FDH-002 y FDH-003. El Data Catalog queda como investigación. Ver [ADR-0008](../../../../docs/adr/0008-world-bank-data360.md).
 
 ## Pendiente
 - Elegir los campos para URL oficial, publicador y categoría.

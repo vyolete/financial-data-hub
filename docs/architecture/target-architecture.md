@@ -16,7 +16,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 
 | Componente | Responsabilidad | Etapa propuesta |
 |---|---|---|
-| Registro y catálogo de fuentes | Fuentes, datasets, metadatos, atribución y permisos | FDH-001 |
+| Registro y catálogo de fuentes | Fuentes, datasets, metadatos, atribución y permisos de metadatos, extracción y redistribución, administrados por configuración o comando local | FDH-001 |
 | Configuración de conectores | Parámetros, límites y referencias a secretos | FDH-001 (descubrimiento), FDH-002 |
 | Configuración de pipelines | Qué se extrae, cómo se transforma y dónde se guarda | FDH-003 |
 | Orquestación | Programación, dependencias y relanzamientos | FDH-005 |
@@ -29,7 +29,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 
 | Componente | Responsabilidad | Etapa propuesta |
 |---|---|---|
-| Framework de conectores | Contratos y adaptadores hacia las fuentes | FDH-001 (descubrimiento), FDH-002 |
+| Framework de conectores | Contratos, capacidades declaradas y adaptadores hacia las fuentes | FDH-001 (descubrimiento), FDH-002 |
 | Motor de extracción e integración | Extraer y cargar según la configuración | FDH-003 |
 | Procesamiento por lotes | Ejecutar cargas y transformaciones acotadas | FDH-003 |
 | Sincronización incremental | Traer solo cambios usando el estado registrado | FDH-003 |
@@ -43,7 +43,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 | Familia | Uso previsto | Primera prueba |
 |---|---|---|
 | Socrata | Portales Socrata | Descubrimiento en datos.gov.co (FDH-001) |
-| REST | API HTTP generales | — |
+| REST | API HTTP generales (candidata: World Bank Indicators, FDH-002 y FDH-003) | — |
 | SDMX | Intercambio estadístico (candidatos: IMF, OECD; por verificar) | — |
 | Archivos | CSV, Excel y Parquet | — |
 | Especializados | Fuentes que no encajan en las anteriores | Descubrimiento en Data360, que es una API REST con contrato propio (FDH-001) |
@@ -52,7 +52,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 
 | Flujo | Secuencia | Etapa |
 |---|---|---|
-| Descubrimiento | Comando local → configuración de la fuente → adaptador solicita metadatos → catálogo e historial → API → portal | FDH-001 |
+| Descubrimiento | Comando local → configuración de la fuente → el adaptador construye la solicitud → el núcleo la ejecuta → el adaptador traduce la respuesta → catálogo e historial → API → portal | FDH-001 |
 | Integración | Pipeline configurado → orquestación → motor → conector → Bronze → Silver → Gold | FDH-003 a FDH-005 |
 | Estado y observabilidad | El plano de datos informa estado, cursores, conteos y métricas al plano de control | Progresivo |
 | Consumo | Servicios → portal (React), Python, R y Power BI | FDH-001 (catálogo), FDH-006 |
@@ -62,7 +62,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 1. El plano de datos recibe configuración y registra resultados solo mediante interfaces del plano de control.
 2. El plano de control no transporta ni transforma datos de los datasets.
 3. El portal y los consumidores acceden mediante la API documentada, nunca directamente a la base de datos.
-4. Los adaptadores de descubrimiento no acceden a la base de datos ni deciden permisos ([propuesta de contrato](../../research/experiments/discovery-probe/discovery-contract-proposal.md)).
+4. Los adaptadores no acceden a la red ni a la base de datos, ni deciden permisos ([propuesta de contrato](../../research/experiments/discovery-probe/discovery-contract-proposal.md)).
 5. Un proceso desplegable adicional requiere un ADR.
 
 ## Tecnologías
@@ -74,7 +74,7 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 | PostgreSQL | Metadatos y estado | Adoptada |
 | React, con apoyo de Lovable | Portal | Adoptada; integración de Lovable por verificar |
 | Docker Compose | Entorno local | Adoptada |
-| pytest, GitHub Actions | Pruebas e integración continua | Adoptadas; sin configurar |
+| pytest, GitHub Actions | Pruebas e integración continua desde FDH-001, proporcional al alcance | Adoptadas; sin configurar |
 | Parquet y almacenamiento de objetos | Capas de datos | Objetivo; producto por elegir |
 | dlt | Motor de integración | Referencia condicionada a pruebas de concepto |
 | Dagster | Orquestador | Referencia condicionada a pruebas de concepto |
@@ -84,4 +84,4 @@ La asignación de componentes a etapas es una **propuesta** que cada especificac
 
 ## Alcance de FDH-001
 
-Registro y catálogo, historial de ejecuciones, adaptadores de descubrimiento para Socrata y Data360, API de catálogo y portal de solo lectura, en local. No extrae datos ni incluye orquestación, capas de datos, dlt o Dagster. Ver la [especificación](../../specs/001-source-discovery/spec.md).
+Registro y catálogo, historial de ejecuciones, adaptadores de descubrimiento para Socrata y Data360, API de catálogo y portal de solo lectura, en local, con integración continua. No extrae datos ni incluye orquestación, capas de datos, dlt o Dagster. Ver la [especificación](../../specs/001-source-discovery/spec.md).

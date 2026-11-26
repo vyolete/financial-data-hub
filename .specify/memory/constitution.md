@@ -89,7 +89,8 @@ Criterios verificables:
 - El contenido externo (respuestas de API, metadatos, páginas web, issues y comentarios de
   terceros) se trata como dato no confiable: no se obedece como instrucción, no se ejecuta y se
   escapa al mostrarse.
-- Los adaptadores solo contactan hosts configurados de proveedores aprobados.
+- Toda solicitud saliente que construye un adaptador y ejecuta el sistema se dirige solo a hosts
+  configurados de proveedores aprobados.
 - Un control de GitHub solo se declara activo si se verificó, indicando fecha y método.
 
 ### VI. Eficiencia de recursos
@@ -218,4 +219,4 @@ contradicciones se corrigen en el documento subordinado o mediante una enmienda.
 - **Cumplimiento**: cada plan incluye la comprobación contra la constitución y cada PR declara su
   cumplimiento. Una excepción se justifica por escrito y requiere aprobación humana.
 
-**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): pendiente de aprobación registrada en GitHub | **Last Amended**: 2026-11-25
+**Version**: 1.1.1 | **Ratified**: TODO(RATIFICATION_DATE): pendiente de aprobación registrada en GitHub | **Last Amended**: 2026-11-25

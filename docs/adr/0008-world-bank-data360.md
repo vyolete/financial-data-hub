@@ -28,5 +28,8 @@ catálogo, identificado por `idno`.
 ## Consecuencias
 
 - El contrato de descubrimiento admite solicitudes `POST` de solo lectura.
-- Las licencias son heterogéneas, y parte se declara externamente o no se declara.
+- Las licencias son heterogéneas: 59 datasets la declaran externamente y 21 no declaran ninguna.
+  Los permisos de extracción y redistribución se determinan por dataset.
+- Indicators API queda como candidata para extraer indicadores y series económicas en FDH-002
+  y FDH-003.
 - La condición beta obliga a validar cada respuesta y cubrir el adaptador con pruebas de contrato.

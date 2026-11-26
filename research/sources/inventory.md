@@ -9,6 +9,7 @@ Registro central de las fuentes candidatas aprobadas por la mantenedora el 2026-
 | Validación | `no investigada`; `probada en vivo` (con evidencia en este directorio) |
 | Publicación de metadatos | `undetermined` (predeterminado), `allowed`, `denied` |
 | Revisión de cada dataset | `pending` (predeterminado), `verified`, `restricted`; se registra en el catálogo, no aquí |
+| Extracción y redistribución de datos | Por dataset: `undetermined` (predeterminado), `allowed`, `denied`; independientes entre sí y de la publicación de metadatos |
 
 «Hipótesis» marca una suposición por verificar; no debe usarse para implementar.
 
@@ -54,7 +55,16 @@ Registro central de las fuentes candidatas aprobadas por la mantenedora el 2026-
 | `int-worldbank-data360` | `allowed` para metadatos | The World Bank, nombre del dataset y fuente de los datos cuando se conozca; mostrar la licencia declarada | [Términos para datasets](https://www.worldbank.org/ext/en/legal/terms-conditions/datasets) |
 
 - **Quién y cuándo**: la mantenedora, en sesión de trabajo del 2026-11-25. Registro verificable en el [issue #2](https://github.com/vyolete/financial-data-hub/issues/2): aún no consta.
-- **Alcance**: mostrar metadatos con atribución. No autoriza redistribuir datos ni marca datasets como `verified`.
+- **Alcance**: mostrar metadatos con atribución. No autoriza extraer ni redistribuir datos, que permanecen `undetermined` en todas las fuentes, ni marca datasets como `verified`.
+- **Data360**: no todos sus datasets comparten condiciones; hay licencias externas, ausentes y restrictivas ([revisión](international/world-bank/README.md)).
+
+## Otras API de fuentes ya listadas
+
+No añaden fuentes a las 12 candidatas.
+
+| Fuente | API | Situación | Uso previsto |
+|---|---|---|---|
+| World Bank | Indicators API v2 | probada en vivo ([informe](international/world-bank/README.md)) | Candidata para extraer indicadores y series económicas, FDH-002 y FDH-003 |
 
 ## Archivos
 

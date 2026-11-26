@@ -1,0 +1,174 @@
+{
+ "target": "data360-licences",
+ "started_utc": "2026-11-26T01:19:22Z",
+ "finished_utc": "2026-11-26T01:19:28Z",
+ "repository_commit": "d7cb98eb54f9ca480894bf3bd0d5870947026d35",
+ "script_sha256": "4199c722b639c070ca1cd576ec43d812a2033eeeebd9e45a2bf1c3585bc48b1a",
+ "round2_sha256": "1d81b8d73f11b23e6570882999679cf19ceef192594d09ff33b9f544b859f47a",
+ "probe_sha256": "91e195d283e25a2c02541f6f5d92ea958631f4cfb89d34909d07f3d429ea41e6",
+ "python": "3.9.6",
+ "checks": {
+  "declared_total": 174,
+  "complete": true,
+  "datasets": 174,
+  "distinct_identifiers": 174,
+  "licence_entries_per_dataset": {
+   "0": 21,
+   "1": 152,
+   "3": 1
+  },
+  "licence_names": {
+   "License Specified Externally": 61,
+   "CC BY 4.0": 42,
+   "CC BY": 20,
+   "CC BY 3.0 IGO": 7,
+   "CC BY-NC-SA 3.0 IGO": 5,
+   "CC BY-4.0": 3,
+   "CC-BY 4.0": 2,
+   "GNU General Public Licence": 1,
+   "CC-BY": 1,
+   "CC BY-NC-ND 4.0": 1,
+   "Public Use": 1,
+   "CC BY-SA 4.0": 1,
+   "Creative Commons": 1,
+   "GNU General Public License v2.0": 1,
+   "Custom License": 1,
+   "CC BY-3.0 IGO": 1,
+   "CC BY-NC-SA": 1,
+   "Custom Licence": 1,
+   "CC BY-NC 3.0 IGO": 1,
+   "CC BY-NC-SA 4.0": 1,
+   "CC BY-SA": 1,
+   "CC-BY-4.0": 1
+  },
+  "groups": {
+   "external": {
+    "datasets": 59,
+    "with_licence_link": 36,
+    "with_licence_note": 56,
+    "with_citation_requirement": 48,
+    "link_hosts": {
+     "www.imf.org": 13,
+     "www.oecd.org": 3,
+     "freedomhouse.org": 2,
+     "www.gemconsortium.org": 2,
+     "www.weforum.org": 2,
+     "internationalbudget.org": 1,
+     "wits.worldbank.org": 1,
+     "comtrade.un.org": 1,
+     "humancapital.worldbank.org": 1,
+     "www.systemicpeace.org": 1,
+     "worldjusticeproject.org": 1,
+     "www.sgi-network.org": 1,
+     "ourworldindata.org": 1,
+     "www.eia.gov": 1,
+     "globalsolaratlas.info": 1,
+     "www.v-dem.net": 1,
+     "bti-project.org": 1,
+     "rsf.org": 1,
+     "globalwindatlas.info": 1,
+     "www.africaintegrityindicators.org": 1
+    },
+    "identifier_prefixes": {
+     "<other>": 59
+    }
+   },
+   "cc_by_4_or_unversioned": {
+    "datasets": 69,
+    "with_licence_link": 67,
+    "with_licence_note": 59,
+    "with_citation_requirement": 45,
+    "link_hosts": {
+     "creativecommons.org": 60,
+     "www.worldbank.org": 6,
+     "openknowledge.fao.org": 1
+    },
+    "identifier_prefixes": {
+     "<other>": 69
+    }
+   },
+   "other_named": {
+    "datasets": 16,
+    "with_licence_link": 14,
+    "with_licence_note": 13,
+    "with_citation_requirement": 15,
+    "link_hosts": {
+     "creativecommons.org": 10,
+     "www.gnu.org": 1,
+     "www.imf.org": 1,
+     "github.com": 1,
+     "www.oecd.org": 1
+    },
+    "identifier_prefixes": {
+     "<other>": 16
+    }
+   },
+   "absent": {
+    "datasets": 21,
+    "with_licence_link": 0,
+    "with_licence_note": 0,
+    "with_citation_requirement": 3,
+    "link_hosts": {},
+    "identifier_prefixes": {
+     "<other>": 21
+    }
+   },
+   "non_commercial_or_no_derivatives": {
+    "datasets": 9,
+    "with_licence_link": 9,
+    "with_licence_note": 9,
+    "with_citation_requirement": 7,
+    "link_hosts": {
+     "creativecommons.org": 9
+    },
+    "identifier_prefixes": {
+     "<other>": 9
+    }
+   }
+  }
+ },
+ "requests": [
+  {
+   "id": "G1",
+   "purpose": "all datasets, page 1",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 0
+   },
+   "utc": "2026-11-26T01:19:22Z",
+   "status": 200,
+   "elapsed_ms": 2462,
+   "bytes": 1184165,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "acf743215bc05ee66a1b0dff65fa668e9b30901206b45a1edbbc9521a19106f8",
+   "json": true
+  },
+  {
+   "id": "G2",
+   "purpose": "all datasets, page 2",
+   "method": "POST",
+   "url": "https://data360api.worldbank.org/data360/searchv2",
+   "request_body": {
+    "count": true,
+    "search": "*",
+    "filter": "type eq 'dataset'",
+    "top": 100,
+    "skip": 100
+   },
+   "utc": "2026-11-26T01:19:25Z",
+   "status": 200,
+   "elapsed_ms": 1250,
+   "bytes": 811467,
+   "content_type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+   "retry_after": null,
+   "body_sha256": "7f9de274283ae584b910390d19e8536f0932ae3ac9aebfa5567ad2d2865f8017",
+   "json": true
+  }
+ ]
+}
